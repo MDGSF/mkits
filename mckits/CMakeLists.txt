@@ -1,8 +1,9 @@
 project(mckits)
 
+message(STATUS "[mckits] CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 message(STATUS "[mckits] PROJECT_SOURCE_DIR: ${PROJECT_SOURCE_DIR}")
 
-set(CMAKE_C_FLAGS_DEBUG   "-std=c11 -Wall -g")
+set(CMAKE_C_FLAGS_DEBUG "-std=c11 -Wall -g")
 set(CMAKE_C_FLAGS_RELEASE "-std=c11 -Wall -O3")
 
 add_library(mckits SHARED
