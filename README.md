@@ -15,3 +15,7 @@ cmake ..
 make
 make VERBOSE=1
 ```
+
+```sh
+./build <Debug|Release> <Shared/Static>
+```

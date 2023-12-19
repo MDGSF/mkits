@@ -4,3 +4,4 @@ project(mkits)
 
 add_subdirectory(mckits)
 add_subdirectory(mcppkits)
+add_subdirectory(test/mckits)
