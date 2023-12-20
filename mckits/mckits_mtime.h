@@ -33,6 +33,8 @@ void mckits_sleep_nanoseconds(int64_t nanoseconds);
 
 /*
 @brief: Sleep until a future timestamp.
+@notes: The function exhibits an error within the realm of tens of microseconds,
+  while simultaneously demanding a greater share of CPU resources.
 */
 void mckits_sleep_to(int64_t microtimestamp);
 
