@@ -37,22 +37,22 @@ void message_header_encode(const struct MessageHeader* msg_header,
   *p++ = msg_header->magic_word[2];
   *p++ = msg_header->magic_word[3];
 
-  mckits_little_endian_encode_u16(msg_header->version, p);
+  mckits_big_endian_encode_u16(msg_header->version, p);
   p += 2;
 
-  mckits_little_endian_encode_u16(msg_header->msg_type, p);
+  mckits_big_endian_encode_u16(msg_header->msg_type, p);
   p += 2;
 
-  mckits_little_endian_encode_u32(msg_header->metadata_offset, p);
+  mckits_big_endian_encode_u32(msg_header->metadata_offset, p);
   p += 4;
 
-  mckits_little_endian_encode_u32(msg_header->metadata_length, p);
+  mckits_big_endian_encode_u32(msg_header->metadata_length, p);
   p += 4;
 
-  mckits_little_endian_encode_u32(msg_header->payload_offset, p);
+  mckits_big_endian_encode_u32(msg_header->payload_offset, p);
   p += 4;
 
-  mckits_little_endian_encode_u32(msg_header->payload_length, p);
+  mckits_big_endian_encode_u32(msg_header->payload_length, p);
   p += 4;
 }
 
@@ -65,22 +65,22 @@ void message_header_decode(struct MessageHeader* msg_header,
   msg_header->magic_word[2] = *p++;
   msg_header->magic_word[3] = *p++;
 
-  msg_header->version = mckits_little_endian_decode_u16(p);
+  msg_header->version = mckits_big_endian_decode_u16(p);
   p += 2;
 
-  msg_header->msg_type = mckits_little_endian_decode_u16(p);
+  msg_header->msg_type = mckits_big_endian_decode_u16(p);
   p += 2;
 
-  msg_header->metadata_offset = mckits_little_endian_decode_u32(p);
+  msg_header->metadata_offset = mckits_big_endian_decode_u32(p);
   p += 4;
 
-  msg_header->metadata_length = mckits_little_endian_decode_u32(p);
+  msg_header->metadata_length = mckits_big_endian_decode_u32(p);
   p += 4;
 
-  msg_header->payload_offset = mckits_little_endian_decode_u32(p);
+  msg_header->payload_offset = mckits_big_endian_decode_u32(p);
   p += 4;
 
-  msg_header->payload_length = mckits_little_endian_decode_u32(p);
+  msg_header->payload_length = mckits_big_endian_decode_u32(p);
   p += 4;
 }
 
