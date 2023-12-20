@@ -10,12 +10,10 @@ mkdir -p build
 cd build
 
 cmake \
-  -DCMAKE_SYSTEM_NAME=Linux \
   -DCMAKE_BUILD_TYPE=$compile \
-  -DCMAKE_CXX_COMPILER=g++ \
-  -DCMAKE_C_COMPILER=gcc \
-  -DCMAKE_AR=ar \
+  -DCMAKE_INSTALL_PREFIX=output \
   ..
 
 make
 # make VERBOSE=1
+make install
