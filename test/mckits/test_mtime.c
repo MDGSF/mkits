@@ -8,9 +8,9 @@ void test01() {
   int64_t diff_sum = 0;
   int count = 1000;
   for (int i = 0; i < count; ++i) {
-    int64_t start = current_clock_nanoseconds();
-    sleep_nanoseconds(1);
-    int64_t end = current_clock_nanoseconds();
+    int64_t start = mckits_current_clock_nanoseconds();
+    mckits_sleep_nanoseconds(1);
+    int64_t end = mckits_current_clock_nanoseconds();
     int64_t diff = end - start;
     diff_sum += diff;
   }
@@ -21,10 +21,10 @@ void test01() {
 void test02() {
   int result[1024] = {0};
   for (int i = 0; i < 1000; ++i) {
-    int64_t start = current_clock_microseconds();
+    int64_t start = mckits_current_clock_microseconds();
     int64_t expected_end = start + 10000;  // 10ms later
-    sleep_to(expected_end);
-    int64_t end = current_clock_microseconds();
+    mckits_sleep_to(expected_end);
+    int64_t end = mckits_current_clock_microseconds();
     int64_t diff = end - expected_end;
     if (diff < 0 || diff > 1024) {
       printf("test02 start: %ld, end: %ld, expected_end: %ld, diff: %ld us\n",

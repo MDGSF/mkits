@@ -10,31 +10,31 @@ extern "C" {
 /*
 @brief: Get current timestamp use gettimeofday().
 */
-int64_t current_seconds();
-int64_t current_milliseconds();
-int64_t current_microseconds();
-int64_t current_nanoseconds();
+int64_t mckits_current_seconds();
+int64_t mckits_current_milliseconds();
+int64_t mckits_current_microseconds();
+int64_t mckits_current_nanoseconds();
 
 /*
 @brief: Get current timestamp use clock_gettime(CLOCK_MONOTONIC);
 */
-int64_t current_clock_seconds();
-int64_t current_clock_milliseconds();
-int64_t current_clock_microseconds();
-int64_t current_clock_nanoseconds();
+int64_t mckits_current_clock_seconds();
+int64_t mckits_current_clock_milliseconds();
+int64_t mckits_current_clock_microseconds();
+int64_t mckits_current_clock_nanoseconds();
 
 /*
 @brief: Sleep a time duration.
 */
-void sleep_seconds(int seconds);
-void sleep_milliseconds(int64_t milliseconds);
-void sleep_microseconds(int64_t microseconds);
-void sleep_nanoseconds(int64_t nanoseconds);
+void mckits_sleep_seconds(int seconds);
+void mckits_sleep_milliseconds(int64_t milliseconds);
+void mckits_sleep_microseconds(int64_t microseconds);
+void mckits_sleep_nanoseconds(int64_t nanoseconds);
 
 /*
 @brief: Sleep until a future timestamp.
 */
-void sleep_to(int64_t microtimestamp);
+void mckits_sleep_to(int64_t microtimestamp);
 
 #ifdef __cplusplus
 }
