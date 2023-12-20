@@ -1,5 +1,7 @@
-project(mcppkits)
+project(mcppkits VERSION 0.0.1)
 
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_CXX_FLAGS_DEBUG "-std=c++11 -Wall -g")
 set(CMAKE_CXX_FLAGS_RELEASE "-std=c++11 -Wall -O3")
 

@@ -1,4 +1,4 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.13.1)
+cmake_minimum_required(VERSION 3.13.1)
 
 project(mkits)
 
@@ -8,6 +8,13 @@ option(BUILD_STATIC "build static library" ON)
 option(BUILD_MCKITS "build mckits" ON)
 option(BUILD_MCPPKITS "build mcppkits" ON)
 option(BUILD_UNITTEST "build unittest" OFF)
+
+message(STATUS "CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
+if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+  add_definitions(-DDEBUG)
+else()
+  add_definitions(-DNDEBUG)
+endif()
 
 if(BUILD_MCKITS)
   add_subdirectory(mckits)

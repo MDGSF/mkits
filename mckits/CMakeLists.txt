@@ -1,10 +1,12 @@
-project(mckits)
+project(mckits VERSION 0.0.1)
 
 message(STATUS "[mckits] CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 message(STATUS "[mckits] BUILD_SHARED: ${BUILD_SHARED}")
 message(STATUS "[mckits] BUILD_STATIC: ${BUILD_STATIC}")
 message(STATUS "[mckits] PROJECT_SOURCE_DIR: ${PROJECT_SOURCE_DIR}")
 
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED True)
 set(CMAKE_C_FLAGS_DEBUG "-std=c11 -Wall -g")
 set(CMAKE_C_FLAGS_RELEASE "-std=c11 -Wall -O3")
 
