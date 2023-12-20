@@ -8,6 +8,7 @@ option(BUILD_STATIC "build static library" ON)
 option(BUILD_MCKITS "build mckits" ON)
 option(BUILD_MCPPKITS "build mcppkits" ON)
 option(BUILD_UNITTEST "build unittest" OFF)
+option(BUILD_BENCH "build bench" OFF)
 
 message(STATUS "CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
@@ -27,3 +28,8 @@ endif()
 if(BUILD_UNITTEST)
   add_subdirectory(test/mckits)
 endif()
+
+if(BUILD_BENCH)
+  add_subdirectory(bench/mckits)
+endif()
+
