@@ -13,23 +13,35 @@ set(CMAKE_C_FLAGS_RELEASE "-std=c11 -Wall -O3")
 set(mckits_headers
   mckits.h
   mckits_encoding_binary.h
+  mckits_mtime.h
 )
 
 set(mckits_srcs
   mckits.c
   mckits_encoding_binary.c
+  mckits_mtime.c
 )
+
+# set(mckits_libs ${mckits_libs} pthread)
+set(mckits_libs ${mckits_libs} m)
+set(mckits_libs ${mckits_libs} dl)
+set(mckits_libs ${mckits_libs} rt)
+set(mckits_libs ${mckits_libs} stdc++)
 
 if(BUILD_SHARED)
   add_library(mckits SHARED ${mckits_srcs})
   target_include_directories(mckits PUBLIC
     ${PROJECT_SOURCE_DIR}
   )
+  target_link_libraries(mckits ${mckits_libs})
+  target_compile_options(mckits PRIVATE -pthread)
+  target_link_options(mckits PRIVATE -pthread)
   install(TARGETS mckits
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin
   )
+  add_custom_target(libmckits DEPENDS mckits)
 endif()
 
 if(BUILD_STATIC)
@@ -37,9 +49,13 @@ if(BUILD_STATIC)
   target_include_directories(mckits_static PUBLIC
     ${PROJECT_SOURCE_DIR}
   )
+  target_link_libraries(mckits_static ${mckits_libs})
+  target_compile_options(mckits_static PRIVATE -pthread)
+  target_link_options(mckits_static PRIVATE -pthread)
   install(TARGETS mckits_static
     ARCHIVE DESTINATION lib
   )
+  add_custom_target(libmckits_static DEPENDS mckits_static)
 endif()
 
 install(FILES ${mckits_headers} DESTINATION include/mckits)

@@ -1,2 +1,5 @@
 add_executable(test_encoding_binary test_encoding_binary.c)
 target_link_libraries(test_encoding_binary PRIVATE mckits)
+
+add_executable(test_mtime test_mtime.c)
+target_link_libraries(test_mtime PRIVATE mckits)

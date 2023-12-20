@@ -12,6 +12,7 @@ cd build
 cmake \
   -DCMAKE_BUILD_TYPE=$compile \
   -DCMAKE_INSTALL_PREFIX=output \
+  -DBUILD_UNITTEST=ON \
   ..
 
 make
