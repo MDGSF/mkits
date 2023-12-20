@@ -1,5 +1,6 @@
-add_executable(test_encoding_binary test_encoding_binary.c)
-target_link_libraries(test_encoding_binary PRIVATE mckits)
-
-add_executable(test_mtime test_mtime.c)
-target_link_libraries(test_mtime PRIVATE mckits)
+file(GLOB SOURCES "*.c")
+foreach(SOURCE ${SOURCES})
+	get_filename_component(EXECUTABLE_NAME ${SOURCE} NAME_WE)
+	add_executable(${EXECUTABLE_NAME} ${SOURCE})
+	target_link_libraries(${EXECUTABLE_NAME} PRIVATE mckits)
+endforeach()
