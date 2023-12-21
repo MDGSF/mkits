@@ -11,6 +11,7 @@ extern "C" {
 #include "mckits_mos.h"
 #include "mckits_mrandom.h"
 #include "mckits_mtime.h"
+#include "mckits_thread.h"
 #include "mckits_utils.h"
 
 #ifdef __cplusplus

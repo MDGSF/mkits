@@ -1,6 +1,8 @@
 #ifndef MKITS_MCKITS_MCKITS_MLOG_H_
 #define MKITS_MCKITS_MCKITS_MLOG_H_
 
+#include <stdio.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif

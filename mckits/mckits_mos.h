@@ -30,6 +30,11 @@ ssize_t mckits_exe_path(char* buf, size_t bufsiz);
 ssize_t mckits_exe_path_dir(char* buf, size_t bufsiz);
 ssize_t mckits_exe_path_base(char* buf, size_t bufsiz);
 
+/*
+@brief: Get hardware core number.
+*/
+int hardware_concurrency();
+
 #ifdef __cplusplus
 }
 #endif
