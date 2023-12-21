@@ -16,6 +16,7 @@ set(mckits_headers
   mckits_mfile.h
   mckits_mlog.h
   mckits_mtime.h
+  mckits_utils.h
 )
 
 set(mckits_srcs
@@ -24,6 +25,7 @@ set(mckits_srcs
   mckits_mfile.c
   mckits_mlog.c
   mckits_mtime.c
+  mckits_utils.c
 )
 
 # set(mckits_libs ${mckits_libs} pthread)
