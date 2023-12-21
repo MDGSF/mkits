@@ -32,8 +32,34 @@ void test01() {
   assert(mckits_is_file_exists(pathname) == 0);
 }
 
+void test02() {
+  const char* pathname = "/tmp/mckits_testdir/sub01/subsub01";
+  assert(mckits_is_dir_exists(pathname) == 0);
+  mckits_mkdir_all(pathname);
+  assert(mckits_is_dir_exists(pathname) == 1);
+
+  mckits_remove_dir("/tmp/mckits_testdir");
+  assert(mckits_is_dir_exists(pathname) == 0);
+  assert(mckits_is_dir_exists("/tmp/mckits_testdir") == 0);
+  assert(mckits_is_dir_exists("/tmp") == 1);
+}
+
+void test03() {
+  const char* pathname = "/tmp/mckits_testfile/not_exists_path/sub01/foo.txt";
+
+  char buf1[1024] = "hello world";
+  size_t count = strlen(buf1);
+  ssize_t bytes_written = mckits_write_to_file(pathname, buf1, count);
+  assert(bytes_written == count);
+
+  mckits_remove_dir("/tmp/mckits_testfile");
+  assert(mckits_is_dir_exists("/tmp/mckits_testfile") == 0);
+}
+
 int main() {
   test01();
+  test02();
+  test03();
   return 0;
 }
 

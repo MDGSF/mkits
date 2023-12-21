@@ -103,7 +103,7 @@ void test_message_header_encode_decode() {
   struct MessageHeader msg_header_decoded;
   message_header_decode(&msg_header_decoded, buf);
 
-  assert(is_message_header_equal(msg_header, msg_header_decoded) == 1);
+  assert(is_message_header_equal(&msg_header, &msg_header_decoded) == 1);
 
   for (int i = 0; i < 24; ++i) {
     printf("%02X ", buf[i]);

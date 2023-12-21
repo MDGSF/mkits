@@ -17,6 +17,15 @@ extern "C" {
 int mckits_is_file_exists(const char* pathname);
 
 /*
+@brief: Check directory exists or not.
+@param pathname[in]: directory pathname.
+@return:
+  1: directory exists.
+  0: directory not exists.
+*/
+int mckits_is_dir_exists(const char* pathname);
+
+/*
 @brief: Get file size in bytes.
 @param pathname[in]: filename.
 @return:
@@ -30,6 +39,27 @@ ssize_t mckits_file_size(const char* pathname);
 @param pathname[in]: filename.
 */
 void mckits_remove_file(const char* pathname);
+
+/*
+@brief: Delete the directory recursively.
+@param pathname[in]: directory pathname.
+*/
+void mckits_remove_dir(const char* pathname);
+
+/*
+@brief: Create the directory recursively.
+@param pathname[in]: directory pathname.
+*/
+void mckits_mkdir_all(const char* pathname);
+
+/*
+@brief: Return all but the last element of pathname
+@param pathname[in]: pathname.
+@param dirpath[out]: buffer used to save directory.
+@param count[in]: dirpath buffer size.
+@return dirpath string size.
+*/
+ssize_t mckits_path_dir(const char* pathname, char* dirpath, size_t count);
 
 /*
 @brief: Read whole file to memory buffer.

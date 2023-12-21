@@ -14,6 +14,7 @@ set(mckits_headers
   mckits.h
   mckits_encoding_binary.h
   mckits_mfile.h
+  mckits_mlog.h
   mckits_mtime.h
 )
 
@@ -21,6 +22,7 @@ set(mckits_srcs
   mckits.c
   mckits_encoding_binary.c
   mckits_mfile.c
+  mckits_mlog.c
   mckits_mtime.c
 )
 
