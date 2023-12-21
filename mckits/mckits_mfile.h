@@ -57,9 +57,22 @@ void mckits_mkdir_all(const char* pathname);
 @param pathname[in]: pathname.
 @param dirpath[out]: buffer used to save directory.
 @param count[in]: dirpath buffer size.
-@return dirpath string size.
+@return
+  On success, dirpath string size.
+  On error, -1 mean count is to small.
 */
 ssize_t mckits_path_dir(const char* pathname, char* dirpath, size_t count);
+
+/*
+@brief: Return the last element of pathname
+@param pathname[in]: pathname.
+@param basename[out]: buffer used to save the last element.
+@param count[in]: basename buffer size.
+@return
+  On success, basename string size.
+  On error, -1 mean count is to small.
+*/
+ssize_t mckits_path_base(const char* pathname, char* basename, size_t count);
 
 /*
 @brief: Read whole file to memory buffer.

@@ -89,6 +89,10 @@ void mckits_mkdir_all(const char* pathname) {
 }
 
 ssize_t mckits_path_dir(const char* pathname, char* dirpath, size_t count) {
+  if (dirpath == NULL || count < 2) {
+    return -1;
+  }
+
   const char* last_separator = strrchr(pathname, '/');
 
   if (last_separator == NULL) {
@@ -98,11 +102,53 @@ ssize_t mckits_path_dir(const char* pathname, char* dirpath, size_t count) {
   }
 
   size_t length = last_separator - pathname;
-  size_t copy_length = mckits_min(length, count);
-  strncpy(dirpath, pathname, copy_length);
-  dirpath[copy_length] = '\0';
+  if (count <= length) {
+    return -1;
+  }
 
-  return copy_length;
+  strncpy(dirpath, pathname, length);
+  dirpath[length] = '\0';
+
+  return length;
+}
+
+ssize_t mckits_path_base(const char* pathname, char* basename, size_t count) {
+  if (basename == NULL || count < 2) {
+    return -1;
+  }
+
+  size_t pathname_size = strlen(pathname);
+  if (pathname == NULL || pathname_size == 0) {
+    basename[0] = '.';
+    basename[1] = '\0';
+    return 1;
+  }
+
+  const char* last_separator = strrchr(pathname, '/');
+  if (last_separator == NULL) {
+    if (count <= pathname_size) {
+      return -1;
+    }
+
+    strncpy(basename, pathname, pathname_size);
+    basename[pathname_size] = '\0';
+    return pathname_size;
+  }
+
+  const char* last_element = last_separator + 1;
+  size_t last_element_size = strlen(last_element);
+  if (last_element_size == 0) {
+    basename[0] = '.';
+    basename[1] = '\0';
+    return 1;
+  }
+  if (count <= last_element_size) {
+    return -1;
+  }
+
+  strncpy(basename, last_element, last_element_size);
+  basename[last_element_size] = '\0';
+  return last_element_size;
 }
 
 ssize_t mckits_read_whole_file(const char* pathname, void* buf, size_t count) {

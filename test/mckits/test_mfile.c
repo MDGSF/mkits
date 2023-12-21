@@ -56,10 +56,27 @@ void test03() {
   assert(mckits_is_dir_exists("/tmp/mckits_testfile") == 0);
 }
 
+void test04() {
+  const char* pathname = "/tmp/mckits_testfile/not_exists_path/sub01/foo.txt";
+  const char* expected_dir = "/tmp/mckits_testfile/not_exists_path/sub01";
+  const char* expected_base = "foo.txt";
+
+  char dirpath[1024] = {0};
+  ssize_t dirpath_size = mckits_path_dir(pathname, dirpath, 1024);
+  assert(dirpath_size == strlen(expected_dir));
+  assert(strcmp(dirpath, expected_dir) == 0);
+
+  char basename[1024] = {0};
+  ssize_t basename_size = mckits_path_base(pathname, basename, 1024);
+  assert(basename_size == strlen(expected_base));
+  assert(strcmp(basename, expected_base) == 0);
+}
+
 int main() {
   test01();
   test02();
   test03();
+  test04();
   return 0;
 }
 
