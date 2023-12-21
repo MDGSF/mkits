@@ -2,6 +2,7 @@
 #define MKITS_MCKITS_MCKITS_MOS_H_
 
 #include <stddef.h>
+#include <sys/types.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -16,6 +17,18 @@ extern "C" {
   On error, return NULL.
 */
 char* mckits_working_directory(char* buf, size_t size);
+
+/*
+@brief: Get executable path.
+@param buf[out]: memory buffer used to store executable path.
+@param bufsiz[in]: memory buffer size.
+@return:
+  On success, the number of bytes placed in buf.
+  On error, -1 is returned.
+*/
+ssize_t mckits_exe_path(char* buf, size_t bufsiz);
+ssize_t mckits_exe_path_dir(char* buf, size_t bufsiz);
+ssize_t mckits_exe_path_base(char* buf, size_t bufsiz);
 
 #ifdef __cplusplus
 }
