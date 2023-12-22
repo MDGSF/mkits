@@ -32,6 +32,7 @@ set(mckits_srcs
   mckits_mrandom.c
   mckits_msock.c
   mckits_mtime.c
+  mckits_rawpipe.c
   mckits_thread.c
   mckits_utils.c
 )
