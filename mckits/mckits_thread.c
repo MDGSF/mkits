@@ -42,3 +42,69 @@ void mckits_set_thread_cpu_affinity(int cpu_index) {
     errlog("pthread setaffinity failed: %d, %s", ret, strerror(errno));
   }
 }
+
+void mckits_set_thread_cpu_affinity_list(const int* cpu_index_list,
+                                         size_t cpu_index_list_len) {
+  int cores = hardware_concurrency();
+  cpu_set_t cpuset;
+  CPU_ZERO(&cpuset);
+  for (size_t i = 0; i < cpu_index_list_len; ++i) {
+    int cpu_index = cpu_index_list[i];
+    if (cpu_index < 0 || cpu_index >= cores) {
+      errlog("invalid cpu_index: %d, cores = %d\n", cpu_index, cores);
+      return;
+    }
+    CPU_SET(cpu_index, &cpuset);
+  }
+
+  int ret = pthread_setaffinity_np(pthread_self(), sizeof(cpuset), &cpuset);
+  if (ret != 0) {
+    errlog("pthread setaffinity failed: %d, %s", ret, strerror(errno));
+  }
+}
+
+void mckits_set_thread_cpu_affinity_list_except(const int* cpu_index_list,
+                                                size_t cpu_index_list_len) {
+  int cores = hardware_concurrency();
+  cpu_set_t cpuset;
+  CPU_ZERO(&cpuset);
+  for (int cpu_index = 0; cpu_index < cores; ++cpu_index) {
+    int found = 0;
+    for (int i = 0; i < cpu_index_list_len; ++i) {
+      if (cpu_index_list[i] == cpu_index) {
+        found = 1;
+        break;
+      }
+    }
+    if (found == 0) {
+      CPU_SET(cpu_index, &cpuset);
+    }
+  }
+
+  int ret = pthread_setaffinity_np(pthread_self(), sizeof(cpuset), &cpuset);
+  if (ret != 0) {
+    errlog("pthread setaffinity failed: %d, %s", ret, strerror(errno));
+  }
+}
+
+ssize_t mckits_get_thread_cpu_affinity(int* cpus, size_t len) {
+  cpu_set_t cpuset;
+  CPU_ZERO(&cpuset);
+  int ret = pthread_getaffinity_np(pthread_self(), sizeof(cpuset), &cpuset);
+  if (ret != 0) {
+    errlog("pthread getaffinity failed: %d, %s", ret, strerror(errno));
+    return -1;
+  }
+
+  ssize_t count = 0;
+  for (int i = 0; i < CPU_SETSIZE; ++i) {
+    if (CPU_ISSET(i, &cpuset)) {
+      cpus[count++] = i;
+      if (count >= len) {
+        return -2;
+      }
+    }
+  }
+
+  return count;
+}
