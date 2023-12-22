@@ -17,7 +17,7 @@ void show_current_thread_affinity() {
 }
 
 void test01() {
-  int cores = hardware_concurrency();
+  int cores = mckits_hardware_concurrency();
   printf("cores = %d\n", cores);
   show_current_thread_affinity();
 

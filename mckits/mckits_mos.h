@@ -33,7 +33,7 @@ ssize_t mckits_exe_path_base(char* buf, size_t bufsiz);
 /*
 @brief: Get hardware core number.
 */
-int hardware_concurrency();
+int mckits_hardware_concurrency();
 
 #ifdef __cplusplus
 }

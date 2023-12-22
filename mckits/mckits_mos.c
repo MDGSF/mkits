@@ -30,7 +30,7 @@ ssize_t mckits_exe_path_base(char* buf, size_t bufsiz) {
   return mckits_path_base(exe_path, buf, bufsiz);
 }
 
-int hardware_concurrency() {
+int mckits_hardware_concurrency() {
   long cores = sysconf(_SC_NPROCESSORS_ONLN);
   return (int)cores;
 }

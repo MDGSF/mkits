@@ -31,7 +31,7 @@ void mckits_set_thread_cpu_affinity(int cpu_index) {
     CPU_SET(cpu_index, &cpuset);
   } else {
     // Set affinity mask to include CPUS[0 ~ cores]
-    int cores = hardware_concurrency();
+    int cores = mckits_hardware_concurrency();
     for (int i = 0; i < cores; ++i) {
       CPU_SET(i, &cpuset);
     }
@@ -45,7 +45,7 @@ void mckits_set_thread_cpu_affinity(int cpu_index) {
 
 void mckits_set_thread_cpu_affinity_list(const int* cpu_index_list,
                                          size_t cpu_index_list_len) {
-  int cores = hardware_concurrency();
+  int cores = mckits_hardware_concurrency();
   cpu_set_t cpuset;
   CPU_ZERO(&cpuset);
   for (size_t i = 0; i < cpu_index_list_len; ++i) {
@@ -65,7 +65,7 @@ void mckits_set_thread_cpu_affinity_list(const int* cpu_index_list,
 
 void mckits_set_thread_cpu_affinity_list_except(const int* cpu_index_list,
                                                 size_t cpu_index_list_len) {
-  int cores = hardware_concurrency();
+  int cores = mckits_hardware_concurrency();
   cpu_set_t cpuset;
   CPU_ZERO(&cpuset);
   for (int cpu_index = 0; cpu_index < cores; ++cpu_index) {
