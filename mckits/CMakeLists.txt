@@ -17,6 +17,7 @@ set(mckits_headers
   mckits_mlog.h
   mckits_mos.h
   mckits_mrandom.h
+  mckits_msock.h
   mckits_mtime.h
   mckits_thread.h
   mckits_utils.h
@@ -29,6 +30,7 @@ set(mckits_srcs
   mckits_mlog.c
   mckits_mos.c
   mckits_mrandom.c
+  mckits_msock.c
   mckits_mtime.c
   mckits_thread.c
   mckits_utils.c
