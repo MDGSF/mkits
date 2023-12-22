@@ -15,6 +15,36 @@ extern "C" {
 #endif
 
 /*
+@brief:Create a TCP socket lisetning to 'port' ready to accept connections.
+@param port[in]: port number to listen.
+@return
+  On success, return server socket.
+  On error, -1 is returned.
+*/
+int mckits_create_tcpserver(int port);
+
+/*
+@brief: If the listening socket signaled there is new connection ready to
+  be accepted, we accept(2) it.
+@param server_socket[in]: server listening socket.
+@return
+  On success, return new client socket.
+  On error, -1 is returned.
+*/
+int mckits_accept_client(int server_socket);
+
+/*
+@brief: Create a TCP socket and connect it to the specified address.
+  If 'nonblock' is non-zero, the socket is put in nonblocking state
+  and the connect() attempt will not block as well, but the socket
+  may not be immediately ready for writing.
+@return:
+  On success, the socket descriptor is returned.
+  On error, return -1.
+*/
+int mckits_tcpconnect(char* addr, int port, int nonblock);
+
+/*
 @brief: Set socket SO_REUSEADDR.
 @param fd[in]: Socket fd.
 @param on[in]: 1 means enable, 0 means disable.

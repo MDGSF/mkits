@@ -10,12 +10,118 @@
 #include <netinet/tcp.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>
+#include <sys/types.h>
 #include <unistd.h>
 
 #include "mckits_mlog.h"
+
+int mckits_create_tcpserver(int port) {
+  int s = socket(AF_INET, SOCK_STREAM, 0);
+  if (s == -1) {
+    errlog("create socket failed: %s\n", strerror(errno));
+    return -1;
+  }
+
+  mckits_set_reuse_addr(s, 1);  // Best effor.
+
+  struct sockaddr_in sa;
+  memset(&sa, 0, sizeof(sa));
+  sa.sin_family = AF_INET;
+  sa.sin_port = htons(port);
+  sa.sin_addr.s_addr = htonl(INADDR_ANY);
+
+  if (bind(s, (struct sockaddr*)&sa, sizeof(sa)) == -1 ||
+      listen(s, 511) == -1) {
+    errlog("bind or listen failed: %s\n", strerror(errno));
+    close(s);
+    return -1;
+  }
+
+  return s;
+}
+
+int mckits_accept_client(int server_socket) {
+  int s;
+
+  while (1) {
+    struct sockaddr_in sa;
+    socklen_t slen = sizeof(sa);
+    s = accept(server_socket, (struct sockaddr*)&sa, &slen);
+    if (s == -1) {
+      if (errno == EINTR) {
+        continue;
+      } else {
+        return -1;
+      }
+    }
+    break;
+  }
+
+  return s;
+}
+
+int mckits_tcpconnect(char* addr, int port, int nonblock) {
+  char portstr[6];
+  snprintf(portstr, sizeof(portstr), "%d", port);
+
+  struct addrinfo hints;
+  memset(&hints, 0, sizeof(hints));
+  hints.ai_family = AF_UNSPEC;
+  hints.ai_socktype = SOCK_STREAM;
+
+  struct addrinfo* servinfo;
+
+  if (getaddrinfo(addr, portstr, &hints, &servinfo) != 0) {
+    perror("getaddrinfo failed");
+    return -1;
+  }
+
+  int retval = -1;
+
+  for (struct addrinfo* p = servinfo; p != NULL; p = p->ai_next) {
+    // Try to create the socket and to connect it.
+    // If we fail in the socket() call, or on connect(), we retry with
+    // the next entry in servinfo.
+    int s = socket(p->ai_family, p->ai_socktype, p->ai_protocol);
+    if (s == -1) {
+      continue;
+    }
+
+    // Put in non blocking state if needed
+    if (nonblock && mckits_set_non_blocking(s, 1) == -1 &&
+        mckits_set_tcp_nodelay(s, 1)) {
+      close(s);
+      break;
+    }
+
+    // Try to connect
+    if (connect(s, p->ai_addr, p->ai_addrlen) == -1) {
+      // If the socket is non-blocking, it is ok for connect() to
+      // return EINPROGRESS error here.
+      if (errno == EINPROGRESS && nonblock) {
+        retval = s;
+        break;
+      }
+
+      // Otherwise it's an error.
+      close(s);
+      break;
+    }
+
+    // If we ended an iteration of the for loop without errors, we
+    // have a connected socket. Let's return to the caller.
+    retval = s;
+
+    break;
+  }
+
+  freeaddrinfo(servinfo);
+  return retval;
+}
 
 int mckits_set_reuse_addr(int fd, int on) {
   int opt = on ? 1 : 0;
