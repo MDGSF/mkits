@@ -7,13 +7,13 @@ set(CMAKE_CXX_FLAGS_RELEASE "-std=c++11 -Wall -O3")
 
 set(mcppkits_headers
   mcppkits.h
+  mcppkits_dbgutils.h
   mcppkits_fps.h
   mcppkits_strutils.h
 )
 
 set(mcppkits_srcs
   mcppkits.cpp
-  mcppkits_fps.cpp
   mcppkits_strutils.cpp
 )
 
