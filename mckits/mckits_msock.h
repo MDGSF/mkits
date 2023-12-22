@@ -15,6 +15,21 @@ extern "C" {
 #endif
 
 /*
+@brief: Create a socket pair.
+@param sock_type[in]: can be either `SOCK_STREAM` or `SOCK_DGRAM`.
+@param sv[out]: two connected socket.
+@return
+  On success, 0 is returned.
+  On error, -1 is returned.
+*/
+int mckits_create_socketpair(int sock_type, int sv[2]);
+
+/*
+@brief: The same as mckits_create_socketpair, sock_type = SOCK_STREAM.
+*/
+int mckits_create_tcp_socketpair(int sv[2]);
+
+/*
 @brief:Create a TCP socket lisetning to 'port' ready to accept connections.
 @param port[in]: port number to listen.
 @return

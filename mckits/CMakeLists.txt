@@ -41,7 +41,6 @@ set(mckits_srcs
 set(mckits_libs ${mckits_libs} m)
 set(mckits_libs ${mckits_libs} dl)
 set(mckits_libs ${mckits_libs} rt)
-set(mckits_libs ${mckits_libs} stdc++)
 
 if(BUILD_SHARED)
   add_library(mckits SHARED ${mckits_srcs})

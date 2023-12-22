@@ -19,6 +19,14 @@
 
 #include "mckits_mlog.h"
 
+int mckits_create_socketpair(int sock_type, int sv[2]) {
+  return socketpair(AF_UNIX, sock_type | SOCK_NONBLOCK | SOCK_CLOEXEC, 0, sv);
+}
+
+int mckits_create_tcp_socketpair(int sv[2]) {
+  return socketpair(AF_UNIX, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0, sv);
+}
+
 int mckits_create_tcpserver(int port) {
   int s = socket(AF_INET, SOCK_STREAM, 0);
   if (s == -1) {
