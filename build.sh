@@ -19,3 +19,5 @@ cmake \
 make
 # make VERBOSE=1
 make install
+
+ctest

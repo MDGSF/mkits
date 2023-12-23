@@ -26,6 +26,7 @@ if(BUILD_MCPPKITS)
 endif()
 
 if(BUILD_UNITTEST)
+  enable_testing()
   add_subdirectory(test/mckits)
 endif()
 

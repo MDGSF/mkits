@@ -5,6 +5,7 @@
 extern "C" {
 #endif
 
+#include "mckits_adt_list.h"
 #include "mckits_encoding_binary.h"
 #include "mckits_mfile.h"
 #include "mckits_mlog.h"
@@ -12,6 +13,7 @@ extern "C" {
 #include "mckits_mrandom.h"
 #include "mckits_msock.h"
 #include "mckits_mtime.h"
+#include "mckits_rawpipe.h"
 #include "mckits_thread.h"
 #include "mckits_utils.h"
 

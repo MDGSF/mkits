@@ -16,7 +16,7 @@ extern "C" {
       char str[4096];                                          \
       snprintf(str, sizeof str, __VA_ARGS__);                  \
       fprintf(stderr, "%s:%d: %s\n", __FILE__, __LINE__, str); \
-      exit(0);                                                 \
+      abort();                                                 \
     }                                                          \
   } while (0)
 
