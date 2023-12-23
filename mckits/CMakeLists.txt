@@ -12,6 +12,7 @@ set(CMAKE_C_FLAGS_RELEASE "-std=c11 -Wall -O3")
 
 set(mckits_headers
   mckits.h
+  mckits_adt_list.h
   mckits_encoding_binary.h
   mckits_mfile.h
   mckits_mlog.h
@@ -25,6 +26,7 @@ set(mckits_headers
 
 set(mckits_srcs
   mckits.c
+  mckits_adt_list.c
   mckits_encoding_binary.c
   mckits_mfile.c
   mckits_mlog.c

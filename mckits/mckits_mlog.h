@@ -18,7 +18,7 @@ extern int mckits_global_loglevel;
 
 #define simple_log(level, ...)                                              \
   {                                                                         \
-    if (mckits_global_loglevel <= level) {                                       \
+    if (mckits_global_loglevel <= level) {                                  \
       char str[4096];                                                       \
       snprintf(str, sizeof str, __VA_ARGS__);                               \
       fprintf(stderr, "[" #level "] %s:%d: %s\n", __FILE__, __LINE__, str); \
