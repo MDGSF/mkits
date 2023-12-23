@@ -1,3 +1,4 @@
+// Inspired by go/src/container/list
 #ifndef MKITS_MCKITS_MCKITS_ADT_LIST_H_
 #define MKITS_MCKITS_MCKITS_ADT_LIST_H_
 

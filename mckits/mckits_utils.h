@@ -20,6 +20,16 @@ extern "C" {
     }                                                          \
   } while (0)
 
+#define mckits_assert_equal(left_expression, right_expression, ...) \
+  do {                                                              \
+    if ((left_expression) != (right_expression)) {                  \
+      char str[4096];                                               \
+      snprintf(str, sizeof str, __VA_ARGS__);                       \
+      fprintf(stderr, "%s:%d: %s\n", __FILE__, __LINE__, str);      \
+      abort();                                                      \
+    }                                                               \
+  } while (0)
+
 /*
 @brief: Determine the equality of two floating-point numbers with
   a precision of 0.0001.
