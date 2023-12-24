@@ -94,7 +94,7 @@ struct MckitsListNode* mckits_list_push_front(struct MckitsList* list,
                                               void* value);
 
 /*
-@brief: Inserts a new node with value at the front of list.
+@brief: Inserts a new node with value at the back of list.
 @return: new node pointer.
 */
 struct MckitsListNode* mckits_list_push_back(struct MckitsList* list,

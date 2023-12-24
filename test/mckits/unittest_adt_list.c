@@ -338,10 +338,185 @@ void test04() {
   mckits_list_drop(list2, NULL);
 }
 
+void test05() {
+  struct MckitsList* list1 = mckits_list_new();
+  mckits_list_push_back(list1, (void*)1);
+  mckits_list_push_back(list1, (void*)2);
+
+  struct MckitsListNode* node = mckits_list_front(list1);
+  mckits_list_remove(list1, node);
+  assert((int64_t)node->value == (int64_t)1);
+  assert(mckits_list_node_next(node) == NULL);
+  assert(mckits_list_node_prev(node) == NULL);
+
+  mckits_list_node_drop(node);
+  mckits_list_drop(list1, NULL);
+}
+
+void test06() {
+  struct MckitsList* list1 = mckits_list_new();
+  struct MckitsListNode* n1 = mckits_list_push_back(list1, (void*)1);
+  struct MckitsListNode* n2 = mckits_list_push_back(list1, (void*)2);
+  struct MckitsListNode* n3 = mckits_list_push_back(list1, (void*)3);
+  struct MckitsListNode* n4 = mckits_list_push_back(list1, (void*)4);
+
+  mckits_list_move_after(list1, n3, n3);
+  check_list_pointers(list1, (struct MckitsListNode*[]){n1, n2, n3, n4}, 4);
+  mckits_list_move_before(list1, n3, n3);
+  check_list_pointers(list1, (struct MckitsListNode*[]){n1, n2, n3, n4}, 4);
+
+  mckits_list_move_after(list1, n3, n2);
+  check_list_pointers(list1, (struct MckitsListNode*[]){n1, n2, n3, n4}, 4);
+  mckits_list_move_before(list1, n2, n3);
+  check_list_pointers(list1, (struct MckitsListNode*[]){n1, n2, n3, n4}, 4);
+
+  mckits_list_move_before(list1, n2, n4);
+  check_list_pointers(list1, (struct MckitsListNode*[]){n1, n3, n2, n4}, 4);
+
+  mckits_list_move_before(list1, n4, n1);
+  check_list_pointers(list1, (struct MckitsListNode*[]){n4, n1, n3, n2}, 4);
+
+  mckits_list_move_after(list1, n4, n1);
+  check_list_pointers(list1, (struct MckitsListNode*[]){n1, n4, n3, n2}, 4);
+
+  mckits_list_move_after(list1, n2, n3);
+  check_list_pointers(list1, (struct MckitsListNode*[]){n1, n4, n3, n2}, 4);
+
+  mckits_list_drop(list1, NULL);
+}
+
+void test07() {
+  struct MckitsList* list1 = mckits_list_new();
+  mckits_list_push_front(list1, (void*)1);
+  {
+    int64_t iarray[] = {1};
+    void* parray[1];
+    int_to_void(iarray, parray, 1);
+    check_list(list1, parray, 1);
+  }
+
+  struct MckitsList* list2 = mckits_list_new();
+  mckits_list_push_back(list2, (void*)1);
+  {
+    int64_t iarray[] = {1};
+    void* parray[1];
+    int_to_void(iarray, parray, 1);
+    check_list(list2, parray, 1);
+  }
+
+  struct MckitsList* list3 = mckits_list_new();
+  mckits_list_push_front_list(list3, list1);
+  {
+    int64_t iarray[] = {1};
+    void* parray[1];
+    int_to_void(iarray, parray, 1);
+    check_list(list3, parray, 1);
+  }
+
+  struct MckitsList* list4 = mckits_list_new();
+  mckits_list_push_back_list(list4, list1);
+  {
+    int64_t iarray[] = {1};
+    void* parray[1];
+    int_to_void(iarray, parray, 1);
+    check_list(list4, parray, 1);
+  }
+
+  mckits_list_drop(list1, NULL);
+  mckits_list_drop(list2, NULL);
+  mckits_list_drop(list3, NULL);
+  mckits_list_drop(list4, NULL);
+}
+
+void test08() {
+  struct MckitsList* list1 = mckits_list_new();
+  mckits_list_push_back(list1, (void*)1);
+  mckits_list_push_back(list1, (void*)2);
+  mckits_list_push_back(list1, (void*)3);
+
+  struct MckitsListNode* unknown_node = mckits_list_node_new(NULL);
+  mckits_list_insert_before(list1, (void*)123, unknown_node);
+
+  {
+    int64_t iarray[] = {1, 2, 3};
+    void* parray[3];
+    int_to_void(iarray, parray, 3);
+    check_list(list1, parray, 3);
+  }
+
+  mckits_list_node_drop(unknown_node);
+  mckits_list_drop(list1, NULL);
+}
+
+void test09() {
+  struct MckitsList* list1 = mckits_list_new();
+  mckits_list_push_back(list1, (void*)1);
+  mckits_list_push_back(list1, (void*)2);
+  mckits_list_push_back(list1, (void*)3);
+
+  struct MckitsListNode* unknown_node = mckits_list_node_new(NULL);
+  mckits_list_insert_after(list1, (void*)123, unknown_node);
+
+  {
+    int64_t iarray[] = {1, 2, 3};
+    void* parray[3];
+    int_to_void(iarray, parray, 3);
+    check_list(list1, parray, 3);
+  }
+
+  mckits_list_node_drop(unknown_node);
+  mckits_list_drop(list1, NULL);
+}
+
+void test10() {
+  struct MckitsList* list1 = mckits_list_new();
+  struct MckitsListNode* node1 = mckits_list_push_back(list1, (void*)1);
+
+  struct MckitsList* list2 = mckits_list_new();
+  struct MckitsListNode* node2 = mckits_list_push_back(list2, (void*)2);
+
+  mckits_list_move_after(list1, node1, node2);
+  {
+    int64_t iarray[] = {1};
+    void* parray[1];
+    int_to_void(iarray, parray, 1);
+    check_list(list1, parray, 1);
+  }
+  {
+    int64_t iarray[] = {2};
+    void* parray[1];
+    int_to_void(iarray, parray, 1);
+    check_list(list2, parray, 1);
+  }
+
+  mckits_list_move_before(list1, node1, node2);
+  {
+    int64_t iarray[] = {1};
+    void* parray[1];
+    int_to_void(iarray, parray, 1);
+    check_list(list1, parray, 1);
+  }
+  {
+    int64_t iarray[] = {2};
+    void* parray[1];
+    int_to_void(iarray, parray, 1);
+    check_list(list2, parray, 1);
+  }
+
+  mckits_list_drop(list1, NULL);
+  mckits_list_drop(list2, NULL);
+}
+
 int main() {
   test01();
   test02();
   test03();
   test04();
+  test05();
+  test06();
+  test07();
+  test08();
+  test09();
+  test10();
   return 0;
 }
