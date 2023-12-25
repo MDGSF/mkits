@@ -44,6 +44,17 @@ int mckits_fequal(float f1, float f2);
 */
 int mckits_dequal(double f1, double f2);
 
+/*
+@brief: Found num in array.
+@param num[in]: num will be found in array.
+@param array[in]: int array.
+@param size[in]: int array size.
+@return:
+  1: means founded.
+  0: means not found.
+*/
+int found_int_array(int num, const int* array, size_t size);
+
 #ifdef __cplusplus
 }
 #endif

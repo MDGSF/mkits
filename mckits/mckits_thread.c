@@ -8,6 +8,7 @@
 
 #include "mckits_mlog.h"
 #include "mckits_mos.h"
+#include "mckits_utils.h"
 
 void mckits_set_thread_name(const char* name) {
   int ret = pthread_setname_np(pthread_self(), name);
@@ -69,14 +70,7 @@ void mckits_set_thread_cpu_affinity_list_except(const int* cpu_index_list,
   cpu_set_t cpuset;
   CPU_ZERO(&cpuset);
   for (int cpu_index = 0; cpu_index < cores; ++cpu_index) {
-    int found = 0;
-    for (int i = 0; i < cpu_index_list_len; ++i) {
-      if (cpu_index_list[i] == cpu_index) {
-        found = 1;
-        break;
-      }
-    }
-    if (found == 0) {
+    if (0 == found_int_array(cpu_index, cpu_index_list, cpu_index_list_len)) {
       CPU_SET(cpu_index, &cpuset);
     }
   }
