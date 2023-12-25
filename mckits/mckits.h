@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 #include "mckits_adt_list.h"
+#include "mckits_adt_flowqueue.h"
 #include "mckits_encoding_binary.h"
 #include "mckits_mfile.h"
 #include "mckits_mlog.h"
