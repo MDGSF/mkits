@@ -20,6 +20,9 @@ set(mckits_headers
   mckits_mrandom.h
   mckits_msock.h
   mckits_mtime.h
+  mckits_rawpipe.h
+  mckits_strconv.h
+  mckits_string.h
   mckits_thread.h
   mckits_utils.h
 )
@@ -35,6 +38,8 @@ set(mckits_srcs
   mckits_msock.c
   mckits_mtime.c
   mckits_rawpipe.c
+  mckits_strconv.c
+  mckits_string.c
   mckits_thread.c
   mckits_utils.c
 )

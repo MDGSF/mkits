@@ -14,6 +14,8 @@ extern "C" {
 #include "mckits_msock.h"
 #include "mckits_mtime.h"
 #include "mckits_rawpipe.h"
+#include "mckits_strconv.h"
+#include "mckits_string.h"
 #include "mckits_thread.h"
 #include "mckits_utils.h"
 
