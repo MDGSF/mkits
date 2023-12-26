@@ -65,6 +65,7 @@ int mckits_mpmcqueue_push(struct MckitsMpmcQueue* mpmc_queue, void* value) {
   pthread_mutex_lock(&mpmc_queue->mtx_);
   while (1) {
     if (mpmc_queue->stoped_) {
+      pthread_mutex_unlock(&mpmc_queue->mtx_);
       return 0;
     }
     if (mckits_mpmcqueue_full(mpmc_queue)) {
@@ -89,6 +90,7 @@ void* mckits_mpmcqueue_pop(struct MckitsMpmcQueue* mpmc_queue) {
   pthread_mutex_lock(&mpmc_queue->mtx_);
   while (1) {
     if (mpmc_queue->stoped_) {
+      pthread_mutex_unlock(&mpmc_queue->mtx_);
       return NULL;
     }
     if (mckits_mpmcqueue_empty(mpmc_queue)) {
