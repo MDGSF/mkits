@@ -19,6 +19,15 @@ extern "C" {
 char* mckits_working_directory(char* buf, size_t size);
 
 /*
+@brief: Change current working directory.
+@param pathname[in]: new working directory.
+@return:
+  On success, zero is returned.
+  On error, -1 is returned.
+*/
+int mckits_change_working_directory(const char* pathname);
+
+/*
 @brief: Get executable path.
 @param buf[out]: memory buffer used to store executable path.
 @param bufsiz[in]: memory buffer size.

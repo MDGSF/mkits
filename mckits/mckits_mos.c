@@ -8,6 +8,10 @@ char* mckits_working_directory(char* buf, size_t size) {
   return getcwd(buf, size);
 }
 
+int mckits_change_working_directory(const char* pathname) {
+  return chdir(pathname);
+}
+
 ssize_t mckits_exe_path(char* buf, size_t bufsiz) {
   return readlink("/proc/self/exe", buf, bufsiz - 1);
 }
