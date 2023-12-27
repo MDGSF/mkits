@@ -11,7 +11,7 @@ extern "C" {
 /*
 @brief: Message queue, thread safe, fixed queue capacity.
   Support multi-producer, multi-consumer.
-  One message can be comsuned only once.
+  One message can be comsumed only once.
   push behavior when queue is full: block until queue is not full.
   pop behavior when queue is empty: block until queue is not empty.
 */
