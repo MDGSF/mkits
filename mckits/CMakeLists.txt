@@ -13,9 +13,13 @@ set(CMAKE_C_FLAGS_RELEASE "-std=c11 -Wall -O3")
 set(mckits_headers
   mckits.h
   mckits_adt_flowqueue.h
+  mckits_adt_hashmap.h
+  mckits_adt_heap.h
   mckits_adt_list.h
   mckits_adt_mpmcqueue.h
+  mckits_adt_rbtree.h
   mckits_adt_ring.h
+  mckits_adt_skiplist.h
   mckits_array.h
   mckits_encoding_binary.h
   mckits_mfile.h
@@ -34,9 +38,13 @@ set(mckits_headers
 set(mckits_srcs
   mckits.c
   mckits_adt_flowqueue.c
+  mckits_adt_hashmap.c
+  mckits_adt_heap.c
   mckits_adt_list.c
   mckits_adt_mpmcqueue.c
+  mckits_adt_rbtree.c
   mckits_adt_ring.c
+  mckits_adt_skiplist.c
   mckits_array.c
   mckits_encoding_binary.c
   mckits_mfile.c
