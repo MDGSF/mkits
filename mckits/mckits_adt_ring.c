@@ -9,8 +9,14 @@ static void mckits_ring_init(struct MckitsRing* ring) {
 }
 
 struct MckitsRing* mckits_ring_new(int n) {
+  if (n <= 0) {
+    return NULL;
+  }
+
   struct MckitsRing* ring =
       (struct MckitsRing*)malloc(sizeof(struct MckitsRing));
+  memset(ring, 0, sizeof(struct MckitsRing));
+
   struct MckitsRing* p = ring;
   for (int i = 1; i < n; ++i) {
     struct MckitsRing* next =
