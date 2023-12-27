@@ -106,7 +106,7 @@ ssize_t mckits_path_dir(const char* pathname, char* dirpath, size_t count) {
     return -1;
   }
 
-  strncpy(dirpath, pathname, length);
+  memcpy(dirpath, pathname, length);
   dirpath[length] = '\0';
 
   return length;
@@ -130,7 +130,7 @@ ssize_t mckits_path_base(const char* pathname, char* basename, size_t count) {
       return -1;
     }
 
-    strncpy(basename, pathname, pathname_size);
+    memcpy(basename, pathname, pathname_size);
     basename[pathname_size] = '\0';
     return pathname_size;
   }
@@ -146,7 +146,7 @@ ssize_t mckits_path_base(const char* pathname, char* basename, size_t count) {
     return -1;
   }
 
-  strncpy(basename, last_element, last_element_size);
+  memcpy(basename, last_element, last_element_size);
   basename[last_element_size] = '\0';
   return last_element_size;
 }
