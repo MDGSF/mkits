@@ -16,6 +16,7 @@ set(mckits_headers
   mckits_adt_list.h
   mckits_adt_mpmcqueue.h
   mckits_adt_ring.h
+  mckits_array.h
   mckits_encoding_binary.h
   mckits_mfile.h
   mckits_mlog.h
@@ -36,6 +37,7 @@ set(mckits_srcs
   mckits_adt_list.c
   mckits_adt_mpmcqueue.c
   mckits_adt_ring.c
+  mckits_array.c
   mckits_encoding_binary.c
   mckits_mfile.c
   mckits_mlog.c

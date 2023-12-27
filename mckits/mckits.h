@@ -9,6 +9,7 @@ extern "C" {
 #include "mckits_adt_list.h"
 #include "mckits_adt_mpmcqueue.h"
 #include "mckits_adt_ring.h"
+#include "mckits_array.h"
 #include "mckits_encoding_binary.h"
 #include "mckits_mfile.h"
 #include "mckits_mlog.h"
