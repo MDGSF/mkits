@@ -94,7 +94,8 @@ void test02() {
   mckits_mpmcqueue_drop(mpmc_queue);
 }
 
-static atomic_size_t test03_subscriber_count;
+static atomic_size_t test03_subscriber_started_count;
+static atomic_size_t test03_subscriber_ended_count;
 void* thread_blocked_subscriber(void* arg) {
   struct MckitsMpmcQueue* mpmc_queue = (struct MckitsMpmcQueue*)arg;
   assert(mckits_mpmcqueue_size(mpmc_queue) == 0);
@@ -102,32 +103,34 @@ void* thread_blocked_subscriber(void* arg) {
   assert(mckits_mpmcqueue_full(mpmc_queue) == 0);
 
   while (1) {
-    atomic_fetch_add(&test03_subscriber_count, 1);
+    atomic_fetch_add(&test03_subscriber_started_count, 1);
     void* value = mckits_mpmcqueue_pop(mpmc_queue);
     if (value == NULL) {
       break;
     }
   }
+
+  atomic_fetch_add(&test03_subscriber_ended_count, 1);
   pthread_exit(NULL);
 }
 
 void test03() {
-  atomic_init(&test03_subscriber_count, 0);
+  atomic_init(&test03_subscriber_started_count, 0);
+  atomic_init(&test03_subscriber_ended_count, 0);
   struct MckitsMpmcQueue* mpmc_queue = mckits_mpmcqueue_new(3, NULL);
 
   pthread_t thread1, thread2;
   pthread_create(&thread1, NULL, thread_blocked_subscriber, mpmc_queue);
   pthread_create(&thread2, NULL, thread_blocked_subscriber, mpmc_queue);
 
-  while (1) {
-    if (atomic_load(&test03_subscriber_count) == 2) {
-      mckits_sleep_milliseconds(200);
-      break;
-    } else {
-      mckits_sleep_milliseconds(50);
-    }
+  while (atomic_load(&test03_subscriber_started_count) < 2) {
+    mckits_sleep_milliseconds(10);
   }
-  mckits_mpmcqueue_stop(mpmc_queue);
+
+  while (atomic_load(&test03_subscriber_ended_count) < 2) {
+    mckits_mpmcqueue_stop(mpmc_queue);
+    mckits_sleep_milliseconds(10);
+  }
 
   pthread_join(thread1, NULL);
   pthread_join(thread2, NULL);
