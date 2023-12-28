@@ -12,6 +12,7 @@ int mckits_array_init(struct MckitsArray* array, size_t capacity,
   if (NULL == array->buffer) {
     return -1;
   }
+  memset(array->buffer, 0, capacity * element_bytes);
   return 0;
 }
 
