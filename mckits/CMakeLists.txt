@@ -17,6 +17,7 @@ set(mckits_headers
   mckits_adt_heap.h
   mckits_adt_list.h
   mckits_adt_mpmcqueue.h
+  mckits_adt_nlist.h
   mckits_adt_rbtree.h
   mckits_adt_ring.h
   mckits_adt_skiplist.h
@@ -42,6 +43,7 @@ set(mckits_srcs
   mckits_adt_heap.c
   mckits_adt_list.c
   mckits_adt_mpmcqueue.c
+  mckits_adt_nlist.c
   mckits_adt_rbtree.c
   mckits_adt_ring.c
   mckits_adt_skiplist.c

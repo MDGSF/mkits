@@ -10,6 +10,7 @@ extern "C" {
 #include "mckits_adt_heap.h"
 #include "mckits_adt_list.h"
 #include "mckits_adt_mpmcqueue.h"
+#include "mckits_adt_nlist.h"
 #include "mckits_adt_rbtree.h"
 #include "mckits_adt_ring.h"
 #include "mckits_adt_skiplist.h"

@@ -1,3 +1,4 @@
+// Inspired by go/src/container/heap
 #ifndef MKITS_MCKITS_MCKITS_ADT_HEAP_H_
 #define MKITS_MCKITS_MCKITS_ADT_HEAP_H_
 
