@@ -1,5 +1,8 @@
 # mkits
 
+A collections of C language module, from go, nginx, redis, etc. With many
+comments and unit test.
+
 ## build
 
 ```sh
