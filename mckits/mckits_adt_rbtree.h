@@ -47,6 +47,55 @@ struct MckitsRbtree {
 // a sentinel must be black
 #define mckits_rbtree_sentinel_init(node) mckits_rbtree_black(node)
 
+/*
+@brief: Insert node into rbtree.
+@param tree[in]: rbtree.
+@param node[in]: node will be insert into rbtree.
+*/
+void mckits_rbtree_insert(struct MckitsRbtree* tree,
+                          struct MckitsRbtreeNode* node);
+
+/*
+@brief: Delete node from rbtree.
+@param tree[in]: rbtree.
+@param node[in]: node will be deleted from rbtree.
+*/
+void mckits_rbtree_delete(struct MckitsRbtree* tree,
+                          struct MckitsRbtreeNode* node);
+
+/*
+@brief: Insert value into rbtree.
+  Callback function used in `mckits_rbtree_init`.
+*/
+void mckits_rbtree_insert_value(struct MckitsRbtreeNode* root,
+                                struct MckitsRbtreeNode* node,
+                                struct MckitsRbtreeNode* sentinel);
+
+/*
+@brief: Insert timer value into rbtree.
+  Callback function used in `mckits_rbtree_init`.
+@notes:
+  1) timer value are spread in small range, usually several minutes,
+  2) timer value overflow each 49 days, if milliseconds are stored in 32 bits.
+*/
+void mckits_rbtree_insert_timer_value(struct MckitsRbtreeNode* root,
+                                      struct MckitsRbtreeNode* node,
+                                      struct MckitsRbtreeNode* sentinel);
+
+/*
+@brief: Get next node from rbtree.
+@param tree[in]: rbtree.
+@param node[in]: current node.
+@return:
+  On success, return the pointer to the next node.
+  If not found, return NULL.
+*/
+struct MckitsRbtreeNode* mckits_rbtree_next(struct MckitsRbtree* tree,
+                                            struct MckitsRbtreeNode* node);
+
+/*
+@brief: Recursion get left node until sentinel.
+*/
 struct MckitsRbtreeNode* mckits_rbtree_min(struct MckitsRbtreeNode* node,
                                            struct MckitsRbtreeNode* sentinel);
 
