@@ -335,7 +335,7 @@ void test08() {
   }
   assert(10 == mckits_heap_len(heap));
 
-  struct MckitsHeapItem item = mckits_heap_remove(heap, 4);
+  mckits_heap_remove(heap, 4);
   assert(9 == mckits_heap_len(heap));
 
   struct MckitsHeapItem preitem = mckits_heap_pop(heap);
