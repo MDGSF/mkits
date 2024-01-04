@@ -24,6 +24,7 @@ set(mckits_headers
   mckits_array.h
   mckits_crc.h
   mckits_encoding_binary.h
+  mckits_hash_fnv.h
   mckits_mfile.h
   mckits_mlog.h
   mckits_mos.h
@@ -50,6 +51,7 @@ set(mckits_srcs
   mckits_adt_skiplist.c
   mckits_array.c
   mckits_encoding_binary.c
+  mckits_hash_fnv.c
   mckits_mfile.c
   mckits_mlog.c
   mckits_mos.c

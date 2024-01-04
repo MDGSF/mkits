@@ -17,6 +17,7 @@ extern "C" {
 #include "mckits_array.h"
 #include "mckits_crc.h"
 #include "mckits_encoding_binary.h"
+#include "mckits_hash_fnv.h"
 #include "mckits_mfile.h"
 #include "mckits_mlog.h"
 #include "mckits_mos.h"
