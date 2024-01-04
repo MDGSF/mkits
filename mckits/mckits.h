@@ -15,6 +15,7 @@ extern "C" {
 #include "mckits_adt_ring.h"
 #include "mckits_adt_skiplist.h"
 #include "mckits_array.h"
+#include "mckits_crc.h"
 #include "mckits_encoding_binary.h"
 #include "mckits_mfile.h"
 #include "mckits_mlog.h"

@@ -22,6 +22,7 @@ set(mckits_headers
   mckits_adt_ring.h
   mckits_adt_skiplist.h
   mckits_array.h
+  mckits_crc.h
   mckits_encoding_binary.h
   mckits_mfile.h
   mckits_mlog.h
