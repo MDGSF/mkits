@@ -53,4 +53,3 @@ if(BUILD_STATIC)
 endif()
 
 install(FILES ${mcppkits_headers} DESTINATION include/mcppkits)
-

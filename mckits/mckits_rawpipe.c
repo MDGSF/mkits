@@ -74,4 +74,3 @@ int mckits_rawpipe_read(struct MckitsRawPipe* rawpipe, void* buf,
   } while (ret == -1 && errno == EINTR);
   return ret;
 }
-

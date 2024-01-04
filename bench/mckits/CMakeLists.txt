@@ -1,3 +1,2 @@
 add_executable(bench_encoding_binary bench_encoding_binary.c)
 target_link_libraries(bench_encoding_binary PRIVATE mckits)
-

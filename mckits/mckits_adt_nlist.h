@@ -106,11 +106,11 @@ struct MckitsNList {
 @param n: Second sublist sentinel.
 */
 #define mckits_nlist_split(h, q, n) \
-  (n)->prev = (h)->prev;             \
-  (n)->prev->next = n;               \
-  (n)->next = q;                     \
-  (h)->prev = (q)->prev;             \
-  (h)->prev->next = h;               \
+  (n)->prev = (h)->prev;            \
+  (n)->prev->next = n;              \
+  (n)->next = q;                    \
+  (h)->prev = (q)->prev;            \
+  (h)->prev->next = h;              \
   (q)->prev = n
 
 /*

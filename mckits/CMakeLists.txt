@@ -98,4 +98,3 @@ if(BUILD_STATIC)
 endif()
 
 install(FILES ${mckits_headers} DESTINATION include/mckits)
-

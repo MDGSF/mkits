@@ -195,4 +195,3 @@ ssize_t mckits_write_to_file(const char* pathname, const void* buf,
   fclose(file);
   return bytes_written;
 }
-

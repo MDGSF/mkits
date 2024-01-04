@@ -36,4 +36,3 @@ end_of_line = CRLF
 [{package.json,.travis.yml}]
 indent_style = space
 indent_size = 2
-

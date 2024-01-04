@@ -1,10 +1,10 @@
 #include <assert.h>
 #include <pthread.h>
+#include <stdatomic.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdatomic.h>
 
 #include "mckits_adt_mpmcqueue.h"
 #include "mckits_mtime.h"

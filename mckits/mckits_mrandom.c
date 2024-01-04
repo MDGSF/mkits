@@ -22,4 +22,3 @@ int mckits_random_num(int start, int end) {
   int num = start + rand() % (end - start);
   return num;
 }
-

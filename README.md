@@ -17,3 +17,8 @@ cd build
 cmake ..
 make
 ```
+
+## code of conduct
+
+- pre-commit: <https://github.com/pre-commit/pre-commit>
+- git-cz: <https://github.com/streamich/git-cz>
