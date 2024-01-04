@@ -49,10 +49,70 @@ static void mckits_rbtree_right_rotate(struct MckitsRbtreeNode** root,
 }
 
 void mckits_rbtree_insert(struct MckitsRbtree* tree,
-                          struct MckitsRbtreeNode* node) {}
+                          struct MckitsRbtreeNode* node) {
+  // a binary tree insert
+  struct MckitsRbtreeNode** root = &tree->root;
+  struct MckitsRbtreeNode* sentinel = tree->sentinel;
+
+  if (*root == sentinel) {
+    node->parent = NULL;
+    node->left = sentinel;
+    node->right = sentinel;
+    mckits_rbtree_black(node);
+    *root = node;
+    return;
+  }
+
+  tree->insert(*root, node, sentinel);
+
+  // re-balance tree
+
+  struct MckitsRbtreeNode* temp = NULL;
+  while (node != *root && mckits_rbtree_is_red(node->parent)) {
+    if (node->parent == node->parent->parent->left) {
+      temp = node->parent->parent->right;
+      if (mckits_rbtree_is_red(temp)) {
+        mckits_rbtree_black(node->parent);
+        mckits_rbtree_black(temp);
+        mckits_rbtree_red(node->parent->parent);
+        node = node->parent->parent;
+      } else {
+        if (node == node->parent->right) {
+          node = node->parent;
+          mckits_rbtree_left_rotate(root, sentinel, node);
+        }
+        mckits_rbtree_black(node->parent);
+        mckits_rbtree_red(node->parent->parent);
+        mckits_rbtree_right_rotate(root, sentinel, node->parent->parent);
+      }
+    } else {
+      temp = node->parent->parent->left;
+      if (mckits_rbtree_is_red(temp)) {
+        mckits_rbtree_black(node->parent);
+        mckits_rbtree_black(temp);
+        mckits_rbtree_red(node->parent->parent);
+        node = node->parent->parent;
+      } else {
+        if (node == node->parent->left) {
+          node = node->parent;
+          mckits_rbtree_right_rotate(root, sentinel, node);
+        }
+        mckits_rbtree_black(node->parent);
+        mckits_rbtree_red(node->parent->parent);
+        mckits_rbtree_left_rotate(root, sentinel, node->parent->parent);
+      }
+    }
+  }
+
+  mckits_rbtree_black(*root);
+}
 
 void mckits_rbtree_delete(struct MckitsRbtree* tree,
-                          struct MckitsRbtreeNode* node) {}
+                          struct MckitsRbtreeNode* node) {
+  // a binary tree insert
+
+  // a delete fixup
+}
 
 void mckits_rbtree_insert_value(struct MckitsRbtreeNode* root,
                                 struct MckitsRbtreeNode* node,
