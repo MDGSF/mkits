@@ -9,6 +9,12 @@
 extern "C" {
 #endif
 
+/*
+@brief: Calculate hash code.
+@param data[in]: Input data.
+@param size[in]: Input data size in bytes.
+@return hash code
+*/
 uint32_t mckits_fnv_1_32(const uint8_t* data, size_t size);
 uint32_t mckits_fnv_1a_32(const uint8_t* data, size_t size);
 uint64_t mckits_fnv_1_64(const uint8_t* data, size_t size);
