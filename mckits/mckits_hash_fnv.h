@@ -9,10 +9,10 @@
 extern "C" {
 #endif
 
-uint32_t fnv_1_32(const uint8_t* data, size_t size);
-uint32_t fnv_1a_32(const uint8_t* data, size_t size);
-uint64_t fnv_1_64(const uint8_t* data, size_t size);
-uint64_t fnv_1a_64(const uint8_t* data, size_t size);
+uint32_t mckits_fnv_1_32(const uint8_t* data, size_t size);
+uint32_t mckits_fnv_1a_32(const uint8_t* data, size_t size);
+uint64_t mckits_fnv_1_64(const uint8_t* data, size_t size);
+uint64_t mckits_fnv_1a_64(const uint8_t* data, size_t size);
 
 #ifdef __cplusplus
 }
