@@ -1,4 +1,7 @@
-// https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
+/*
+fnv hash function.
+wiki: https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
+*/
 #ifndef MKITS_MCKITS_MCKITS_HASH_FNV_H_
 #define MKITS_MCKITS_MCKITS_HASH_FNV_H_
 
@@ -10,7 +13,7 @@ extern "C" {
 #endif
 
 /*
-@brief: Calculate hash code.
+@brief: Calculate hash code use fnv hash function.
 @param data[in]: Input data.
 @param size[in]: Input data size in bytes.
 @return hash code
