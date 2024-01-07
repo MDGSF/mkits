@@ -23,7 +23,10 @@ set(mckits_headers
   mckits_adt_skiplist.h
   mckits_array.h
   mckits_crc.h
+  mckits_encoding_base32.h
+  mckits_encoding_base64.h
   mckits_encoding_binary.h
+  mckits_encoding_hex.h
   mckits_hash_fnv.h
   mckits_hash_murmur.h
   mckits_mfile.h
@@ -51,7 +54,10 @@ set(mckits_srcs
   mckits_adt_ring.c
   mckits_adt_skiplist.c
   mckits_array.c
+  mckits_encoding_base32.c
+  mckits_encoding_base64.c
   mckits_encoding_binary.c
+  mckits_encoding_hex.c
   mckits_hash_fnv.c
   mckits_hash_murmur.c
   mckits_mfile.c
