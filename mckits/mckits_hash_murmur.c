@@ -3,9 +3,10 @@
 uint32_t mckits_murmur3_32(const uint8_t* data, size_t len, uint32_t seed) {
   uint32_t k = 0;
   uint32_t h = seed;
+  size_t left_len = len;
 
   // four byte chunk
-  while (len >= 4) {
+  while (left_len >= 4) {
     k = data[0];
     k |= data[1] << 8;
     k |= data[2] << 16;
@@ -18,11 +19,14 @@ uint32_t mckits_murmur3_32(const uint8_t* data, size_t len, uint32_t seed) {
     h ^= k;
     h = (h << 13) | (h >> 19);
     h = h * 5 + 0xe6546b64;
+
+    data += 4;
+    left_len -= 4;
   }
 
   // remaining bytes
   k = 0;
-  switch (len) {
+  switch (left_len) {
     case 3:
       k ^= data[2] << 16;
       /* fall through */
