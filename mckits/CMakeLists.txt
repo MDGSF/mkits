@@ -12,73 +12,73 @@ set(CMAKE_C_FLAGS_RELEASE "-std=c11 -Wall -O3")
 
 set(mckits_headers
   mckits.h
-  mckits_adt_flowqueue.h
-  mckits_adt_hashmap.h
-  mckits_adt_heap.h
-  mckits_adt_list.h
-  mckits_adt_mpmcqueue.h
-  mckits_adt_nlist.h
-  mckits_adt_rbtree.h
-  mckits_adt_ring.h
-  mckits_adt_skiplist.h
-  mckits_array.h
-  mckits_crc.h
-  mckits_encoding_base32.h
-  mckits_encoding_base64.h
-  mckits_encoding_binary.h
-  mckits_encoding_hex.h
-  mckits_encoding_iniparser.h
-  mckits_encoding_json.h
-  mckits_encoding_toml.h
-  mckits_endian.h
-  mckits_hash_fnv.h
-  mckits_hash_murmur.h
-  mckits_mfile.h
-  mckits_mlog.h
-  mckits_mos.h
-  mckits_mrandom.h
-  mckits_msock.h
-  mckits_mtime.h
-  mckits_rawpipe.h
-  mckits_strconv.h
-  mckits_string.h
-  mckits_thread.h
-  mckits_utils.h
+  platform/mckits_mfile.h
+  platform/mckits_mos.h
+  platform/mckits_thread.h
+  core/mckits_adt_flowqueue.h
+  core/mckits_adt_hashmap.h
+  core/mckits_adt_heap.h
+  core/mckits_adt_list.h
+  core/mckits_adt_mpmcqueue.h
+  core/mckits_adt_nlist.h
+  core/mckits_adt_rbtree.h
+  core/mckits_adt_ring.h
+  core/mckits_adt_skiplist.h
+  core/mckits_array.h
+  core/mckits_crc.h
+  core/mckits_encoding_base32.h
+  core/mckits_encoding_base64.h
+  core/mckits_encoding_binary.h
+  core/mckits_encoding_hex.h
+  core/mckits_encoding_iniparser.h
+  core/mckits_encoding_json.h
+  core/mckits_encoding_toml.h
+  core/mckits_endian.h
+  core/mckits_hash_fnv.h
+  core/mckits_hash_murmur.h
+  core/mckits_mlog.h
+  core/mckits_mrandom.h
+  core/mckits_msock.h
+  core/mckits_mtime.h
+  core/mckits_rawpipe.h
+  core/mckits_strconv.h
+  core/mckits_string.h
+  core/mckits_utils.h
 )
 
 set(mckits_srcs
   mckits.c
-  mckits_adt_flowqueue.c
-  mckits_adt_hashmap.c
-  mckits_adt_heap.c
-  mckits_adt_list.c
-  mckits_adt_mpmcqueue.c
-  mckits_adt_nlist.c
-  mckits_adt_rbtree.c
-  mckits_adt_ring.c
-  mckits_adt_skiplist.c
-  mckits_array.c
-  mckits_encoding_base32.c
-  mckits_encoding_base64.c
-  mckits_encoding_binary.c
-  mckits_encoding_hex.c
-  mckits_encoding_iniparser.c
-  mckits_encoding_json.c
-  mckits_encoding_toml.c
-  mckits_endian.c
-  mckits_hash_fnv.c
-  mckits_hash_murmur.c
-  mckits_mfile.c
-  mckits_mlog.c
-  mckits_mos.c
-  mckits_mrandom.c
-  mckits_msock.c
-  mckits_mtime.c
-  mckits_rawpipe.c
-  mckits_strconv.c
-  mckits_string.c
-  mckits_thread.c
-  mckits_utils.c
+  platform/mckits_mfile.c
+  platform/mckits_mos.c
+  platform/mckits_thread.c
+  core/mckits_adt_flowqueue.c
+  core/mckits_adt_hashmap.c
+  core/mckits_adt_heap.c
+  core/mckits_adt_list.c
+  core/mckits_adt_mpmcqueue.c
+  core/mckits_adt_nlist.c
+  core/mckits_adt_rbtree.c
+  core/mckits_adt_ring.c
+  core/mckits_adt_skiplist.c
+  core/mckits_array.c
+  core/mckits_encoding_base32.c
+  core/mckits_encoding_base64.c
+  core/mckits_encoding_binary.c
+  core/mckits_encoding_hex.c
+  core/mckits_encoding_iniparser.c
+  core/mckits_encoding_json.c
+  core/mckits_encoding_toml.c
+  core/mckits_endian.c
+  core/mckits_hash_fnv.c
+  core/mckits_hash_murmur.c
+  core/mckits_mlog.c
+  core/mckits_mrandom.c
+  core/mckits_msock.c
+  core/mckits_mtime.c
+  core/mckits_rawpipe.c
+  core/mckits_strconv.c
+  core/mckits_string.c
+  core/mckits_utils.c
 )
 
 # set(mckits_libs ${mckits_libs} pthread)
@@ -90,6 +90,8 @@ if(BUILD_SHARED)
   add_library(mckits SHARED ${mckits_srcs})
   target_include_directories(mckits PUBLIC
     ${PROJECT_SOURCE_DIR}
+    ${PROJECT_SOURCE_DIR}/core
+    ${PROJECT_SOURCE_DIR}/platform
   )
   target_link_libraries(mckits ${mckits_libs})
   target_compile_options(mckits PRIVATE -pthread)
@@ -106,6 +108,8 @@ if(BUILD_STATIC)
   add_library(mckits_static STATIC ${mckits_srcs})
   target_include_directories(mckits_static PUBLIC
     ${PROJECT_SOURCE_DIR}
+    ${PROJECT_SOURCE_DIR}/core
+    ${PROJECT_SOURCE_DIR}/platform
   )
   target_link_libraries(mckits_static ${mckits_libs})
   target_compile_options(mckits_static PRIVATE -pthread)
