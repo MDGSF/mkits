@@ -23,6 +23,7 @@ extern "C" {
 #include "mckits_encoding_iniparser.h"
 #include "mckits_encoding_json.h"
 #include "mckits_encoding_toml.h"
+#include "mckits_endian.h"
 #include "mckits_hash_fnv.h"
 #include "mckits_hash_murmur.h"
 #include "mckits_mfile.h"
