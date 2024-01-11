@@ -27,6 +27,9 @@ set(mckits_headers
   mckits_encoding_base64.h
   mckits_encoding_binary.h
   mckits_encoding_hex.h
+  mckits_encoding_iniparser.h
+  mckits_encoding_json.h
+  mckits_encoding_toml.h
   mckits_hash_fnv.h
   mckits_hash_murmur.h
   mckits_mfile.h
@@ -58,6 +61,9 @@ set(mckits_srcs
   mckits_encoding_base64.c
   mckits_encoding_binary.c
   mckits_encoding_hex.c
+  mckits_encoding_iniparser.c
+  mckits_encoding_json.c
+  mckits_encoding_toml.c
   mckits_hash_fnv.c
   mckits_hash_murmur.c
   mckits_mfile.c
