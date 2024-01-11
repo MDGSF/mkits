@@ -14,7 +14,11 @@ set(mckits_headers
   mckits.h
   platform/mckits_mfile.h
   platform/mckits_mos.h
+  platform/mckits_msock.h
+  platform/mckits_rawpipe.h
   platform/mckits_thread.h
+  core/base/mckits_array.h
+  core/base/mckits_string.h
   core/mckits_adt_flowqueue.h
   core/mckits_adt_hashmap.h
   core/mckits_adt_heap.h
@@ -24,7 +28,6 @@ set(mckits_headers
   core/mckits_adt_rbtree.h
   core/mckits_adt_ring.h
   core/mckits_adt_skiplist.h
-  core/mckits_array.h
   core/mckits_crc.h
   core/mckits_encoding_base32.h
   core/mckits_encoding_base64.h
@@ -38,11 +41,8 @@ set(mckits_headers
   core/mckits_hash_murmur.h
   core/mckits_mlog.h
   core/mckits_mrandom.h
-  core/mckits_msock.h
   core/mckits_mtime.h
-  core/mckits_rawpipe.h
   core/mckits_strconv.h
-  core/mckits_string.h
   core/mckits_utils.h
 )
 
@@ -50,7 +50,11 @@ set(mckits_srcs
   mckits.c
   platform/mckits_mfile.c
   platform/mckits_mos.c
+  platform/mckits_msock.c
+  platform/mckits_rawpipe.c
   platform/mckits_thread.c
+  core/base/mckits_array.c
+  core/base/mckits_string.c
   core/mckits_adt_flowqueue.c
   core/mckits_adt_hashmap.c
   core/mckits_adt_heap.c
@@ -60,7 +64,6 @@ set(mckits_srcs
   core/mckits_adt_rbtree.c
   core/mckits_adt_ring.c
   core/mckits_adt_skiplist.c
-  core/mckits_array.c
   core/mckits_encoding_base32.c
   core/mckits_encoding_base64.c
   core/mckits_encoding_binary.c
@@ -73,12 +76,16 @@ set(mckits_srcs
   core/mckits_hash_murmur.c
   core/mckits_mlog.c
   core/mckits_mrandom.c
-  core/mckits_msock.c
   core/mckits_mtime.c
-  core/mckits_rawpipe.c
   core/mckits_strconv.c
-  core/mckits_string.c
   core/mckits_utils.c
+)
+
+set(mckits_include_directories
+  ${PROJECT_SOURCE_DIR}
+  ${PROJECT_SOURCE_DIR}/core
+  ${PROJECT_SOURCE_DIR}/core/base
+  ${PROJECT_SOURCE_DIR}/platform
 )
 
 # set(mckits_libs ${mckits_libs} pthread)
@@ -89,9 +96,7 @@ set(mckits_libs ${mckits_libs} rt)
 if(BUILD_SHARED)
   add_library(mckits SHARED ${mckits_srcs})
   target_include_directories(mckits PUBLIC
-    ${PROJECT_SOURCE_DIR}
-    ${PROJECT_SOURCE_DIR}/core
-    ${PROJECT_SOURCE_DIR}/platform
+    ${mckits_include_directories}
   )
   target_link_libraries(mckits ${mckits_libs})
   target_compile_options(mckits PRIVATE -pthread)
@@ -107,9 +112,7 @@ endif()
 if(BUILD_STATIC)
   add_library(mckits_static STATIC ${mckits_srcs})
   target_include_directories(mckits_static PUBLIC
-    ${PROJECT_SOURCE_DIR}
-    ${PROJECT_SOURCE_DIR}/core
-    ${PROJECT_SOURCE_DIR}/platform
+    ${mckits_include_directories}
   )
   target_link_libraries(mckits_static ${mckits_libs})
   target_compile_options(mckits_static PRIVATE -pthread)
