@@ -9,14 +9,25 @@ extern "C" {
 #endif
 
 /*
-@brief: Hex encode src into dst. dst_size must be greater than src_size * 2.
+@brief: Hex encode src into dst. dst memory buffer size must be greater or equal
+  than src_size * 2.
 @param dst[out]: Destination memory buffer used to store encoded hex binary.
-@param dst_size[in]: Destination memory buffer size.
 @param src[in]: Source memory buffer.
 @param src_size[in]: Source memory buffer size.
 */
-void mckits_hex_encode(uint8_t* dst, size_t dst_size, const uint8_t* src,
-                       size_t src_size);
+void mckits_hex_encode(uint8_t* dst, const uint8_t* src, size_t src_size);
+
+/*
+@brief: Hex decode src into dst.
+@param dst[out]: Destination memory buffer used to decoded data.
+@param src[in]: Source data encoded in hex format.
+@param src_size[in]: Source memory buffer size.
+@return
+  On success, 0 is returned.
+  -1: means invalid src_size, src_size must be even number.
+  -2: src contains invalid byte.
+*/
+int mckits_hex_decode(uint8_t* dst, const uint8_t* src, size_t src_size);
 
 #ifdef __cplusplus
 }
