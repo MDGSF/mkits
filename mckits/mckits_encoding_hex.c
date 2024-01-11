@@ -41,7 +41,7 @@ int mckits_hex_decode(uint8_t* dst, const uint8_t* src, size_t src_size) {
     if (mckits_hex_char_to_value(src[i + 1], &low) == -1) {
       return -2;
     }
-    dst[++j] = (high << 4) | low;
+    dst[j++] = (high << 4) | low;
   }
 
   return 0;
