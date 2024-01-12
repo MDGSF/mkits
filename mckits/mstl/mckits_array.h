@@ -1,6 +1,6 @@
 // Inspired by nginx/ngx_array
-#ifndef MKITS_MCKITS_CORE_MCKITS_ARRAY_H_
-#define MKITS_MCKITS_CORE_MCKITS_ARRAY_H_
+#ifndef MKITS_MCKITS_MSTL_MCKITS_ARRAY_H_
+#define MKITS_MCKITS_MSTL_MCKITS_ARRAY_H_
 
 #include <stddef.h>
 #include <stdint.h>

@@ -1,6 +1,6 @@
 // Inspired by go/src/container/list
-#ifndef MKITS_MCKITS_CORE_MCKITS_ADT_LIST_H_
-#define MKITS_MCKITS_CORE_MCKITS_ADT_LIST_H_
+#ifndef MKITS_MCKITS_MSTL_MCKITS_ADT_LIST_H_
+#define MKITS_MCKITS_MSTL_MCKITS_ADT_LIST_H_
 
 #include <stddef.h>
 #include <stdint.h>

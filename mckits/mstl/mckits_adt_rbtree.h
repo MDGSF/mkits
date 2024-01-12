@@ -1,6 +1,6 @@
 // Inspired by nginx/ngx_rbtree
-#ifndef MKITS_MCKITS_CORE_MCKITS_ADT_RBTREE_H_
-#define MKITS_MCKITS_CORE_MCKITS_ADT_RBTREE_H_
+#ifndef MKITS_MCKITS_MSTL_MCKITS_ADT_RBTREE_H_
+#define MKITS_MCKITS_MSTL_MCKITS_ADT_RBTREE_H_
 
 #include <stddef.h>
 #include <stdint.h>

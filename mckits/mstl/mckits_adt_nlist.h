@@ -1,6 +1,6 @@
 // Inspired by nginx/ngx_queue
-#ifndef MKITS_MCKITS_CORE_MCKITS_ADT_NLIST_H_
-#define MKITS_MCKITS_CORE_MCKITS_ADT_NLIST_H_
+#ifndef MKITS_MCKITS_MSTL_MCKITS_ADT_NLIST_H_
+#define MKITS_MCKITS_MSTL_MCKITS_ADT_NLIST_H_
 
 #include <stddef.h>
 #include <stdint.h>

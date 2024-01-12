@@ -1,6 +1,6 @@
 // Inspired by go/src/container/ring
-#ifndef MKITS_MCKITS_CORE_MCKITS_ADT_RING_H_
-#define MKITS_MCKITS_CORE_MCKITS_ADT_RING_H_
+#ifndef MKITS_MCKITS_MSTL_MCKITS_ADT_RING_H_
+#define MKITS_MCKITS_MSTL_MCKITS_ADT_RING_H_
 
 #include <stddef.h>
 #include <stdint.h>

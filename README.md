@@ -6,14 +6,19 @@ comments and unit test.
 ## architecture
 
 - mckits
+  - mstl: only use libc
+    - array
+    - string
+    - hashmap
+    - rbtree
+    - heap
+    - list
+    - skiplist
   - platform
     - os
     - file
     - thread
   - core
-    - base
-      - array
-      - string
     - log
     - encoding
     - abstract data structure
