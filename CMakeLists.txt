@@ -17,23 +17,6 @@ else()
   add_definitions(-DNDEBUG)
 endif()
 
-if(BUILD_MCKITS)
-  add_subdirectory(mckits)
-endif()
-
-if(BUILD_MCPPKITS)
-  add_subdirectory(mcppkits)
-endif()
-
-if(BUILD_UNITTEST)
-  enable_testing()
-  add_subdirectory(test/mckits)
-endif()
-
-if(BUILD_BENCH)
-  add_subdirectory(bench/mckits)
-endif()
-
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED True)
 set(CMAKE_C_FLAGS_DEBUG "-std=c11 -Wall -g")
@@ -76,4 +59,21 @@ if(UNIX)
   set(mcppkits_libs ${mcppkits_libs} stdc++)
   set(mcppkits_compile_options ${mcppkits_compile_options} -pthread)
   set(mcppkits_link_options ${mcppkits_link_options} -pthread)
+endif()
+
+if(BUILD_MCKITS)
+  add_subdirectory(mckits)
+endif()
+
+if(BUILD_MCPPKITS)
+  add_subdirectory(mcppkits)
+endif()
+
+if(BUILD_UNITTEST)
+  enable_testing()
+  add_subdirectory(test/mckits)
+endif()
+
+if(BUILD_BENCH)
+  add_subdirectory(bench/mckits)
 endif()
