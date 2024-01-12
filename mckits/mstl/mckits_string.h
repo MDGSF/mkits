@@ -9,6 +9,10 @@
 extern "C" {
 #endif
 
+/*
+@brief: MckitsStr represents a null-terminate string. `len` is the string
+  length, not include null-terminate. `data` memory size is len + 1.
+*/
 struct MckitsStr {
   size_t len;
   uint8_t* data;
@@ -30,6 +34,20 @@ struct MckitsStr mckits_str_initn(const char* str, size_t len);
 #define mckits_str_null(str) \
   (str)->len = 0;            \
   (str)->data = NULL
+
+/*
+@brief: Duplicate a string.
+@param src[in]: source string.
+@return new malloc string, need manually free.
+*/
+uint8_t* mckits_pstrdup(const struct MckitsStr* src);
+
+/*
+@brief: Duplicate a string.
+@param src[in]: source string.
+@return new malloc string, need manually free.
+*/
+struct MckitsStr mckits_strdup(struct MckitsStr src);
 
 /*
 @brief: Transform byte to lower.
@@ -145,6 +163,12 @@ uint8_t* mckits_copy(uint8_t* dst, uint8_t* src, size_t n);
 @return pointer to dst
 */
 uint8_t* mckits_cpystrn(uint8_t* dst, uint8_t* src, size_t n);
+
+/*
+@brief: Compare two strings ignoring case.
+*/
+int mckits_strcasecmp(uint8_t* s1, uint8_t* s2);
+int mckits_strncasecmp(uint8_t* s1, uint8_t* s2, size_t n);
 
 #ifdef __cplusplus
 }
