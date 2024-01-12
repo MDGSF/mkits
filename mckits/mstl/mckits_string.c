@@ -1,5 +1,18 @@
 #include "mckits_string.h"
 
+struct MckitsStr mckits_str_init(const char* str) {
+  struct MckitsStr ret = {0, (uint8_t*)str};
+  if (str != NULL) {
+    ret.len = strlen(str);
+  }
+  return ret;
+}
+
+struct MckitsStr mckits_str_initn(const char* str, size_t len) {
+  struct MckitsStr ret = {len, (uint8_t*)str};
+  return ret;
+}
+
 void mckits_strlow(uint8_t* dst, const uint8_t* src, size_t n) {
   while (n > 0) {
     *dst = mckits_tolower(*src);

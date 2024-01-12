@@ -14,10 +14,13 @@ struct MckitsStr {
   uint8_t* data;
 };
 
-#define mckits_string(str) \
+struct MckitsStr mckits_str_init(const char* str);
+struct MckitsStr mckits_str_initn(const char* str, size_t len);
+
+#define mckits_str(str) \
   { sizeof(str) - 1, (uint8_t*)str }
 
-#define mckits_null_string \
+#define mckits_null_str \
   { 0, NULL }
 
 #define mckits_str_set(str, text) \
