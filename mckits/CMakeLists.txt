@@ -5,11 +5,6 @@ message(STATUS "[mckits] BUILD_SHARED: ${BUILD_SHARED}")
 message(STATUS "[mckits] BUILD_STATIC: ${BUILD_STATIC}")
 message(STATUS "[mckits] PROJECT_SOURCE_DIR: ${PROJECT_SOURCE_DIR}")
 
-set(CMAKE_C_STANDARD 11)
-set(CMAKE_C_STANDARD_REQUIRED True)
-set(CMAKE_C_FLAGS_DEBUG "-std=c11 -Wall -g")
-set(CMAKE_C_FLAGS_RELEASE "-std=c11 -Wall -O3")
-
 set(mckits_mstl_headers
   mstl/mckits_adt_hashmap.h
   mstl/mckits_adt_heap.h
@@ -108,6 +103,32 @@ set(mckits_srcs
   ${mckits_core_srcs}
 )
 
+if(WIN32)
+  set(mckits_headers
+    ${mckits_mstl_headers}
+  )
+
+  set(mckits_srcs
+    ${mckits_mstl_srcs}
+  )
+endif()
+
+if(UNIX)
+  set(mckits_headers
+    mckits.h
+    ${mckits_mstl_headers}
+    ${mckits_platform_headers}
+    ${mckits_core_headers}
+  )
+
+  set(mckits_srcs
+    mckits.c
+    ${mckits_mstl_srcs}
+    ${mckits_platform_srcs}
+    ${mckits_core_srcs}
+  )
+endif()
+
 set(mckits_include_directories
   ${PROJECT_SOURCE_DIR}
   ${PROJECT_SOURCE_DIR}/mstl
@@ -115,19 +136,14 @@ set(mckits_include_directories
   ${PROJECT_SOURCE_DIR}/core
 )
 
-# set(mckits_libs ${mckits_libs} pthread)
-set(mckits_libs ${mckits_libs} m)
-set(mckits_libs ${mckits_libs} dl)
-set(mckits_libs ${mckits_libs} rt)
-
 if(BUILD_SHARED)
   add_library(mckits SHARED ${mckits_srcs})
   target_include_directories(mckits PUBLIC
     ${mckits_include_directories}
   )
   target_link_libraries(mckits ${mckits_libs})
-  target_compile_options(mckits PRIVATE -pthread)
-  target_link_options(mckits PRIVATE -pthread)
+  target_compile_options(mckits PRIVATE ${mckits_compile_options})
+  target_link_options(mckits PRIVATE ${mckits_link_options})
   install(TARGETS mckits
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
@@ -142,8 +158,8 @@ if(BUILD_STATIC)
     ${mckits_include_directories}
   )
   target_link_libraries(mckits_static ${mckits_libs})
-  target_compile_options(mckits_static PRIVATE -pthread)
-  target_link_options(mckits_static PRIVATE -pthread)
+  target_compile_options(mckits_static PRIVATE ${mckits_compile_options})
+  target_link_options(mckits_static PRIVATE ${mckits_link_options})
   install(TARGETS mckits_static
     ARCHIVE DESTINATION lib
   )
