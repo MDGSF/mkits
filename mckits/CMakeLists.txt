@@ -19,6 +19,7 @@ set(mckits_mstl_headers
   mstl/mckits_adt_ring.h
   mstl/mckits_adt_skiplist.h
   mstl/mckits_array.h
+  mstl/mckits_config.h
   mstl/mckits_mstl_utils.h
   mstl/mckits_string.h
 )

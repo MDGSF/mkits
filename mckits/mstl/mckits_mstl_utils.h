@@ -1,14 +1,13 @@
-#ifndef MKITS_MCKITS_CORE_MCKITS_CORE_UTILS_H_
-#define MKITS_MCKITS_CORE_MCKITS_CORE_UTILS_H_
+#ifndef MKITS_MCKITS_MSTL_MCKITS_MSTL_UTILS_H_
+#define MKITS_MCKITS_MSTL_MCKITS_MSTL_UTILS_H_
 
+#include <stddef.h>
+#include <stdint.h>
 #include <stdlib.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#define mckits_min(a, b) ((a) < (b) ? (a) : (b))
-#define mckits_max(a, b) ((a) > (b) ? (a) : (b))
 
 #define mckits_assert(expression, ...)                         \
   do {                                                         \
