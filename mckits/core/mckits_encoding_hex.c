@@ -2,6 +2,10 @@
 
 static const char* hextable = "0123456789abcdef";
 
+size_t mckits_hex_encode_len(size_t src_size) { return src_size * 2; }
+
+size_t mckits_hex_decode_len(size_t src_size) { return src_size / 2; }
+
 void mckits_hex_encode(uint8_t* dst, const uint8_t* src, size_t src_size) {
   size_t j = 0;
   for (size_t i = 0; i < src_size; ++i) {

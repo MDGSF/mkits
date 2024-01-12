@@ -9,6 +9,18 @@ extern "C" {
 #endif
 
 /*
+@brief: Hex encoded length.
+@return src_size * 2
+*/
+size_t mckits_hex_encode_len(size_t src_size);
+
+/*
+@brief: Hex decoded length, src_size must be even number
+@return src_size / 2
+*/
+size_t mckits_hex_decode_len(size_t src_size);
+
+/*
 @brief: Hex encode src into dst. dst memory buffer size must be greater or equal
   than src_size * 2.
 @param dst[out]: Destination memory buffer used to store encoded hex binary.
