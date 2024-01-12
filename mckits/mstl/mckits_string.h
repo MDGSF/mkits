@@ -27,6 +27,11 @@ struct MckitsStr {
   (str)->len = 0;            \
   (str)->data = NULL
 
+#define mckits_tolower(c) ((uint8_t)((c >= 'A' && c <= 'Z') ? (c | 0x20) : c))
+#define mckits_toupper(c) ((uint8_t)((c >= 'a' && c <= 'z') ? (c & ~0x20) : c))
+
+void mckits_strlow(uint8_t* dst, uint8_t* src, size_t n);
+
 #ifdef __cplusplus
 }
 #endif

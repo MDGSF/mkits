@@ -19,6 +19,7 @@ set(mckits_mstl_headers
   mstl/mckits_adt_ring.h
   mstl/mckits_adt_skiplist.h
   mstl/mckits_array.h
+  mstl/mckits_mstl_utils.h
   mstl/mckits_string.h
 )
 
@@ -31,6 +32,7 @@ set(mckits_mstl_srcs
   mstl/mckits_adt_ring.c
   mstl/mckits_adt_skiplist.c
   mstl/mckits_array.c
+  mstl/mckits_mstl_utils.c
   mstl/mckits_string.c
 )
 
@@ -53,6 +55,7 @@ set(mckits_platform_srcs
 set(mckits_core_headers
   core/mckits_adt_flowqueue.h
   core/mckits_adt_mpmcqueue.h
+  core/mckits_core_utils.h
   core/mckits_crc.h
   core/mckits_encoding_base32.h
   core/mckits_encoding_base64.h
@@ -68,12 +71,12 @@ set(mckits_core_headers
   core/mckits_mrandom.h
   core/mckits_mtime.h
   core/mckits_strconv.h
-  core/mckits_utils.h
 )
 
 set(mckits_core_srcs
   core/mckits_adt_flowqueue.c
   core/mckits_adt_mpmcqueue.c
+  core/mckits_core_utils.c
   core/mckits_encoding_base32.c
   core/mckits_encoding_base64.c
   core/mckits_encoding_binary.c
@@ -88,7 +91,6 @@ set(mckits_core_srcs
   core/mckits_mrandom.c
   core/mckits_mtime.c
   core/mckits_strconv.c
-  core/mckits_utils.c
 )
 
 set(mckits_headers
