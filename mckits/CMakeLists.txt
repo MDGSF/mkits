@@ -51,6 +51,7 @@ set(mckits_platform_srcs
 set(mckits_core_headers
   core/mckits_adt_flowqueue.h
   core/mckits_adt_mpmcqueue.h
+  core/mckits_atomic.h
   core/mckits_core_utils.h
   core/mckits_crc.h
   core/mckits_encoding_base32.h

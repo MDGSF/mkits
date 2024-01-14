@@ -27,6 +27,7 @@ extern "C" {
 // core
 #include "mckits_adt_flowqueue.h"
 #include "mckits_adt_mpmcqueue.h"
+#include "mckits_atomic.h"
 #include "mckits_core_utils.h"
 #include "mckits_crc.h"
 #include "mckits_encoding_base32.h"
