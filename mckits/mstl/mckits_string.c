@@ -16,11 +16,11 @@ struct MckitsStr mckits_str_initn(const char* str, size_t len) {
 }
 
 uint8_t* mckits_pstrdup(const struct MckitsStr* src) {
-  uint8_t* dst = (uint8_t*)malloc(src->len);
+  uint8_t* dst = (uint8_t*)malloc(src->len + 1);
   if (dst == NULL) {
     return NULL;
   }
-  mckits_memcpy(dst, src->data, src->len);
+  mckits_memcpy(dst, src->data, src->len + 1);
   return dst;
 }
 

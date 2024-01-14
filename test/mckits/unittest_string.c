@@ -84,6 +84,104 @@ void test09() {
   assert(mckits_strnlen(str.data, 2) == 2);
 }
 
+void test10() {
+  struct MckitsStr str = mckits_str("hello world");
+  const char* p = mckits_strstr(str.data, "world");
+  assert(mckits_strlen(p) == 5);
+  assert(mckits_strcmp(p, "world") == 0);
+
+  const char* p2 = mckits_strstr(str.data, "now");
+  assert(p2 == NULL);
+}
+
+void test11() {
+  struct MckitsStr str = mckits_str("hello");
+  const char* p = mckits_strchr(str.data, 'e');
+  assert(mckits_strlen(p) == 4);
+  assert(mckits_strcmp(p, "ello") == 0);
+
+  const char* p2 = mckits_strchr(str.data, 'z');
+  assert(p2 == NULL);
+}
+
+void test12() {
+  struct MckitsStr str = mckits_str("hello world");
+  uint8_t* start = str.data + 1;
+  uint8_t* end = str.data + 7;
+  uint8_t* p = mckits_strlchr(start, end, 'e');
+  assert(mckits_strlen(p) == 10);
+  assert(mckits_strcmp(p, "ello world") == 0);
+
+  uint8_t* p2 = mckits_strlchr(start, end, 'd');
+  assert(p2 == NULL);
+}
+
+void test13() {
+  char src[] = "hello";
+  char dst[1024] = {0};
+  uint8_t* p1 = mckits_copy((uint8_t*)dst, (uint8_t*)src, strlen(src) + 1);
+  uint8_t* p2 = (uint8_t*)(dst + strlen(src) + 1);
+  assert(p1 == p2);
+  assert(mckits_strlen(dst) == 5);
+  assert(mckits_strcmp(dst, "hello") == 0);
+}
+
+void test14() {
+  struct MckitsStr str = mckits_str("hello");
+  uint8_t dst[1024];
+  uint8_t* p1 = mckits_cpystrn(dst, str.data, str.len + 1);
+  uint8_t* p2 = (uint8_t*)(dst + str.len);
+  assert(p1 == p2);
+  assert(mckits_strlen(dst) == 5);
+  assert(mckits_strcmp(dst, "hello") == 0);
+}
+
+void test15() {
+  struct MckitsStr str = mckits_str("hello");
+  uint8_t dst[1024];
+  uint8_t* p1 = mckits_cpystrn(dst, str.data, 0);
+  assert(p1 == dst);
+}
+
+void test16() {
+  struct MckitsStr s1 = mckits_str("hello");
+  struct MckitsStr s2 = mckits_str("HeLLo");
+  assert(0 == mckits_strcasecmp(s1.data, s2.data));
+  assert(0 == mckits_strncasecmp(s1.data, s2.data, s1.len));
+}
+
+void test17() {
+  const char* s = "hello";
+  struct MckitsStr str = mckits_str_init(s);
+  assert(str.len == 5);
+  assert(mckits_strcmp(str.data, s) == 0);
+
+  struct MckitsStr str2 = mckits_str_initn(s, strlen(s));
+  assert(str2.len == 5);
+  assert(mckits_strcmp(str2.data, s) == 0);
+}
+
+void test18() {
+  struct MckitsStr str = mckits_str_init("hello");
+  uint8_t* pdst = mckits_pstrdup(&str);
+  if (pdst == NULL) {
+    printf("mckits_pstrdup return NULL\n");
+    return;
+  }
+
+  assert(mckits_strlen(pdst) == 5);
+  assert(mckits_strcmp(pdst, "hello") == 0);
+  free(pdst);
+}
+
+void test19() {
+  struct MckitsStr src = mckits_str_init("hello");
+  struct MckitsStr dst = mckits_strdup(src);
+  assert(src.len == dst.len);
+  assert(mckits_strcmp(src.data, dst.data) == 0);
+  free(dst.data);
+}
+
 int main() {
   test01();
   test02();
@@ -94,5 +192,15 @@ int main() {
   test07();
   test08();
   test09();
+  test10();
+  test11();
+  test12();
+  test13();
+  test14();
+  test15();
+  test16();
+  test17();
+  test18();
+  test19();
   return 0;
 }

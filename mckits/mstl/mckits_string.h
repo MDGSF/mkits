@@ -116,7 +116,7 @@ character c in the string s, or NULL if the character is not found.
 
 /*
 @brief: Returns a pointer to the first occurrence of the character c from
-start to end, or NULL if the character is not found.
+start to end, or NULL if the character is not found. Range [start, end).
 */
 uint8_t* mckits_strlchr(uint8_t* start, uint8_t* end, uint8_t c);
 
@@ -160,7 +160,8 @@ uint8_t* mckits_copy(uint8_t* dst, uint8_t* src, size_t n);
 
 /*
 @brief: Copy src to dst. dst will always have null-terminated.
-@return pointer to dst
+@return pointer to dst null-terminated.
+@notes: dst[n - 1] == '\0', return pointer is &dst[n - 1].
 */
 uint8_t* mckits_cpystrn(uint8_t* dst, uint8_t* src, size_t n);
 
