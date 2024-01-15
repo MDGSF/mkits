@@ -1,6 +1,6 @@
 // Inspired by skynet/atomic.h
-#ifndef MKITS_MCKITS_CORE_MCKITS_ATOMIC_H_
-#define MKITS_MCKITS_CORE_MCKITS_ATOMIC_H_
+#ifndef MKITS_MCKITS_CORE_THREAD_MCKITS_ATOMIC_H_
+#define MKITS_MCKITS_CORE_THREAD_MCKITS_ATOMIC_H_
 
 #include <stdatomic.h>
 #include <stddef.h>

@@ -1,6 +1,6 @@
 // Inspired by skynet/rwlock.h
-#ifndef MKITS_MCKITS_CORE_MCKITS_RWLOCKP_H_
-#define MKITS_MCKITS_CORE_MCKITS_RWLOCKP_H_
+#ifndef MKITS_MCKITS_CORE_THREAD_MCKITS_RWLOCKP_H_
+#define MKITS_MCKITS_CORE_THREAD_MCKITS_RWLOCKP_H_
 
 #include <pthread.h>
 

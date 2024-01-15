@@ -3,8 +3,8 @@ Murmur hash function. MurmurHash is a non-cryptographic hash function suitable
 for general hash-based lookup.
 wiki: https://en.wikipedia.org/wiki/MurmurHash
 */
-#ifndef MKITS_MCKITS_CORE_MCKITS_HASH_MURMUR_H_
-#define MKITS_MCKITS_CORE_MCKITS_HASH_MURMUR_H_
+#ifndef MKITS_MCKITS_CORE_HASH_MCKITS_HASH_MURMUR_H_
+#define MKITS_MCKITS_CORE_HASH_MCKITS_HASH_MURMUR_H_
 
 #include <stddef.h>
 #include <stdint.h>

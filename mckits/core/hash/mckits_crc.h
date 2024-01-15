@@ -1,5 +1,5 @@
-#ifndef MKITS_MCKITS_CORE_MCKITS_CRC_H_
-#define MKITS_MCKITS_CORE_MCKITS_CRC_H_
+#ifndef MKITS_MCKITS_CORE_HASH_MCKITS_CRC_H_
+#define MKITS_MCKITS_CORE_HASH_MCKITS_CRC_H_
 
 #include <stddef.h>
 #include <stdint.h>

@@ -18,8 +18,8 @@ big endian:
 addr： 0x100   0x101   0x102   0x103
 data：  0x12    0x34    0x56    0x78
 */
-#ifndef MKITS_MCKITS_CORE_MCKITS_ENDIAN_H_
-#define MKITS_MCKITS_CORE_MCKITS_ENDIAN_H_
+#ifndef MKITS_MCKITS_CORE_ENCODING_MCKITS_ENDIAN_H_
+#define MKITS_MCKITS_CORE_ENCODING_MCKITS_ENDIAN_H_
 
 #include <arpa/inet.h>
 #include <stdint.h>

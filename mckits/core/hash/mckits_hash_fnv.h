@@ -2,8 +2,8 @@
 fnv hash function.
 wiki: https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
 */
-#ifndef MKITS_MCKITS_CORE_MCKITS_HASH_FNV_H_
-#define MKITS_MCKITS_CORE_MCKITS_HASH_FNV_H_
+#ifndef MKITS_MCKITS_CORE_HASH_MCKITS_HASH_FNV_H_
+#define MKITS_MCKITS_CORE_HASH_MCKITS_HASH_FNV_H_
 
 #include <stddef.h>
 #include <stdint.h>
