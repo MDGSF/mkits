@@ -48,44 +48,72 @@ set(mckits_platform_srcs
   platform/mckits_thread.c
 )
 
-set(mckits_core_headers
-  core/mckits_adt_flowqueue.h
-  core/mckits_adt_mpmcqueue.h
+set(mckits_core_encoding_headers
+  core/encoding/mckits_encoding_base32.h
+  core/encoding/mckits_encoding_base64.h
+  core/encoding/mckits_encoding_binary.h
+  core/encoding/mckits_encoding_hex.h
+  core/encoding/mckits_encoding_iniparser.h
+  core/encoding/mckits_encoding_json.h
+  core/encoding/mckits_encoding_toml.h
+  core/encoding/mckits_endian.h
+)
+
+set(mckits_core_encoding_srcs
+  core/encoding/mckits_encoding_base32.c
+  core/encoding/mckits_encoding_base64.c
+  core/encoding/mckits_encoding_binary.c
+  core/encoding/mckits_encoding_hex.c
+  core/encoding/mckits_encoding_iniparser.c
+  core/encoding/mckits_encoding_json.c
+  core/encoding/mckits_encoding_toml.c
+  core/encoding/mckits_endian.c
+)
+
+set(mckits_core_hash_headers
+  core/hash/mckits_crc.h
+  core/hash/mckits_hash_fnv.h
+  core/hash/mckits_hash_murmur.h
+)
+
+set(mckits_core_hash_srcs
+  core/hash/mckits_hash_fnv.c
+  core/hash/mckits_hash_murmur.c
+)
+
+set(mckits_core_queue_headers
+  core/queue/mckits_adt_flowqueue.h
+  core/queue/mckits_adt_mpmcqueue.h
+)
+
+set(mckits_core_queue_srcs
+  core/queue/mckits_adt_flowqueue.c
+  core/queue/mckits_adt_mpmcqueue.c
+)
+
+set(mckits_core_thread_headers
   core/mckits_atomic.h
+  core/mckits_rwlock.h
+  core/mckits_rwlockp.h
+)
+
+set(mckits_core_headers
+  ${mckits_core_encoding_headers}
+  ${mckits_core_hash_headers}
+  ${mckits_core_queue_headers}
+  ${mckits_core_thread_headers}
   core/mckits_core_utils.h
-  core/mckits_crc.h
-  core/mckits_encoding_base32.h
-  core/mckits_encoding_base64.h
-  core/mckits_encoding_binary.h
-  core/mckits_encoding_hex.h
-  core/mckits_encoding_iniparser.h
-  core/mckits_encoding_json.h
-  core/mckits_encoding_toml.h
-  core/mckits_endian.h
-  core/mckits_hash_fnv.h
-  core/mckits_hash_murmur.h
   core/mckits_mlog.h
   core/mckits_mrandom.h
   core/mckits_mtime.h
-  core/mckits_rwlock.h
-  core/mckits_rwlockp.h
   core/mckits_strconv.h
 )
 
 set(mckits_core_srcs
-  core/mckits_adt_flowqueue.c
-  core/mckits_adt_mpmcqueue.c
+  ${mckits_core_encoding_srcs}
+  ${mckits_core_hash_srcs}
+  ${mckits_core_queue_srcs}
   core/mckits_core_utils.c
-  core/mckits_encoding_base32.c
-  core/mckits_encoding_base64.c
-  core/mckits_encoding_binary.c
-  core/mckits_encoding_hex.c
-  core/mckits_encoding_iniparser.c
-  core/mckits_encoding_json.c
-  core/mckits_encoding_toml.c
-  core/mckits_endian.c
-  core/mckits_hash_fnv.c
-  core/mckits_hash_murmur.c
   core/mckits_mlog.c
   core/mckits_mrandom.c
   core/mckits_mtime.c
@@ -137,6 +165,10 @@ set(mckits_include_directories
   ${PROJECT_SOURCE_DIR}/mstl
   ${PROJECT_SOURCE_DIR}/platform
   ${PROJECT_SOURCE_DIR}/core
+  ${PROJECT_SOURCE_DIR}/core/encoding
+  ${PROJECT_SOURCE_DIR}/core/hash
+  ${PROJECT_SOURCE_DIR}/core/queue
+  ${PROJECT_SOURCE_DIR}/core/thread
 )
 
 if(BUILD_SHARED)

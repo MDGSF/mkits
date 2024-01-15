@@ -25,11 +25,7 @@ extern "C" {
 #include "mckits_thread.h"
 
 // core
-#include "mckits_adt_flowqueue.h"
-#include "mckits_adt_mpmcqueue.h"
-#include "mckits_atomic.h"
-#include "mckits_core_utils.h"
-#include "mckits_crc.h"
+// core/encoding
 #include "mckits_encoding_base32.h"
 #include "mckits_encoding_base64.h"
 #include "mckits_encoding_binary.h"
@@ -38,8 +34,19 @@ extern "C" {
 #include "mckits_encoding_json.h"
 #include "mckits_encoding_toml.h"
 #include "mckits_endian.h"
+
+// core/hash
+#include "mckits_crc.h"
 #include "mckits_hash_fnv.h"
 #include "mckits_hash_murmur.h"
+
+// core/queue
+#include "mckits_adt_flowqueue.h"
+#include "mckits_adt_mpmcqueue.h"
+
+// core/thread
+#include "mckits_atomic.h"
+#include "mckits_core_utils.h"
 #include "mckits_mlog.h"
 #include "mckits_mrandom.h"
 #include "mckits_mtime.h"
