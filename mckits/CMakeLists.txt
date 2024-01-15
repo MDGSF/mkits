@@ -67,6 +67,7 @@ set(mckits_core_headers
   core/mckits_mlog.h
   core/mckits_mrandom.h
   core/mckits_mtime.h
+  core/mckits_rwlock.h
   core/mckits_strconv.h
 )
 

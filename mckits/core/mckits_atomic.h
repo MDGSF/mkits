@@ -1,3 +1,4 @@
+// Inspired by skynet/atomic.h
 #ifndef MKITS_MCKITS_CORE_MCKITS_ATOMIC_H_
 #define MKITS_MCKITS_CORE_MCKITS_ATOMIC_H_
 
