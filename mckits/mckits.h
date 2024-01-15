@@ -44,6 +44,7 @@ extern "C" {
 #include "mckits_mrandom.h"
 #include "mckits_mtime.h"
 #include "mckits_rwlock.h"
+#include "mckits_rwlockp.h"
 #include "mckits_strconv.h"
 
 #ifdef __cplusplus
