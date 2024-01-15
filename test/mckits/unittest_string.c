@@ -176,10 +176,10 @@ void test18() {
 
 void test19() {
   struct MckitsStr src = mckits_str_init("hello");
-  struct MckitsStr dst = mckits_strdup(src);
+  struct MckitsString dst = mckits_strdup(src);
   assert(src.len == dst.len);
   assert(mckits_strcmp(src.data, dst.data) == 0);
-  free(dst.data);
+  mckits_string_drop_data(&dst);
 }
 
 int main() {

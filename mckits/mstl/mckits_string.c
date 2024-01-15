@@ -2,6 +2,49 @@
 
 #include <stdlib.h>
 
+struct MckitsString* mckits_string_init(struct MckitsString* mstring,
+                                        const char* data) {
+  if (data == NULL) {
+    mstring->cap = 0;
+    mstring->len = 0;
+    mstring->data = NULL;
+    return mstring;
+  }
+
+  size_t len = mckits_strlen(data);
+  uint8_t* ptr = (uint8_t*)malloc(len + 1);
+  if (ptr == NULL) {
+    return NULL;
+  }
+
+  mstring->len = len;
+  mstring->cap = len + 1;
+  mstring->data = ptr;
+  mckits_memcpy(ptr, data, len + 1);
+  return mstring;
+}
+
+struct MckitsString* mckits_string_new(const char* data) {
+  struct MckitsString* mstring =
+      (struct MckitsString*)malloc(sizeof(struct MckitsString));
+  if (mstring == NULL) {
+    return NULL;
+  }
+  return mckits_string_init(mstring, data);
+}
+
+void mckits_string_drop(struct MckitsString* mstring) {
+  mckits_string_drop_data(mstring);
+  free(mstring);
+}
+
+void mckits_string_drop_data(struct MckitsString* mstring) {
+  mstring->cap = 0;
+  mstring->len = 0;
+  free(mstring->data);
+  mstring->data = NULL;
+}
+
 struct MckitsStr mckits_str_init(const char* str) {
   struct MckitsStr ret = {0, (uint8_t*)str};
   if (str != NULL) {
@@ -24,22 +67,10 @@ uint8_t* mckits_pstrdup(const struct MckitsStr* src) {
   return dst;
 }
 
-struct MckitsStr mckits_strdup(struct MckitsStr src) {
-  struct MckitsStr dst = mckits_null_str;
-  if (src.len <= 0 || src.data == NULL) {
-    return dst;
-  }
-
-  uint8_t* dst_data = (uint8_t*)malloc(src.len + 1);
-  if (dst_data == NULL) {
-    return dst;
-  }
-  mckits_memcpy(dst_data, src.data, src.len);
-  dst_data[src.len] = '\0';
-
-  dst.len = src.len;
-  dst.data = dst_data;
-  return dst;
+struct MckitsString mckits_strdup(struct MckitsStr src) {
+  struct MckitsString mstring;
+  mckits_string_init(&mstring, (const char*)src.data);
+  return mstring;
 }
 
 void mckits_strlow(uint8_t* dst, const uint8_t* src, size_t n) {

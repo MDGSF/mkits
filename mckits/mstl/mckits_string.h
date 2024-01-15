@@ -10,14 +10,62 @@ extern "C" {
 #endif
 
 /*
-@brief: MckitsStr represents a null-terminate string. `len` is the string
-  length, not include null-terminate. `data` memory size is len + 1.
+@brief: MckitsString is mutable/growing memory buffers, like string.
+@notes: data pointer is memory buffer owner, you will need to manually call
+  free function to free memory buffer.
 */
-struct MckitsStr {
-  size_t len;
+struct MckitsString {
+  size_t cap;  // memory buffer capacity, include all bytes.
+  size_t len;  // string length, not include null-terminate
   uint8_t* data;
 };
 
+/*
+@brief: Initialize mstring with data.
+@param mstring[in]: mstring will be initialized.
+@param data[in]: input data string will be copyed into mstring.
+@return
+  On success, pointer to mstring.
+  On failed, NULL is returned
+*/
+struct MckitsString* mckits_string_init(struct MckitsString* mstring,
+                                        const char* data);
+
+/*
+@brief: Create a new MckitsString with input data.
+@param data[in]: input data string will be copyed into mstring.
+@return
+  On success, pointer to mstring.
+  On failed, NULL is returned
+*/
+struct MckitsString* mckits_string_new(const char* data);
+
+/*
+@brief: Drop the MckitsString.
+*/
+void mckits_string_drop(struct MckitsString* mstring);
+
+/*
+@brief: Drop the MckitsString data filed, and reset len/cap to zero.
+*/
+void mckits_string_drop_data(struct MckitsString* mstring);
+
+/*
+@brief: MckitsStr represents a null-terminate string. `len` is the string
+  length, not include null-terminate. `data` memory size is len + 1.
+@notes: data pointer will not be memory buffer owner, it just borrow from
+  others. MckitsStr is like string view.
+*/
+struct MckitsStr {
+  size_t len;  // string length, not include null-terminate
+  uint8_t* data;
+};
+
+/*
+@brief: Create a new MckitsStr.
+@notes: MckitsStr.data has no ownership, you must sure input `str` lifetime
+  longer than returned struct MckitsStr.
+*/
 struct MckitsStr mckits_str_init(const char* str);
 struct MckitsStr mckits_str_initn(const char* str, size_t len);
 
@@ -47,7 +95,7 @@ uint8_t* mckits_pstrdup(const struct MckitsStr* src);
 @param src[in]: source string.
 @return new malloc string, need manually free.
 */
-struct MckitsStr mckits_strdup(struct MckitsStr src);
+struct MckitsString mckits_strdup(struct MckitsStr src);
 
 /*
 @brief: Transform byte to lower.
