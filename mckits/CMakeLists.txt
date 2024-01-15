@@ -92,9 +92,10 @@ set(mckits_core_queue_srcs
 )
 
 set(mckits_core_thread_headers
-  core/mckits_atomic.h
-  core/mckits_rwlock.h
-  core/mckits_rwlockp.h
+  core/thread/mckits_atomic.h
+  core/thread/mckits_rwlock.h
+  core/thread/mckits_rwlockp.h
+  core/thread/mckits_spinlock.h
 )
 
 set(mckits_core_headers

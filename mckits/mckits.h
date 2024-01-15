@@ -46,12 +46,15 @@ extern "C" {
 
 // core/thread
 #include "mckits_atomic.h"
+#include "mckits_rwlock.h"
+#include "mckits_rwlockp.h"
+#include "mckits_spinlock.h"
+
+// core/others
 #include "mckits_core_utils.h"
 #include "mckits_mlog.h"
 #include "mckits_mrandom.h"
 #include "mckits_mtime.h"
-#include "mckits_rwlock.h"
-#include "mckits_rwlockp.h"
 #include "mckits_strconv.h"
 
 #ifdef __cplusplus
