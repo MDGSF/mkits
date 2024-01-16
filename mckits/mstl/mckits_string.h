@@ -51,6 +51,57 @@ void mckits_string_drop(struct MckitsString* mstring);
 void mckits_string_drop_data(struct MckitsString* mstring);
 
 /*
+@brief: Clone a string.
+@param mstring[in]: mstring will be cloned.
+@return
+  On success, new string pointer will be returned.
+  On error, NULL will be returned.
+*/
+struct MckitsString* mckits_string_clone(struct MckitsString* mstring);
+
+/*
+@brief: Create a reference to mstring.
+@notes: str is just a reference to mstring, mstring's lifetime must be longer
+  than str.
+*/
+struct MckitsStr mckits_string_view(struct MckitsString* mstring);
+
+/*
+@brief: Change string character to lower.
+@param mstring[inout]: string will be modified.
+*/
+void mckits_string_to_lower(struct MckitsString* mstring);
+
+/*
+@brief: Change string character to upper.
+@param mstring[inout]: string will be modified.
+*/
+void mckits_string_to_upper(struct MckitsString* mstring);
+
+/*
+@brief: Trim string start and end chars.
+@param mstring[in]: mstring will be trimmed.
+@param chars[in]: Characters will be trimmed from mstring. " \r\n\t"
+*/
+void mckits_string_trim(struct MckitsString* mstring, const char* chars);
+
+/*
+@brief: Check whether substr is prefix of mstring.
+return:
+  1: means substring is prefix of mstring
+  0: means substring is not prefix of mstring
+*/
+int mckits_string_start_with(struct MckitsString* mstring, const char* substr);
+
+/*
+@brief: Check whether substr is suffix of mstring.
+return:
+  1: means substring is suffix of mstring
+  0: means substring is not suffix of mstring
+*/
+int mckits_string_end_with(struct MckitsString* mstring, const char* substr);
+
+/*
 @brief: MckitsStr represents a null-terminate string. `len` is the string
   length, not include null-terminate. `data` memory size is len + 1.
 @notes: data pointer will not be memory buffer owner, it just borrow from

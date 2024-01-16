@@ -182,6 +182,166 @@ void test19() {
   mckits_string_drop_data(&dst);
 }
 
+void test20() {
+  struct MckitsString mstring;
+  struct MckitsString* p = mckits_string_init(&mstring, "hello");
+  assert(p == &mstring);
+  assert(mstring.cap == 6);
+  assert(mstring.len == 5);
+  assert(mstring.data != NULL);
+  assert(mckits_strcmp(mstring.data, "hello") == 0);
+  mckits_string_drop_data(&mstring);
+}
+
+void test21() {
+  struct MckitsString mstring;
+  struct MckitsString* p = mckits_string_init(&mstring, NULL);
+  assert(p == &mstring);
+  assert(mstring.cap == 0);
+  assert(mstring.len == 0);
+  assert(mstring.data == NULL);
+  mckits_string_drop_data(&mstring);
+}
+
+void test22() {
+  struct MckitsString mstring;
+  struct MckitsString* p = mckits_string_init(&mstring, "");
+  assert(p == &mstring);
+  assert(mstring.cap == 1);
+  assert(mstring.len == 0);
+  assert(mstring.data != NULL);
+  assert(mckits_strcmp(mstring.data, "") == 0);
+  mckits_string_drop_data(&mstring);
+}
+
+void test23() {
+  struct MckitsString* mstring = mckits_string_new("hello");
+  assert(mstring->cap == 6);
+  assert(mstring->len == 5);
+  assert(mstring->data != NULL);
+  assert(mckits_strcmp(mstring->data, "hello") == 0);
+  mckits_string_drop(mstring);
+}
+
+void test24() {
+  struct MckitsString* mstring = mckits_string_new("hello");
+  struct MckitsString* mstring2 = mckits_string_clone(mstring);
+  assert(mstring->cap == 6);
+  assert(mstring->len == 5);
+  assert(mstring->data != NULL);
+  assert(mckits_strcmp(mstring->data, "hello") == 0);
+  assert(mstring2->cap == 6);
+  assert(mstring2->len == 5);
+  assert(mstring2->data != NULL);
+  assert(mckits_strcmp(mstring2->data, "hello") == 0);
+  mckits_string_drop(mstring);
+  mckits_string_drop(mstring2);
+}
+
+void test25() {
+  struct MckitsString* mstring = mckits_string_new("hello");
+  assert(mstring->cap == 6);
+  assert(mstring->len == 5);
+  assert(mstring->data != NULL);
+  assert(mckits_strcmp(mstring->data, "hello") == 0);
+
+  struct MckitsStr str = mckits_string_view(mstring);
+  assert(str.len == 5);
+  assert(str.data == mstring->data);
+  assert(mckits_strcmp(str.data, "hello") == 0);
+
+  mckits_string_drop(mstring);
+}
+
+void test26() {
+  struct MckitsString* mstring = mckits_string_new("HeLLo World");
+  assert(mstring->cap == 12);
+  assert(mstring->len == 11);
+  assert(mstring->data != NULL);
+  assert(mckits_strcmp(mstring->data, "HeLLo World") == 0);
+
+  mckits_string_to_lower(mstring);
+  assert(mstring->cap == 12);
+  assert(mstring->len == 11);
+  assert(mstring->data != NULL);
+  assert(mckits_strcmp(mstring->data, "hello world") == 0);
+
+  mckits_string_drop(mstring);
+}
+
+void test27() {
+  struct MckitsString* mstring = mckits_string_new("HeLLo World");
+  assert(mstring->cap == 12);
+  assert(mstring->len == 11);
+  assert(mstring->data != NULL);
+  assert(mckits_strcmp(mstring->data, "HeLLo World") == 0);
+
+  mckits_string_to_upper(mstring);
+  assert(mstring->cap == 12);
+  assert(mstring->len == 11);
+  assert(mstring->data != NULL);
+  assert(mckits_strcmp(mstring->data, "HELLO WORLD") == 0);
+
+  mckits_string_drop(mstring);
+}
+
+void test28() {
+  const char* data = "  HeLLo World   ";
+  size_t data_length = strlen(data);
+  struct MckitsString* mstring = mckits_string_new(data);
+  assert(mstring->cap == data_length + 1);
+  assert(mstring->len == data_length);
+  assert(mstring->data != NULL);
+  assert(mckits_strcmp(mstring->data, data) == 0);
+
+  mckits_string_trim(mstring, " \r\n\t");
+
+  assert(mstring->cap == data_length + 1);
+  assert(mstring->len == 11);
+  assert(mstring->data != NULL);
+  assert(mckits_strcmp(mstring->data, "HeLLo World") == 0);
+
+  mckits_string_drop(mstring);
+}
+
+void test29() {
+  struct MckitsString* mstring = mckits_string_new("hello");
+  assert(mstring->cap == 6);
+  assert(mstring->len == 5);
+  assert(mstring->data != NULL);
+  assert(mckits_strcmp(mstring->data, "hello") == 0);
+
+  assert(1 == mckits_string_start_with(mstring, "h"));
+  assert(1 == mckits_string_start_with(mstring, "he"));
+  assert(1 == mckits_string_start_with(mstring, "hel"));
+  assert(1 == mckits_string_start_with(mstring, "hell"));
+  assert(1 == mckits_string_start_with(mstring, "hello"));
+
+  assert(0 == mckits_string_start_with(mstring, "hello world"));
+  assert(0 == mckits_string_start_with(mstring, "world"));
+
+  mckits_string_drop(mstring);
+}
+
+void test30() {
+  struct MckitsString* mstring = mckits_string_new("hello");
+  assert(mstring->cap == 6);
+  assert(mstring->len == 5);
+  assert(mstring->data != NULL);
+  assert(mckits_strcmp(mstring->data, "hello") == 0);
+
+  assert(1 == mckits_string_end_with(mstring, "o"));
+  assert(1 == mckits_string_end_with(mstring, "lo"));
+  assert(1 == mckits_string_end_with(mstring, "llo"));
+  assert(1 == mckits_string_end_with(mstring, "ello"));
+  assert(1 == mckits_string_end_with(mstring, "hello"));
+
+  assert(0 == mckits_string_end_with(mstring, "hello world"));
+  assert(0 == mckits_string_end_with(mstring, "world"));
+
+  mckits_string_drop(mstring);
+}
+
 int main() {
   test01();
   test02();
@@ -202,5 +362,16 @@ int main() {
   test17();
   test18();
   test19();
+  test20();
+  test21();
+  test22();
+  test23();
+  test24();
+  test25();
+  test26();
+  test27();
+  test28();
+  test29();
+  test30();
   return 0;
 }

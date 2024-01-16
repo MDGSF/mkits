@@ -39,10 +39,107 @@ void mckits_string_drop(struct MckitsString* mstring) {
 }
 
 void mckits_string_drop_data(struct MckitsString* mstring) {
-  mstring->cap = 0;
-  mstring->len = 0;
-  free(mstring->data);
-  mstring->data = NULL;
+  if (mstring->data != NULL) {
+    mstring->cap = 0;
+    mstring->len = 0;
+    free(mstring->data);
+    mstring->data = NULL;
+  }
+}
+
+void mckits_string_to_lower(struct MckitsString* mstring) {
+  for (size_t i = 0; i < mstring->len; ++i) {
+    mstring->data[i] = mckits_tolower(mstring->data[i]);
+  }
+}
+
+void mckits_string_to_upper(struct MckitsString* mstring) {
+  for (size_t i = 0; i < mstring->len; ++i) {
+    mstring->data[i] = mckits_toupper(mstring->data[i]);
+  }
+}
+
+struct MckitsString* mckits_string_clone(struct MckitsString* mstring) {
+  return mckits_string_new((const char*)mstring->data);
+}
+
+struct MckitsStr mckits_string_view(struct MckitsString* mstring) {
+  return mckits_str_initn((const char*)mstring->data, mstring->len);
+}
+
+void mckits_string_trim(struct MckitsString* mstring, const char* chars) {
+  char m[256] = {0};
+  size_t chars_length = strlen(chars);
+  for (size_t i = 0; i < chars_length; ++i) {
+    uint8_t c = (uint8_t)chars[i];
+    m[c] = 1;
+  }
+
+  // trim left
+  size_t left = 0;
+  while (left < mstring->len) {
+    uint8_t c = mstring->data[left];
+    if (m[c]) {
+      ++left;
+    } else {
+      break;
+    }
+  }
+
+  if (left > 0) {
+    for (size_t i = 0, j = left; j < mstring->len; ++i, ++j) {
+      mstring->data[i] = mstring->data[j];
+    }
+    mstring->len -= left;
+    mstring->data[mstring->len] = '\0';
+  }
+
+  // trim right
+  int right = mstring->len - 1;
+  while (right > 0) {
+    uint8_t c = mstring->data[right];
+    if (m[c]) {
+      --right;
+    } else {
+      break;
+    }
+  }
+  mstring->len = right + 1;
+  mstring->data[mstring->len] = '\0';
+}
+
+int mckits_string_start_with(struct MckitsString* mstring, const char* substr) {
+  size_t substr_length = strlen(substr);
+  if (substr_length > mstring->len) {
+    return 0;
+  }
+
+  for (size_t i = 0; i < substr_length; ++i) {
+    if ((uint8_t)substr[i] != mstring->data[i]) {
+      return 0;
+    }
+  }
+
+  return 1;
+}
+
+int mckits_string_end_with(struct MckitsString* mstring, const char* substr) {
+  size_t substr_length = strlen(substr);
+  if (substr_length > mstring->len) {
+    return 0;
+  }
+
+  int i = substr_length - 1;
+  int j = mstring->len - 1;
+  while (i >= 0) {
+    if ((uint8_t)substr[i] != mstring->data[j]) {
+      return 0;
+    }
+    --i;
+    --j;
+  }
+
+  return 1;
 }
 
 struct MckitsStr mckits_str_init(const char* str) {
