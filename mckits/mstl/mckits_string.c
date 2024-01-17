@@ -142,6 +142,26 @@ int mckits_string_end_with(struct MckitsString* mstring, const char* substr) {
   return 1;
 }
 
+int mckits_string_push_char(struct MckitsString* mstring, char c) {
+  if (mstring->len + 1 == mstring->cap) {
+    // string is full
+
+    size_t new_capacity = mstring->cap * 2;
+    void* new_buffer = malloc(new_capacity);
+    if (NULL == new_buffer) {
+      return -1;
+    }
+
+    memcpy(new_buffer, mstring->data, mstring->cap);
+    free(mstring->data);
+    mstring->data = new_buffer;
+    mstring->cap = new_capacity;
+  }
+  mstring->data[mstring->len++] = (uint8_t)c;
+  mstring->data[mstring->len] = '\0';
+  return 0;
+}
+
 struct MckitsStr mckits_str_init(const char* str) {
   struct MckitsStr ret = {0, (uint8_t*)str};
   if (str != NULL) {
