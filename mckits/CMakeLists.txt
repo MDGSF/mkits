@@ -18,6 +18,7 @@ set(mckits_mstl_headers
   mstl/mckits_malloc.h
   mstl/mckits_mstl_utils.h
   mstl/mckits_string.h
+  mstl/mckits_vector.h
 )
 
 set(mckits_mstl_srcs
@@ -29,8 +30,10 @@ set(mckits_mstl_srcs
   mstl/mckits_adt_ring.c
   mstl/mckits_adt_skiplist.c
   mstl/mckits_array.c
+  mstl/mckits_malloc.c
   mstl/mckits_mstl_utils.c
   mstl/mckits_string.c
+  mstl/mckits_vector.c
 )
 
 set(mckits_platform_headers

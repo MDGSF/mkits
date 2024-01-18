@@ -18,6 +18,7 @@ extern "C" {
 #include "mckits_malloc.h"
 #include "mckits_mstl_utils.h"
 #include "mckits_string.h"
+#include "mckits_vector.h"
 
 // platform
 #include "mckits_mfile.h"

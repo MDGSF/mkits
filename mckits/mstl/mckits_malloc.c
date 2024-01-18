@@ -26,11 +26,11 @@ void* mckits_calloc(size_t nmemb, size_t size) {
 }
 
 void* mckits_realloc(void* ptr, size_t size) {
-  void* ptr = realloc(ptr, size);
-  if (ptr == NULL) {
+  void* newptr = realloc(ptr, size);
+  if (newptr == NULL) {
     mckits_malloc_oom(size);
   }
-  return ptr;
+  return newptr;
 }
 
 void mckits_free(void* ptr) { free(ptr); }
