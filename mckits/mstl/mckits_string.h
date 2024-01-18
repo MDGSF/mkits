@@ -110,6 +110,15 @@ return:
 int mckits_string_push_char(struct MckitsString* mstring, char c);
 
 /*
+@brief: Push back str to mstring.
+return:
+  On success, zero is returned.
+  On failed, -1 is returned, -1 means resize failed.
+*/
+int mckits_string_push_mstr(struct MckitsString* mstring,
+                            struct MckitsStr mstr);
+
+/*
 @brief: MckitsStr represents a null-terminate string. `len` is the string
   length, not include null-terminate. `data` memory size is len + 1.
 @notes: data pointer will not be memory buffer owner, it just borrow from
