@@ -43,8 +43,18 @@ int mckits_vec_is_empty(const struct MckitsVector* mvec) {
   return mvec->size == 0 ? 1 : 0;
 }
 
-void mckits_vec_push(struct MckitsVector* mvec, void* value) {
-  if (mvec->size == mvec->capacity) {
+static void mckits_vec_growsize(struct MckitsVector* mvec) {
+  if (mvec->capacity == 0) {
+    // vector is empty
+
+    size_t new_capacity = 4;
+    size_t new_size = new_capacity * mvec->element_bytes;
+    void* new_buffer = mckits_malloc(new_size);
+
+    mvec->buffer = new_buffer;
+    mvec->capacity = new_capacity;
+
+  } else if (mvec->size == mvec->capacity) {
     // vector is full
 
     size_t new_capacity = 2 * mvec->capacity;
@@ -56,6 +66,10 @@ void mckits_vec_push(struct MckitsVector* mvec, void* value) {
     mvec->buffer = new_buffer;
     mvec->capacity = new_capacity;
   }
+}
+
+void mckits_vec_push(struct MckitsVector* mvec, void* value) {
+  mckits_vec_growsize(mvec);
 
   void* element = (uint8_t*)mvec->buffer + mvec->size * mvec->element_bytes;
   memcpy(element, value, mvec->element_bytes);
