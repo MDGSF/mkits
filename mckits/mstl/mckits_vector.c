@@ -6,32 +6,53 @@
 #include "mckits_array.h"
 #include "mckits_malloc.h"
 
-struct MckitsVector {
-  // pointer to array
-  void* buffer;
-  // the number of elements in buffer. eg. size(), len()
-  size_t size;
-  // max element buffer can hold. eg. cap(), capacity()
-  size_t capacity;
-  // each element size in byte
-  size_t element_bytes;
-};
-
-struct MckitsVector mckits_vec_new(size_t element_bytes) {
-  struct MckitsVector mvec;
-  memset(&mvec, 0, sizeof(struct MckitsVector));
-  mvec.element_bytes = element_bytes;
+struct MckitsVector* mckits_vec_new(size_t element_bytes) {
+  struct MckitsVector* mvec =
+      (struct MckitsVector*)mckits_malloc(sizeof(struct MckitsVector));
+  memset(mvec, 0, sizeof(struct MckitsVector));
+  mvec->element_bytes = element_bytes;
   return mvec;
 }
 
-struct MckitsVector mckits_vec_with_capacity(size_t element_bytes,
-                                             size_t capacity) {
-  struct MckitsVector mvec;
-  mvec.size = 0;
-  mvec.capacity = capacity;
-  mvec.element_bytes = element_bytes;
-  mvec.buffer = mckits_malloc(capacity * element_bytes);
+struct MckitsVector* mckits_vec_with_capacity(size_t element_bytes,
+                                              size_t capacity) {
+  struct MckitsVector* mvec =
+      (struct MckitsVector*)mckits_malloc(sizeof(struct MckitsVector));
+  mvec->size = 0;
+  mvec->capacity = capacity;
+  mvec->element_bytes = element_bytes;
+  mvec->buffer = mckits_malloc(capacity * element_bytes);
   return mvec;
+}
+
+void mckits_vec_init(struct MckitsVector* mvec, size_t element_bytes) {
+  memset(mvec, 0, sizeof(struct MckitsVector));
+  mvec->element_bytes = element_bytes;
+}
+
+void mckits_vec_init_with_capacity(struct MckitsVector* mvec,
+                                   size_t element_bytes, size_t capacity) {
+  mvec->size = 0;
+  mvec->capacity = capacity;
+  mvec->element_bytes = element_bytes;
+  mvec->buffer = mckits_malloc(capacity * element_bytes);
+}
+
+void mckits_vec_drop(struct MckitsVector* mvec) {
+  mckits_vec_drop_data(mvec);
+  mckits_free(mvec);
+}
+
+void mckits_vec_drop_data(struct MckitsVector* mvec) {
+  if (mvec->buffer == NULL) {
+    return;
+  }
+
+  mckits_free(mvec->buffer);
+  mvec->buffer = NULL;
+  mvec->size = 0;
+  mvec->capacity = 0;
+  mvec->element_bytes = 0;
 }
 
 size_t mckits_vec_len(const struct MckitsVector* mvec) { return mvec->size; }
@@ -102,6 +123,11 @@ void* mckits_vec_last(struct MckitsVector* mvec) {
 }
 
 void mckits_vec_append(struct MckitsVector* mvec, struct MckitsVector* other) {
+  if (other->size == 0) {
+    // other is empty, do nothing.
+    return;
+  }
+
   if (mvec->capacity == 0) {
     // vector is empty
 
@@ -136,6 +162,7 @@ void mckits_vec_append(struct MckitsVector* mvec, struct MckitsVector* other) {
   memcpy(element, other->buffer, other->size * other->element_bytes);
   mvec->size += other->size;
 
+  mckits_free(other->buffer);
   other->buffer = 0;
   other->size = 0;
   other->capacity = 0;
@@ -147,17 +174,20 @@ void mckits_vec_clear(struct MckitsVector* mvec) { mvec->size = 0; }
 void* mckits_vec_as_ptr(struct MckitsVector* mvec) { return mvec->buffer; }
 
 void mckits_vec_insert(struct MckitsVector* mvec, size_t index, void* value) {
-  assert(index < mvec->size);
+  assert(index <= mvec->size);
 
   mckits_vec_grow_size(mvec);
 
-  void* dst = mckits_vec_index(mvec, index + 1);
-  void* src = mckits_vec_index(mvec, index);
-  size_t n = (mvec->size - index) * mvec->element_bytes;
-  memmove(dst, src, n);
+  if (index < mvec->size) {
+    void* dst = mckits_vec_index(mvec, index + 1);
+    void* src = mckits_vec_index(mvec, index);
+    size_t n = (mvec->size - index) * mvec->element_bytes;
+    memmove(dst, src, n);
+  }
 
   void* element = mckits_vec_index(mvec, index);
   memcpy(element, value, mvec->element_bytes);
+  mvec->size += 1;
 }
 
 void mckits_vec_remove(struct MckitsVector* mvec, size_t index) {

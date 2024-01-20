@@ -8,21 +8,54 @@
 extern "C" {
 #endif
 
-struct MckitsVector;
+struct MckitsVector {
+  // pointer to array
+  void* buffer;
+  // the number of elements in buffer. eg. size(), len()
+  size_t size;
+  // max element buffer can hold. eg. cap(), capacity()
+  size_t capacity;
+  // each element size in byte
+  size_t element_bytes;
+};
 
 /*
 @brief: Create a new vector.
 @param element_bytes[in]: each element size in byte
 */
-struct MckitsVector mckits_vec_new(size_t element_bytes);
+struct MckitsVector* mckits_vec_new(size_t element_bytes);
 
 /*
 @brief: Create a new vector with capacity.
 @param element_bytes[in]: each element size in byte
 @param capacity[in]: the new vector's capacity.
 */
-struct MckitsVector mckits_vec_with_capacity(size_t element_bytes,
-                                             size_t capacity);
+struct MckitsVector* mckits_vec_with_capacity(size_t element_bytes,
+                                              size_t capacity);
+
+/*
+@brief: Initialize vector.
+@param element_bytes[in]: each element size in byte
+*/
+void mckits_vec_init(struct MckitsVector* mvec, size_t element_bytes);
+
+/*
+@brief: Initialize vector.
+@param element_bytes[in]: each element size in byte
+@param capacity[in]: the new vector's capacity.
+*/
+void mckits_vec_init_with_capacity(struct MckitsVector* mvec,
+                                   size_t element_bytes, size_t capacity);
+
+/*
+@brief: Drop the vector.
+*/
+void mckits_vec_drop(struct MckitsVector* mvec);
+
+/*
+@brief: Drop the vector's data field, reset the len/cap to zero.
+*/
+void mckits_vec_drop_data(struct MckitsVector* mvec);
 
 /*
 @brief: Returns the number of elements in the vector.
