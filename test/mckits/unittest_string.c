@@ -184,8 +184,7 @@ void test19() {
 
 void test20() {
   struct MckitsString mstring;
-  struct MckitsString* p = mckits_string_init(&mstring, "hello");
-  assert(p == &mstring);
+  mckits_string_init(&mstring, "hello");
   assert(mstring.cap == 6);
   assert(mstring.len == 5);
   assert(mstring.data != NULL);
@@ -195,8 +194,7 @@ void test20() {
 
 void test21() {
   struct MckitsString mstring;
-  struct MckitsString* p = mckits_string_init(&mstring, NULL);
-  assert(p == &mstring);
+  mckits_string_init(&mstring, NULL);
   assert(mstring.cap == 0);
   assert(mstring.len == 0);
   assert(mstring.data == NULL);
@@ -205,8 +203,7 @@ void test21() {
 
 void test22() {
   struct MckitsString mstring;
-  struct MckitsString* p = mckits_string_init(&mstring, "");
-  assert(p == &mstring);
+  mckits_string_init(&mstring, "");
   assert(mstring.cap == 1);
   assert(mstring.len == 0);
   assert(mstring.data != NULL);

@@ -24,12 +24,8 @@ struct MckitsString {
 @brief: Initialize mstring with data.
 @param mstring[in]: mstring will be initialized.
 @param data[in]: input data string will be copyed into mstring.
-@return
-  On success, pointer to mstring.
-  On failed, NULL is returned
 */
-struct MckitsString* mckits_string_init(struct MckitsString* mstring,
-                                        const char* data);
+void mckits_string_init(struct MckitsString* mstring, const char* data);
 
 /*
 @brief: Create a new MckitsString with input data.

@@ -30,11 +30,25 @@ struct MckitsRbtree {
   mckits_rbtree_insert_callback insert;
 };
 
-#define mckits_rbtree_init(tree, s, i)            \
-  mckits_rbtree_sentinel_init(s)(tree)->root = s; \
-  (tree)->sentinel = s;                           \
+/*
+@brief: Initialize rbtree.
+@param tree[in]: pointer to rbtree.
+@param s[in]: pointer to sentinel tree node.
+@param i[in}: insert callback function.
+*/
+#define mckits_rbtree_init(tree, s, i) \
+  mckits_rbtree_sentinel_init(s);      \
+  (tree)->root = s;                    \
+  (tree)->sentinel = s;                \
   (tree)->insert = i
 
+/*
+@brief: Get user struct pointer.
+@param node[in]: pointer to rbtree node.
+@param type[in]: user struct type.
+@param link[in]: rbtree node field name in user struct type.
+@return pointer to user struct.
+*/
 #define mckits_rbtree_data(node, type, link) \
   (type*)((uint8_t*)(node)-offsetof(type, link))
 

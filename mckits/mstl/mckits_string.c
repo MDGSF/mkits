@@ -2,35 +2,30 @@
 
 #include <stdlib.h>
 
-struct MckitsString* mckits_string_init(struct MckitsString* mstring,
-                                        const char* data) {
+#include "mckits_malloc.h"
+
+void mckits_string_init(struct MckitsString* mstring, const char* data) {
   if (data == NULL) {
     mstring->cap = 0;
     mstring->len = 0;
     mstring->data = NULL;
-    return mstring;
+    return;
   }
 
   size_t len = mckits_strlen(data);
-  uint8_t* ptr = (uint8_t*)malloc(len + 1);
-  if (ptr == NULL) {
-    return NULL;
-  }
+  uint8_t* ptr = (uint8_t*)mckits_malloc(len + 1);
 
   mstring->len = len;
   mstring->cap = len + 1;
   mstring->data = ptr;
   mckits_memcpy(ptr, data, len + 1);
-  return mstring;
 }
 
 struct MckitsString* mckits_string_new(const char* data) {
   struct MckitsString* mstring =
-      (struct MckitsString*)malloc(sizeof(struct MckitsString));
-  if (mstring == NULL) {
-    return NULL;
-  }
-  return mckits_string_init(mstring, data);
+      (struct MckitsString*)mckits_malloc(sizeof(struct MckitsString));
+  mckits_string_init(mstring, data);
+  return mstring;
 }
 
 void mckits_string_drop(struct MckitsString* mstring) {
