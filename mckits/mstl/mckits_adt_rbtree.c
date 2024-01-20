@@ -323,3 +323,76 @@ struct MckitsRbtreeNode* mckits_rbtree_min(struct MckitsRbtreeNode* node,
   }
   return node;
 }
+
+void mckits_rbtree_insert_str_value(struct MckitsRbtreeNode* root,
+                                    struct MckitsRbtreeNode* node,
+                                    struct MckitsRbtreeNode* sentinel) {
+  struct MckitsRbtreeNode* temp = root;
+  struct MckitsRbtreeNode** p = NULL;
+  struct MckitsRbtreeStrNode* n = NULL;
+  struct MckitsRbtreeStrNode* t = NULL;
+
+  for (;;) {
+    n = (struct MckitsRbtreeStrNode*)node;
+    t = (struct MckitsRbtreeStrNode*)temp;
+
+    if (node->key != temp->key) {
+      p = (node->key < temp->key) ? &temp->left : &temp->right;
+    } else if (n->str.len != t->str.len) {
+      p = (n->str.len < t->str.len) ? &temp->left : &temp->right;
+    } else {
+      p = (mckits_memcmp(n->str.data, t->str.data, n->str.len) < 0)
+              ? &temp->left
+              : &temp->right;
+    }
+
+    if (*p == sentinel) {
+      break;
+    }
+
+    temp = *p;
+  }
+
+  *p = node;
+  node->parent = temp;
+  node->left = sentinel;
+  node->right = sentinel;
+  mckits_rbtree_red(node);
+}
+
+struct MckitsRbtreeStrNode* mckits_rbtree_str_lookup(struct MckitsRbtree* tree,
+                                                     struct MckitsString* key,
+                                                     uint32_t hash) {
+  struct MckitsRbtreeNode* node = tree->root;
+  struct MckitsRbtreeNode* sentinel = tree->sentinel;
+
+  while (node != sentinel) {
+    struct MckitsRbtreeStrNode* n = (struct MckitsRbtreeStrNode*)node;
+
+    if (hash != node->key) {
+      node = (hash < node->key) ? node->left : node->right;
+      continue;
+    }
+
+    if (key->len != n->str.len) {
+      node = (key->len < n->str.len) ? node->left : node->right;
+      continue;
+    }
+
+    int ret = mckits_memcmp(key->data, n->str.data, key->len);
+
+    if (ret < 0) {
+      node = node->left;
+      continue;
+    }
+
+    if (ret > 0) {
+      node = node->right;
+      continue;
+    }
+
+    return n;
+  }
+
+  return NULL;
+}

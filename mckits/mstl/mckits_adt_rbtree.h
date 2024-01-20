@@ -5,6 +5,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "mckits_string.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -112,6 +114,32 @@ struct MckitsRbtreeNode* mckits_rbtree_next(struct MckitsRbtree* tree,
 */
 struct MckitsRbtreeNode* mckits_rbtree_min(struct MckitsRbtreeNode* node,
                                            struct MckitsRbtreeNode* sentinel);
+
+struct MckitsRbtreeStrNode {
+  struct MckitsRbtreeNode node;
+  struct MckitsString str;
+};
+
+/*
+@brief: Insert string value into rbtree.
+  Callback function used in `mckits_rbtree_init`.
+@param root[in]: pointer to `struct MckitsRbtreeStrNode`
+@param node[in]: pointer to `struct MckitsRbtreeStrNode`
+*/
+void mckits_rbtree_insert_str_value(struct MckitsRbtreeNode* root,
+                                    struct MckitsRbtreeNode* node,
+                                    struct MckitsRbtreeNode* sentinel);
+
+/*
+@brief: Search key in rbtree.
+@param tree[in]: rbtree.
+@param key[in]: string key will be searched in rbtree.
+@param hash[in]: key string hash code.
+@return: Returns pointer to string node, or NULL if not found.
+*/
+struct MckitsRbtreeStrNode* mckits_rbtree_str_lookup(struct MckitsRbtree* tree,
+                                                     struct MckitsString* key,
+                                                     uint32_t hash);
 
 #ifdef __cplusplus
 }
