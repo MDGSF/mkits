@@ -6,9 +6,9 @@
 #include <pthread.h>
 #include <string.h>
 
+#include "mckits_mlibc_utils.h"
 #include "mckits_mlog.h"
 #include "mckits_mos.h"
-#include "mckits_mstl_utils.h"
 
 void mckits_set_thread_name(const char* name) {
   int ret = pthread_setname_np(pthread_self(), name);

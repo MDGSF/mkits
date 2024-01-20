@@ -1,5 +1,5 @@
-#ifndef MKITS_MCKITS_MSTL_MCKITS_MALLOC_H_
-#define MKITS_MCKITS_MSTL_MCKITS_MALLOC_H_
+#ifndef MKITS_MCKITS_MLIBC_MCKITS_MALLOC_H_
+#define MKITS_MCKITS_MLIBC_MCKITS_MALLOC_H_
 
 #include <stddef.h>
 #include <stdint.h>

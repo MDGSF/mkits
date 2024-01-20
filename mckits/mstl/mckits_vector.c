@@ -44,7 +44,7 @@ int mckits_vec_is_empty(const struct MckitsVector* mvec) {
   return mvec->size == 0 ? 1 : 0;
 }
 
-void mckits_vec_push(struct MckitsVector* mvec, void* value) {
+static void mckits_vec_grow_size(struct MckitsVector* mvec) {
   if (mvec->capacity == 0) {
     // vector is empty
 
@@ -67,6 +67,10 @@ void mckits_vec_push(struct MckitsVector* mvec, void* value) {
     mvec->buffer = new_buffer;
     mvec->capacity = new_capacity;
   }
+}
+
+void mckits_vec_push(struct MckitsVector* mvec, void* value) {
+  mckits_vec_grow_size(mvec);
 
   void* element = (uint8_t*)mvec->buffer + mvec->size * mvec->element_bytes;
   memcpy(element, value, mvec->element_bytes);
@@ -80,11 +84,21 @@ void mckits_vec_pop(struct MckitsVector* mvec) {
   mvec->size -= 1;
 }
 
-void* mckits_vec_get(struct MckitsVector* mvec, size_t index) {
-  if (index >= mvec->size) {
-    return NULL;
-  }
+static inline void* mckits_vec_index(struct MckitsVector* mvec, size_t index) {
   return (uint8_t*)mvec->buffer + index * mvec->element_bytes;
+}
+
+void* mckits_vec_get(struct MckitsVector* mvec, size_t index) {
+  assert(index < mvec->size);
+  return mckits_vec_index(mvec, index);
+}
+
+void* mckits_vec_first(struct MckitsVector* mvec) {
+  return mvec->size == 0 ? NULL : mckits_vec_index(mvec, 0);
+}
+
+void* mckits_vec_last(struct MckitsVector* mvec) {
+  return mvec->size == 0 ? NULL : mckits_vec_index(mvec, mvec->size - 1);
 }
 
 void mckits_vec_append(struct MckitsVector* mvec, struct MckitsVector* other) {
@@ -132,14 +146,57 @@ void mckits_vec_clear(struct MckitsVector* mvec) { mvec->size = 0; }
 
 void* mckits_vec_as_ptr(struct MckitsVector* mvec) { return mvec->buffer; }
 
+void mckits_vec_insert(struct MckitsVector* mvec, size_t index, void* value) {
+  assert(index < mvec->size);
+
+  mckits_vec_grow_size(mvec);
+
+  void* dst = mckits_vec_index(mvec, index + 1);
+  void* src = mckits_vec_index(mvec, index);
+  size_t n = (mvec->size - index) * mvec->element_bytes;
+  memmove(dst, src, n);
+
+  void* element = mckits_vec_index(mvec, index);
+  memcpy(element, value, mvec->element_bytes);
+}
+
 void mckits_vec_remove(struct MckitsVector* mvec, size_t index) {
   assert(index < mvec->size);
 
   if (index + 1 < mvec->size) {
-    void* dst = (uint8_t*)mvec->buffer + index * mvec->element_bytes;
-    void* src = (uint8_t*)mvec->buffer + (index + 1) * mvec->element_bytes;
-    size_t n = mvec->size - index - 1;
+    void* dst = mckits_vec_index(mvec, index);
+    void* src = mckits_vec_index(mvec, index + 1);
+    size_t n = (mvec->size - index - 1) * mvec->element_bytes;
     memmove(dst, src, n);
   }
   mvec->size -= 1;
+}
+
+void mckits_vec_swap_remove(struct MckitsVector* mvec, size_t index) {
+  assert(index < mvec->size);
+
+  if (index != mvec->size - 1) {
+    void* dst = mckits_vec_index(mvec, index);
+    void* src = mckits_vec_index(mvec, mvec->size - 1);
+    memcpy(dst, src, mvec->element_bytes);
+  }
+
+  mvec->size -= 1;
+}
+
+void mckits_vec_swap(struct MckitsVector* mvec, size_t a, size_t b) {
+  assert(a < mvec->size);
+  assert(b < mvec->size);
+
+  if (a == b) {
+    return;
+  }
+
+  void* temp = mckits_malloc(mvec->element_bytes);
+  void* pa = mckits_vec_index(mvec, a);
+  void* pb = mckits_vec_index(mvec, b);
+  memcpy(temp, pa, mvec->element_bytes);
+  memcpy(pa, pb, mvec->element_bytes);
+  memcpy(pb, temp, mvec->element_bytes);
+  mckits_free(temp);
 }

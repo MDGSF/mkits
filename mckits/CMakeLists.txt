@@ -5,6 +5,19 @@ message(STATUS "[mckits] BUILD_SHARED: ${BUILD_SHARED}")
 message(STATUS "[mckits] BUILD_STATIC: ${BUILD_STATIC}")
 message(STATUS "[mckits] PROJECT_SOURCE_DIR: ${PROJECT_SOURCE_DIR}")
 
+set(mckits_mlibc_headers
+  mlibc/mckits_config.h
+  mlibc/mckits_cwrap.h
+  mlibc/mckits_malloc.h
+  mlibc/mckits_mlibc_utils.h
+)
+
+set(mckits_mlibc_srcs
+  mlibc/mckits_cwrap.c
+  mlibc/mckits_malloc.c
+  mlibc/mckits_mlibc_utils.c
+)
+
 set(mckits_mstl_headers
   mstl/mckits_adt_hashmap.h
   mstl/mckits_adt_heap.h
@@ -14,9 +27,6 @@ set(mckits_mstl_headers
   mstl/mckits_adt_ring.h
   mstl/mckits_adt_skiplist.h
   mstl/mckits_array.h
-  mstl/mckits_config.h
-  mstl/mckits_malloc.h
-  mstl/mckits_mstl_utils.h
   mstl/mckits_string.h
   mstl/mckits_vector.h
 )
@@ -30,8 +40,6 @@ set(mckits_mstl_srcs
   mstl/mckits_adt_ring.c
   mstl/mckits_adt_skiplist.c
   mstl/mckits_array.c
-  mstl/mckits_malloc.c
-  mstl/mckits_mstl_utils.c
   mstl/mckits_string.c
   mstl/mckits_vector.c
 )
@@ -125,26 +133,14 @@ set(mckits_core_srcs
   core/mckits_strconv.c
 )
 
-set(mckits_headers
-  mckits.h
-  ${mckits_mstl_headers}
-  ${mckits_platform_headers}
-  ${mckits_core_headers}
-)
-
-set(mckits_srcs
-  mckits.c
-  ${mckits_mstl_srcs}
-  ${mckits_platform_srcs}
-  ${mckits_core_srcs}
-)
-
 if(WIN32)
   set(mckits_headers
+    ${mckits_mlibc_headers}
     ${mckits_mstl_headers}
   )
 
   set(mckits_srcs
+    ${mckits_mlibc_srcs}
     ${mckits_mstl_srcs}
   )
 endif()
@@ -152,6 +148,7 @@ endif()
 if(UNIX)
   set(mckits_headers
     mckits.h
+    ${mckits_mlibc_headers}
     ${mckits_mstl_headers}
     ${mckits_platform_headers}
     ${mckits_core_headers}
@@ -159,6 +156,7 @@ if(UNIX)
 
   set(mckits_srcs
     mckits.c
+    ${mckits_mlibc_srcs}
     ${mckits_mstl_srcs}
     ${mckits_platform_srcs}
     ${mckits_core_srcs}
@@ -167,6 +165,7 @@ endif()
 
 set(mckits_include_directories
   ${PROJECT_SOURCE_DIR}
+  ${PROJECT_SOURCE_DIR}/mlibc
   ${PROJECT_SOURCE_DIR}/mstl
   ${PROJECT_SOURCE_DIR}/platform
   ${PROJECT_SOURCE_DIR}/core

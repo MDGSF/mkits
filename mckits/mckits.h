@@ -5,6 +5,12 @@
 extern "C" {
 #endif
 
+// mlibc
+#include "mckits_config.h"
+#include "mckits_cwrap.h"
+#include "mckits_malloc.h"
+#include "mckits_mlibc_utils.h"
+
 // mstl
 #include "mckits_adt_hashmap.h"
 #include "mckits_adt_heap.h"
@@ -14,9 +20,6 @@ extern "C" {
 #include "mckits_adt_ring.h"
 #include "mckits_adt_skiplist.h"
 #include "mckits_array.h"
-#include "mckits_config.h"
-#include "mckits_malloc.h"
-#include "mckits_mstl_utils.h"
 #include "mckits_string.h"
 #include "mckits_vector.h"
 

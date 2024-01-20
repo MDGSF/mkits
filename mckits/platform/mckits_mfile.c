@@ -8,8 +8,8 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#include "mckits_mlibc_utils.h"
 #include "mckits_mlog.h"
-#include "mckits_mstl_utils.h"
 
 int mckits_is_file_exists(const char* pathname) {
   return access(pathname, F_OK) == 0 ? 1 : 0;
