@@ -1,6 +1,7 @@
 #include "mckits_adt_hashmap.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "mckits_adt_list.h"
@@ -22,6 +23,7 @@ struct MckitsHashMapRbEntry {
   int (*compare_func)(void* keya, void* keyb);
   void* key;
   void* val;
+  uint64_t key_hash;
 };
 
 struct MckitsHashMapBucket {
@@ -164,6 +166,7 @@ static struct MckitsHashMapRbEntry* mckits_hashmap_rbtree_entry_new(
   entry->compare_func = compare_func;
   entry->key = key;
   entry->val = val;
+  entry->key_hash = key_hash;
   return entry;
 }
 
@@ -213,7 +216,7 @@ static struct MckitsHashMapEntry* mckits_hashmap_bucket_next_remove(
   mckits_rbtree_delete(tree, tree->root);
 
   struct MckitsHashMapEntry* list_entry = mckits_hashmap_list_entry_new(
-      rbtree_entry->key, rbtree_entry->val, rbtree_entry->node.key);
+      rbtree_entry->key, rbtree_entry->val, rbtree_entry->key_hash);
   mckits_hashmap_rbtree_entry_drop(rbtree_entry);
 
   bucket->entry_num -= 1;

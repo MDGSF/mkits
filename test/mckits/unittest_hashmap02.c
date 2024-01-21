@@ -68,7 +68,60 @@ void test01() {
   mckits_hashmap_drop(map);
 }
 
+void test02() {
+  struct MckitsHashMap* map = mckits_hashmap_new();
+  mckits_hashmap_set_hashfunc(map, student_hash);
+  mckits_hashmap_set_seed0(map, 0);
+  mckits_hashmap_set_seed1(map, 0);
+  mckits_hashmap_set_compare_func(map, student_compare);
+  mckits_hashmap_set_free_key(map, student_free_key);
+  mckits_hashmap_set_free_val(map, student_free);
+
+  assert(mckits_hashmap_len(map) == 0);
+  assert(mckits_hashmap_is_empty(map) == 1);
+
+  static const int max_num = 1000;
+
+  for (int count = 0; count < 100; ++count) {
+    for (int i = 1; i <= max_num; ++i) {
+      struct MckitsString* key = mckits_string_from_int(i);
+
+      char name[1024] = {0};
+      sprintf(name, "name_%02d", i);
+      struct Student* stu = new_student(name, i);
+
+      mckits_hashmap_insert(map, key, stu);
+
+      assert(mckits_hashmap_len(map) == i);
+      assert(mckits_hashmap_is_empty(map) == 0);
+    }
+
+    for (int i = 1; i <= max_num; ++i) {
+      struct MckitsString* key = mckits_string_from_int(i);
+
+      char name[1024] = {0};
+      sprintf(name, "name_%02d", i);
+
+      struct Student* stu = (struct Student*)mckits_hashmap_remove(map, key);
+      assert(stu != NULL);
+      assert(mckits_strcmp(stu->name.data, name) == 0);
+      assert(stu->age == i);
+
+      assert(mckits_hashmap_len(map) == max_num - i);
+
+      mckits_string_drop(key);
+      student_free(stu);
+    }
+
+    assert(mckits_hashmap_len(map) == 0);
+    assert(mckits_hashmap_is_empty(map) == 1);
+  }
+
+  mckits_hashmap_drop(map);
+}
+
 int main() {
   test01();
+  test02();
   return 0;
 }
