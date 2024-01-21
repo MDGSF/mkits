@@ -159,6 +159,8 @@ void test04() {
 
     struct School* school = mckits_rbtree_data(node, struct School, node);
     assert(school->id == i);
+
+    mckits_string_drop_data(&key);
   }
 
   while (tree.root != tree.sentinel) {
@@ -168,10 +170,40 @@ void test04() {
   }
 }
 
+void test05() {
+  struct MckitsRbtree tree;
+  struct MckitsRbtreeNode sentinel;
+  memset(&tree, 0, sizeof(struct MckitsRbtree));
+  memset(&sentinel, 0, sizeof(struct MckitsRbtreeNode));
+  mckits_rbtree_sentinel_init(&sentinel);
+  mckits_rbtree_init(&tree, &sentinel, mckits_rbtree_insert_value);
+
+  struct Student* stu1 = new_student(1, "1");
+  mckits_rbtree_insert(&tree, &stu1->node);
+
+  struct Student* stu2 = new_student(1, "2");
+  mckits_rbtree_insert(&tree, &stu2->node);
+
+  struct MckitsRbtreeNode* cur = mckits_rbtree_min(tree.root, tree.sentinel);
+  struct Student* student = mckits_rbtree_data(cur, struct Student, node);
+  // printf("id: %d, name: %s\n", student->id, student->name.data);
+  assert(student->id == 1);
+
+  while ((cur = mckits_rbtree_next(&tree, cur)) != NULL) {
+    struct Student* student = mckits_rbtree_data(cur, struct Student, node);
+    assert(student->id == 1);
+    // printf("id: %d, name: %s\n", student->id, student->name.data);
+  }
+
+  drop_student(stu1);
+  drop_student(stu2);
+}
+
 int main() {
   test01();
   test02();
   test03();
   test04();
+  test05();
   return 0;
 }

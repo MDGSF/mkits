@@ -11,8 +11,8 @@
 extern "C" {
 #endif
 
-typedef uint32_t mckits_rbtree_key_t;
-typedef int32_t mckits_rbtree_key_int_t;
+typedef uint64_t mckits_rbtree_key_t;
+typedef int64_t mckits_rbtree_key_int_t;
 
 struct MckitsRbtreeNode {
   mckits_rbtree_key_t key;
@@ -99,6 +99,16 @@ void mckits_rbtree_insert_timer_value(struct MckitsRbtreeNode* root,
                                       struct MckitsRbtreeNode* sentinel);
 
 /*
+@brief: Search key in rbtree. Because rbtree can hold multiply same key, so
+  this function just return the first finded node.
+@param tree[in]: rbtree.
+@param key[in]: key will be searched in rbtree.
+@return: Returns pointer to tree node, or NULL if not found.
+*/
+struct MckitsRbtreeNode* mckits_rbtree_lookup(struct MckitsRbtree* tree,
+                                              mckits_rbtree_key_t key);
+
+/*
 @brief: Get next node from rbtree.
 @param tree[in]: rbtree.
 @param node[in]: current node.
@@ -139,7 +149,7 @@ void mckits_rbtree_insert_str_value(struct MckitsRbtreeNode* root,
 */
 struct MckitsRbtreeStrNode* mckits_rbtree_str_lookup(struct MckitsRbtree* tree,
                                                      struct MckitsString* key,
-                                                     uint32_t hash);
+                                                     uint64_t hash);
 
 #ifdef __cplusplus
 }

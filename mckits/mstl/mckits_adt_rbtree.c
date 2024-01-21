@@ -292,6 +292,22 @@ void mckits_rbtree_insert_timer_value(struct MckitsRbtreeNode* root,
   mckits_rbtree_red(node);
 }
 
+struct MckitsRbtreeNode* mckits_rbtree_lookup(struct MckitsRbtree* tree,
+                                              mckits_rbtree_key_t key) {
+  struct MckitsRbtreeNode* node = tree->root;
+  struct MckitsRbtreeNode* sentinel = tree->sentinel;
+
+  while (node != sentinel) {
+    if (key != node->key) {
+      node = (key < node->key) ? node->left : node->right;
+      continue;
+    }
+    return node;
+  }
+
+  return NULL;
+}
+
 struct MckitsRbtreeNode* mckits_rbtree_next(struct MckitsRbtree* tree,
                                             struct MckitsRbtreeNode* node) {
   struct MckitsRbtreeNode* sentinel = tree->sentinel;
@@ -362,7 +378,7 @@ void mckits_rbtree_insert_str_value(struct MckitsRbtreeNode* root,
 
 struct MckitsRbtreeStrNode* mckits_rbtree_str_lookup(struct MckitsRbtree* tree,
                                                      struct MckitsString* key,
-                                                     uint32_t hash) {
+                                                     uint64_t hash) {
   struct MckitsRbtreeNode* node = tree->root;
   struct MckitsRbtreeNode* sentinel = tree->sentinel;
 
