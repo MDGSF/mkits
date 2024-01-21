@@ -37,6 +37,8 @@ int mckits_hashmap_contains_key(struct MckitsHashMap* map, void* key);
 uint64_t hash_func_fnv_1a_64(const void* data, size_t len, uint64_t seed0,
                              uint64_t seed1);
 
+void mckits_hashmap_dbg(struct MckitsHashMap* map);
+
 #ifdef __cplusplus
 }
 #endif

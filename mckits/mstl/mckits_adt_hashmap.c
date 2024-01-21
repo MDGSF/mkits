@@ -1,5 +1,6 @@
 #include "mckits_adt_hashmap.h"
 
+#include <stdio.h>
 #include <string.h>
 
 #include "mckits_adt_list.h"
@@ -301,6 +302,10 @@ void mckits_hashmap_buckets_free(struct MckitsHashMapBucket* buckets) {
 */
 static void mckits_hashmap_bucket_drop_store(
     struct MckitsHashMapBucket* bucket) {
+  if (bucket->store == NULL) {
+    return;
+  }
+
   if (bucket->store_type == MCKITS_HASHMAP_BUCKET_STORE_TYPE_LIST) {
     // drop list
     struct MckitsList* list = (struct MckitsList*)bucket->store;
@@ -539,6 +544,7 @@ static void mckits_hashmap_grow_size(struct MckitsHashMap* map) {
 
   // set new buckets to hashmap
   map->buckets = new_buckets;
+  map->bucket_num = new_bucket_num;
 }
 
 struct MckitsHashMap* mckits_hashmap_new() {
@@ -736,4 +742,17 @@ uint64_t hash_func_fnv_1a_64(const void* data, size_t len, uint64_t seed0,
   (void)seed0;
   (void)seed1;
   return mckits_fnv_1a_64(data, len);
+}
+
+void mckits_hashmap_dbg(struct MckitsHashMap* map) {
+  printf("-----------------------------------\n");
+  printf("hashmap->entry_num = %zu\n", map->entry_num);
+  printf("hashmap->bucket_num = %zu\n", map->bucket_num);
+  printf("hashmap->buckets = %p\n", map->buckets);
+  for (size_t i = 0; i < map->bucket_num; ++i) {
+    struct MckitsHashMapBucket* bucket = &map->buckets[i];
+    printf("[%02zu]<%p> [%s] entry_num:%zu\n", i, bucket,
+           bucket->store_type == 0 ? "list" : "rbtree", bucket->entry_num);
+  }
+  printf("-----------------------------------\n");
 }
