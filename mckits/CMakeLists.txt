@@ -18,7 +18,19 @@ set(mckits_mlibc_srcs
   mlibc/mckits_mlibc_utils.c
 )
 
+set(mckits_mstl_hash_headers
+  mstl/hash/mckits_crc.h
+  mstl/hash/mckits_hash_fnv.h
+  mstl/hash/mckits_hash_murmur.h
+)
+
+set(mckits_mstl_hash_srcs
+  mstl/hash/mckits_hash_fnv.c
+  mstl/hash/mckits_hash_murmur.c
+)
+
 set(mckits_mstl_headers
+  ${mckits_mstl_hash_headers}
   mstl/mckits_adt_hashmap.h
   mstl/mckits_adt_heap.h
   mstl/mckits_adt_list.h
@@ -32,6 +44,7 @@ set(mckits_mstl_headers
 )
 
 set(mckits_mstl_srcs
+  ${mckits_mstl_hash_srcs}
   mstl/mckits_adt_hashmap.c
   mstl/mckits_adt_heap.c
   mstl/mckits_adt_list.c
@@ -82,17 +95,6 @@ set(mckits_core_encoding_srcs
   core/encoding/mckits_endian.c
 )
 
-set(mckits_core_hash_headers
-  core/hash/mckits_crc.h
-  core/hash/mckits_hash_fnv.h
-  core/hash/mckits_hash_murmur.h
-)
-
-set(mckits_core_hash_srcs
-  core/hash/mckits_hash_fnv.c
-  core/hash/mckits_hash_murmur.c
-)
-
 set(mckits_core_queue_headers
   core/queue/mckits_adt_flowqueue.h
   core/queue/mckits_adt_mpmcqueue.h
@@ -112,7 +114,6 @@ set(mckits_core_thread_headers
 
 set(mckits_core_headers
   ${mckits_core_encoding_headers}
-  ${mckits_core_hash_headers}
   ${mckits_core_queue_headers}
   ${mckits_core_thread_headers}
   core/mckits_core_utils.h
@@ -124,7 +125,6 @@ set(mckits_core_headers
 
 set(mckits_core_srcs
   ${mckits_core_encoding_srcs}
-  ${mckits_core_hash_srcs}
   ${mckits_core_queue_srcs}
   core/mckits_core_utils.c
   core/mckits_mlog.c
@@ -167,10 +167,10 @@ set(mckits_include_directories
   ${PROJECT_SOURCE_DIR}
   ${PROJECT_SOURCE_DIR}/mlibc
   ${PROJECT_SOURCE_DIR}/mstl
+  ${PROJECT_SOURCE_DIR}/mstl/hash
   ${PROJECT_SOURCE_DIR}/platform
   ${PROJECT_SOURCE_DIR}/core
   ${PROJECT_SOURCE_DIR}/core/encoding
-  ${PROJECT_SOURCE_DIR}/core/hash
   ${PROJECT_SOURCE_DIR}/core/queue
   ${PROJECT_SOURCE_DIR}/core/thread
 )

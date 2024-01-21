@@ -23,6 +23,11 @@ extern "C" {
 #include "mckits_string.h"
 #include "mckits_vector.h"
 
+// mstl/hash
+#include "mckits_crc.h"
+#include "mckits_hash_fnv.h"
+#include "mckits_hash_murmur.h"
+
 // platform
 #include "mckits_mfile.h"
 #include "mckits_mos.h"
@@ -40,11 +45,6 @@ extern "C" {
 #include "mckits_encoding_json.h"
 #include "mckits_encoding_toml.h"
 #include "mckits_endian.h"
-
-// core/hash
-#include "mckits_crc.h"
-#include "mckits_hash_fnv.h"
-#include "mckits_hash_murmur.h"
 
 // core/queue
 #include "mckits_adt_flowqueue.h"

@@ -7,8 +7,8 @@
 #include "mckits_hash_fnv.h"
 #include "mckits_malloc.h"
 
-#define MCKITS_HASHMAP_BUCKET_STORE_TYPE_LIST 1
-#define MCKITS_HASHMAP_BUCKET_STORE_TYPE_RBTREE 2
+#define MCKITS_HASHMAP_BUCKET_STORE_TYPE_LIST 0
+#define MCKITS_HASHMAP_BUCKET_STORE_TYPE_RBTREE 1
 
 struct MckitsHashMapEntry {
   void* key;
@@ -52,6 +52,13 @@ struct MckitsHashMap {
   void (*free_key)(void* key);
   void (*free_val)(void* val);
 };
+
+/*
+@brief: Calculate bucket index with hash code and bucket_num.
+*/
+static inline size_t index_for(uint64_t hash, size_t bucket_num) {
+  return hash % bucket_num;
+}
 
 /*
 @brief: rbtree insert callback function.
@@ -213,11 +220,100 @@ static struct MckitsHashMapEntry* mckits_hashmap_bucket_next_remove(
   return list_entry;
 }
 
+static struct MckitsListNode* mckits_hashmap_bucket_find_node_int_list(
+    struct MckitsList* list, void* key,
+    int (*compare_func)(void* keya, void* keyb)) {
+  struct MckitsListNode* node = mckits_list_front(list);
+  while (node != NULL) {
+    struct MckitsHashMapEntry* entry = (struct MckitsHashMapEntry*)node->value;
+    if (compare_func(key, entry->key) == 0) {
+      return node;
+    }
+    node = mckits_list_node_next(node);
+  }
+  return NULL;
+}
+
 /*
-@brief: Calculate bucket index with hash code and bucket_num.
+@brief: Remove key in bucket, return pointer to value.
 */
-static size_t index_for(uint64_t hash, size_t bucket_num) {
-  return hash % bucket_num;
+static void* mckits_hashmap_bucket_remove_key(
+    struct MckitsHashMap* map, struct MckitsHashMapBucket* bucket, void* key,
+    uint64_t key_hash) {
+  if (bucket->store_type == MCKITS_HASHMAP_BUCKET_STORE_TYPE_LIST) {
+    // remove key from list
+
+    struct MckitsList* list = (struct MckitsList*)bucket->store;
+
+    struct MckitsListNode* node =
+        mckits_hashmap_bucket_find_node_int_list(list, key, map->compare_func);
+    if (node == NULL) {
+      return NULL;
+    }
+
+    struct MckitsHashMapEntry* entry = mckits_list_remove(list, node);
+    mckits_list_node_drop(node);
+
+    if (map->free_key != NULL) {
+      map->free_key(entry->key);
+    }
+    void* val = entry->val;
+    mckits_hashmap_list_entry_drop(entry);
+
+    bucket->entry_num -= 1;
+
+    return val;
+  }
+
+  // remove key from rbtree
+
+  struct MckitsRbtree* tree = (struct MckitsRbtree*)bucket->store;
+
+  struct MckitsHashMapRbEntry* entry =
+      mckits_rbtree_bucket_entry_lookup(tree, key, key_hash);
+  if (entry == NULL) {
+    return NULL;
+  }
+
+  mckits_rbtree_delete(tree, &entry->node);
+
+  if (map->free_key != NULL) {
+    map->free_key(entry->key);
+  }
+  void* val = entry->val;
+  mckits_hashmap_rbtree_entry_drop(entry);
+
+  bucket->entry_num -= 1;
+
+  return val;
+}
+
+struct MckitsHashMapBucket* mckits_hashmap_buckets_new(size_t bucket_num) {
+  return mckits_calloc(bucket_num, sizeof(struct MckitsHashMapBucket));
+}
+
+void mckits_hashmap_buckets_free(struct MckitsHashMapBucket* buckets) {
+  mckits_free(buckets);
+}
+
+/*
+@brief: Drop bucket store. Must sure bucket is empty.
+*/
+static void mckits_hashmap_bucket_drop_store(
+    struct MckitsHashMapBucket* bucket) {
+  if (bucket->store_type == MCKITS_HASHMAP_BUCKET_STORE_TYPE_LIST) {
+    // drop list
+    struct MckitsList* list = (struct MckitsList*)bucket->store;
+    mckits_list_drop(list, NULL);
+    bucket->store = NULL;
+    return;
+  }
+
+  // drop rbtree
+  struct MckitsRbtree* tree = (struct MckitsRbtree*)bucket->store;
+  mckits_free(tree);
+  bucket->store = NULL;
+  bucket->store_type = MCKITS_HASHMAP_BUCKET_STORE_TYPE_LIST;
 }
 
 /*
@@ -244,10 +340,23 @@ static void mckits_hashmap_bucket_push_back_list(
 }
 
 /*
+@brief: Insert new <key, val> into bucket, bucket->store is rbtree.
+*/
+static void mckits_hashmap_bucket_insert_into_rbtree(
+    struct MckitsHashMapBucket* bucket, void* key, void* val, uint64_t key_hash,
+    int (*compare_func)(void* keya, void* keyb)) {
+  struct MckitsRbtree* tree = (struct MckitsRbtree*)bucket->store;
+  struct MckitsHashMapRbEntry* rbtree_entry =
+      mckits_hashmap_rbtree_entry_new(key, val, key_hash, compare_func);
+  mckits_rbtree_insert(tree, &rbtree_entry->node);
+  bucket->entry_num += 1;
+}
+
+/*
 @brief: Find specified key in bucket, bucket->store is list.
 @return: pointer to entry, or NULL if not found.
 */
-static struct MckitsHashMapEntry* mckits_hashmap_bucket_find_key_in_list(
+static struct MckitsHashMapEntry* mckits_hashmap_bucket_find_entry_in_list(
     struct MckitsHashMapBucket* bucket, void* key,
     int (*compare_func)(void* keya, void* keyb)) {
   struct MckitsHashMapEntry* entry_founded = NULL;
@@ -264,22 +373,16 @@ static struct MckitsHashMapEntry* mckits_hashmap_bucket_find_key_in_list(
   return entry_founded;
 }
 
-static struct MckitsHashMapRbEntry* mckits_hashmap_bucket_find_key_in_rbtree(
-    struct MckitsHashMapBucket* bucket, void* key) {
-  return NULL;
-}
-
 /*
-@brief: Insert new <key, val> into bucket, bucket->store is rbtree.
+@brief: Find specified key in bucket, bucket->store is rbtree.
+@return: pointer to entry, or NULL if not found.
 */
-static void mckits_hashmap_bucket_insert_into_rbtree(
-    struct MckitsHashMapBucket* bucket, void* key, void* val, uint64_t key_hash,
-    int (*compare_func)(void* keya, void* keyb)) {
+static struct MckitsHashMapRbEntry* mckits_hashmap_bucket_find_entry_in_rbtree(
+    struct MckitsHashMapBucket* bucket, void* key, uint64_t key_hash) {
   struct MckitsRbtree* tree = (struct MckitsRbtree*)bucket->store;
-  struct MckitsHashMapRbEntry* rbtree_entry =
-      mckits_hashmap_rbtree_entry_new(key, val, key_hash, compare_func);
-  mckits_rbtree_insert(tree, &rbtree_entry->node);
-  bucket->entry_num += 1;
+  struct MckitsHashMapRbEntry* entry =
+      mckits_rbtree_bucket_entry_lookup(tree, key, key_hash);
+  return entry;
 }
 
 /*
@@ -346,7 +449,8 @@ static void mckits_hashmap_bucket_insert(struct MckitsHashMap* map,
   if (bucket->store_type == MCKITS_HASHMAP_BUCKET_STORE_TYPE_LIST) {
     // try to find key in list
     struct MckitsHashMapEntry* entry_founded =
-        mckits_hashmap_bucket_find_key_in_list(bucket, key, map->compare_func);
+        mckits_hashmap_bucket_find_entry_in_list(bucket, key,
+                                                 map->compare_func);
 
     // found key in list, just replace value
     if (entry_founded != NULL) {
@@ -377,6 +481,22 @@ static void mckits_hashmap_bucket_insert(struct MckitsHashMap* map,
   }
 
   // try to find key in rbtree
+  struct MckitsHashMapRbEntry* entry =
+      mckits_hashmap_bucket_find_entry_in_rbtree(bucket, key, key_hash);
+
+  // found key in rbtree, just replace value
+  if (entry != NULL) {
+    void* old_val = entry->val;
+    entry->val = val;
+    if (map->free_val != NULL) {
+      map->free_val(old_val);
+    }
+    return;
+  }
+
+  // not found key, insert into rbtree
+  mckits_hashmap_bucket_insert_into_rbtree(bucket, key, val, key_hash,
+                                           map->compare_func);
 }
 
 /*
@@ -391,12 +511,13 @@ static void mckits_hashmap_grow_size(struct MckitsHashMap* map) {
   // create new buckets
   size_t new_bucket_num = map->bucket_num * 2;
   struct MckitsHashMapBucket* new_buckets =
-      (struct MckitsHashMapBucket*)mckits_calloc(
-          new_bucket_num, sizeof(struct MckitsHashMapBucket));
+      mckits_hashmap_buckets_new(new_bucket_num);
 
   // move entries from old buckets to new buckets
   for (size_t i = 0; i < map->bucket_num; ++i) {
     struct MckitsHashMapBucket* bucket = &map->buckets[i];
+
+    // move current bucket's entries to new buckets
     while (!mckits_hashmap_bucket_is_empty(bucket)) {
       struct MckitsHashMapEntry* entry =
           mckits_hashmap_bucket_next_remove(bucket);
@@ -408,7 +529,16 @@ static void mckits_hashmap_grow_size(struct MckitsHashMap* map) {
 
       mckits_hashmap_list_entry_drop(entry);
     }
+
+    // drop current bucket store
+    mckits_hashmap_bucket_drop_store(bucket);
   }
+
+  // drop old buckets
+  mckits_hashmap_buckets_free(map->buckets);
+
+  // set new buckets to hashmap
+  map->buckets = new_buckets;
 }
 
 struct MckitsHashMap* mckits_hashmap_new() {
@@ -418,8 +548,7 @@ struct MckitsHashMap* mckits_hashmap_new() {
 
   map->entry_num = 0;
   map->bucket_num = 16;
-  map->buckets = (struct MckitsHashMapBucket*)mckits_calloc(
-      map->bucket_num, sizeof(struct MckitsHashMapBucket));
+  map->buckets = mckits_hashmap_buckets_new(map->bucket_num);
 
   map->bucket_list_max_num = 8;
 
@@ -428,9 +557,113 @@ struct MckitsHashMap* mckits_hashmap_new() {
   return map;
 }
 
-void mckits_hashmap_drop(struct MckitsHashMap* map) {}
+void mckits_hashmap_set_hashfunc(struct MckitsHashMap* map,
+                                 uint64_t (*hash_func)(void* key,
+                                                       uint64_t seed0,
+                                                       uint64_t seed1)) {
+  map->hash_func = hash_func;
+}
 
-void mckits_hashmap_clear(struct MckitsHashMap* map) {}
+void mckits_hashmap_set_seed0(struct MckitsHashMap* map, uint64_t seed0) {
+  map->seed0 = seed0;
+}
+
+void mckits_hashmap_set_seed1(struct MckitsHashMap* map, uint64_t seed1) {
+  map->seed1 = seed1;
+}
+
+void mckits_hashmap_set_compare_func(struct MckitsHashMap* map,
+                                     int (*compare_func)(void* keya,
+                                                         void* keyb)) {
+  map->compare_func = compare_func;
+}
+
+void mckits_hashmap_set_free_key(struct MckitsHashMap* map,
+                                 void (*free_key)(void* key)) {
+  map->free_key = free_key;
+}
+
+void mckits_hashmap_set_free_val(struct MckitsHashMap* map,
+                                 void (*free_val)(void* val)) {
+  map->free_val = free_val;
+}
+
+void mckits_hashmap_drop(struct MckitsHashMap* map) {
+  mckits_hashmap_clear(map);
+  mckits_hashmap_buckets_free(map->buckets);
+  mckits_free(map);
+}
+
+void mckits_hashmap_bucket_list_clear(struct MckitsHashMap* map,
+                                      struct MckitsHashMapBucket* bucket) {
+  struct MckitsList* list = (struct MckitsList*)bucket->store;
+  while (mckits_list_len(list) > 0) {
+    struct MckitsListNode* front = mckits_list_front(list);
+    struct MckitsHashMapEntry* entry =
+        (struct MckitsHashMapEntry*)mckits_list_remove(list, front);
+    mckits_list_node_drop(front);
+
+    if (map->free_key != NULL) {
+      map->free_key(entry->key);
+    }
+    if (map->free_val != NULL) {
+      map->free_val(entry->val);
+    }
+
+    mckits_hashmap_list_entry_drop(entry);
+
+    bucket->entry_num -= 1;
+    map->entry_num -= 1;
+  }
+  mckits_list_drop(list, NULL);
+  bucket->store = NULL;
+}
+
+void mckits_hashmap_bucket_rbtree_clear(struct MckitsHashMap* map,
+                                        struct MckitsHashMapBucket* bucket) {
+  struct MckitsRbtree* tree = (struct MckitsRbtree*)bucket->store;
+  while (tree->root != tree->sentinel) {
+    struct MckitsHashMapRbEntry* entry =
+        mckits_rbtree_data(tree->root, struct MckitsHashMapRbEntry, node);
+    mckits_rbtree_delete(tree, tree->root);
+
+    if (map->free_key != NULL) {
+      map->free_key(entry->key);
+    }
+    if (map->free_val != NULL) {
+      map->free_val(entry->val);
+    }
+
+    mckits_hashmap_rbtree_entry_drop(entry);
+
+    bucket->entry_num -= 1;
+    map->entry_num -= 1;
+  }
+
+  mckits_free(tree);
+  bucket->store = NULL;
+  bucket->store_type = MCKITS_HASHMAP_BUCKET_STORE_TYPE_LIST;
+}
+
+void mckits_hashmap_bucket_clear(struct MckitsHashMap* map,
+                                 struct MckitsHashMapBucket* bucket) {
+  if (bucket->store == NULL) {
+    return;
+  }
+
+  if (bucket->store_type == MCKITS_HASHMAP_BUCKET_STORE_TYPE_LIST) {
+    mckits_hashmap_bucket_list_clear(map, bucket);
+  } else {
+    mckits_hashmap_bucket_rbtree_clear(map, bucket);
+  }
+}
+
+void mckits_hashmap_clear(struct MckitsHashMap* map) {
+  for (size_t i = 0; i < map->bucket_num; ++i) {
+    struct MckitsHashMapBucket* bucket = &map->buckets[i];
+    mckits_hashmap_bucket_clear(map, bucket);
+  }
+}
 
 size_t mckits_hashmap_len(struct MckitsHashMap* map) { return map->entry_num; }
 
@@ -441,17 +674,62 @@ int mckits_hashmap_is_empty(struct MckitsHashMap* map) {
 void mckits_hashmap_insert(struct MckitsHashMap* map, void* key, void* val) {
   mckits_hashmap_grow_size(map);
 
-  uint64_t hash = map->hash_func(key, map->seed0, map->seed1);
-  size_t bucket_index = index_for(hash, map->bucket_num);
+  uint64_t key_hash = map->hash_func(key, map->seed0, map->seed1);
+  size_t bucket_index = index_for(key_hash, map->bucket_num);
   struct MckitsHashMapBucket* bucket = &map->buckets[bucket_index];
-  mckits_hashmap_bucket_insert(map, bucket, key, val, hash);
+  mckits_hashmap_bucket_insert(map, bucket, key, val, key_hash);
   map->entry_num += 1;
 }
 
-void mckits_hashmap_remove(struct MckitsHashMap* map, void* key) {}
+void* mckits_hashmap_remove(struct MckitsHashMap* map, void* key) {
+  uint64_t key_hash = map->hash_func(key, map->seed0, map->seed1);
+  size_t bucket_index = index_for(key_hash, map->bucket_num);
+  struct MckitsHashMapBucket* bucket = &map->buckets[bucket_index];
 
-void* mckits_hashmap_get(struct MckitsHashMap* map, void* key) { return NULL; }
+  if (mckits_hashmap_bucket_is_empty(bucket)) {
+    return NULL;
+  }
+
+  void* value = mckits_hashmap_bucket_remove_key(map, bucket, key, key_hash);
+  map->entry_num -= 1;
+  return value;
+}
+
+void* mckits_hashmap_get(struct MckitsHashMap* map, void* key) {
+  uint64_t key_hash = map->hash_func(key, map->seed0, map->seed1);
+  size_t bucket_index = index_for(key_hash, map->bucket_num);
+  struct MckitsHashMapBucket* bucket = &map->buckets[bucket_index];
+
+  if (mckits_hashmap_bucket_is_empty(bucket)) {
+    return NULL;
+  }
+
+  void* value = NULL;
+  if (bucket->store_type == MCKITS_HASHMAP_BUCKET_STORE_TYPE_LIST) {
+    struct MckitsHashMapEntry* entry = mckits_hashmap_bucket_find_entry_in_list(
+        bucket, key, map->compare_func);
+    if (entry != NULL) {
+      value = entry->val;
+    }
+  } else {
+    struct MckitsHashMapRbEntry* entry =
+        mckits_hashmap_bucket_find_entry_in_rbtree(bucket, key, key_hash);
+    if (entry != NULL) {
+      value = entry->val;
+    }
+  }
+
+  return value;
+}
 
 int mckits_hashmap_contains_key(struct MckitsHashMap* map, void* key) {
-  return 0;
+  void* value = mckits_hashmap_get(map, key);
+  return value != NULL ? 1 : 0;
+}
+
+uint64_t hash_func_fnv_1a_64(const void* data, size_t len, uint64_t seed0,
+                             uint64_t seed1) {
+  (void)seed0;
+  (void)seed1;
+  return mckits_fnv_1a_64(data, len);
 }
