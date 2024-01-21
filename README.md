@@ -6,14 +6,19 @@ comments and unit test.
 ## architecture
 
 - mckits
+  - mlibc: libc wrapper
   - mstl: only use libc
-    - array
-    - string
+    - hash
     - hashmap
-    - rbtree
     - heap
     - list
+    - nlist
+    - rbtree
+    - ring
     - skiplist
+    - array
+    - string
+    - vector
   - platform
     - os
     - file
@@ -25,7 +30,6 @@ comments and unit test.
     - color
     - math
     - meta
-    - hash
     - time
   - web server
   - tools
@@ -34,16 +38,9 @@ comments and unit test.
 ## build
 
 ```sh
-cmake -S . -B build; cmake --build build
-```
-
-or
-
-```sh
-mkdir build
-cd build
-cmake ..
-make
+./build_clang.sh
+./build_gcc.sh
+./build_gcc_release.sh
 ```
 
 ## code of conduct
