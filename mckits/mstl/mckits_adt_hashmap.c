@@ -542,12 +542,16 @@ static void mckits_hashmap_grow_size(struct MckitsHashMap* map) {
 }
 
 struct MckitsHashMap* mckits_hashmap_new() {
+  return mckits_hashmap_with_capacity(16);
+}
+
+struct MckitsHashMap* mckits_hashmap_with_capacity(size_t capacity) {
   struct MckitsHashMap* map =
       (struct MckitsHashMap*)mckits_malloc(sizeof(struct MckitsHashMap));
   memset(map, 0, sizeof(struct MckitsHashMap));
 
   map->entry_num = 0;
-  map->bucket_num = 16;
+  map->bucket_num = capacity;
   map->buckets = mckits_hashmap_buckets_new(map->bucket_num);
 
   map->bucket_list_max_num = 8;

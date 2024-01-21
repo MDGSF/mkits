@@ -115,6 +115,12 @@ int mckits_string_push_mstr(struct MckitsString* mstring,
                             struct MckitsStr mstr);
 
 /*
+@brief: Convert int to mstring.
+*/
+struct MckitsString* mckits_string_from_int(int num);
+struct MckitsString* mckits_string_from_int64(int64_t num);
+
+/*
 @brief: MckitsStr represents a null-terminate string. `len` is the string
   length, not include null-terminate. `data` memory size is len + 1.
 @notes: data pointer will not be memory buffer owner, it just borrow from

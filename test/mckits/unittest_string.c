@@ -339,6 +339,34 @@ void test30() {
   mckits_string_drop(mstring);
 }
 
+void test31() {
+  int num = 123;
+  struct MckitsString* mstring = mckits_string_from_int(num);
+  assert(mckits_strcmp(mstring->data, "123") == 0);
+  mckits_string_drop(mstring);
+}
+
+void test32() {
+  int num = -123;
+  struct MckitsString* mstring = mckits_string_from_int(num);
+  assert(mckits_strcmp(mstring->data, "-123") == 0);
+  mckits_string_drop(mstring);
+}
+
+void test33() {
+  int64_t num = 123;
+  struct MckitsString* mstring = mckits_string_from_int64(num);
+  assert(mckits_strcmp(mstring->data, "123") == 0);
+  mckits_string_drop(mstring);
+}
+
+void test34() {
+  int64_t num = -123;
+  struct MckitsString* mstring = mckits_string_from_int64(num);
+  assert(mckits_strcmp(mstring->data, "-123") == 0);
+  mckits_string_drop(mstring);
+}
+
 int main() {
   test01();
   test02();
@@ -370,5 +398,9 @@ int main() {
   test28();
   test29();
   test30();
+  test31();
+  test32();
+  test33();
+  test34();
   return 0;
 }

@@ -1,5 +1,7 @@
 #include "mckits_string.h"
 
+#include <inttypes.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "mckits_malloc.h"
@@ -179,6 +181,34 @@ int mckits_string_push_mstr(struct MckitsString* mstring,
   mstring->data[mstring->len + mstr.len] = '\0';
   mstring->len += mstr.len;
   return 0;
+}
+
+struct MckitsString* mckits_string_from_int(int num) {
+  struct MckitsString* mstring =
+      (struct MckitsString*)mckits_malloc(sizeof(struct MckitsString));
+
+  int len = snprintf(NULL, 0, "%d", num);
+  uint8_t* ptr = (uint8_t*)mckits_malloc(len + 1);
+  sprintf((char*)ptr, "%d", num);
+
+  mstring->len = len;
+  mstring->cap = len + 1;
+  mstring->data = ptr;
+  return mstring;
+}
+
+struct MckitsString* mckits_string_from_int64(int64_t num) {
+  struct MckitsString* mstring =
+      (struct MckitsString*)mckits_malloc(sizeof(struct MckitsString));
+
+  int len = snprintf(NULL, 0, "%" PRId64, num);
+  uint8_t* ptr = (uint8_t*)mckits_malloc(len + 1);
+  sprintf((char*)ptr, "%" PRId64, num);
+
+  mstring->len = len;
+  mstring->cap = len + 1;
+  mstring->data = ptr;
+  return mstring;
 }
 
 struct MckitsStr mckits_str_init(const char* str) {

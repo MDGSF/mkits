@@ -10,6 +10,7 @@ extern "C" {
 
 struct MckitsHashMap;
 struct MckitsHashMap* mckits_hashmap_new();
+struct MckitsHashMap* mckits_hashmap_with_capacity(size_t capacity);
 void mckits_hashmap_set_hashfunc(struct MckitsHashMap* map,
                                  uint64_t (*hash_func)(void* key,
                                                        uint64_t seed0,
