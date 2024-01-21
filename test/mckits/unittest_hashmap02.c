@@ -120,6 +120,10 @@ void test02() {
   mckits_hashmap_drop(map);
 }
 
+void test03() {
+  // TODO insert after clear
+}
+
 int main() {
   test01();
   test02();
