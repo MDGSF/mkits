@@ -83,6 +83,9 @@ size_t mckits_hashmap_len(struct MckitsHashMap* map);
 
 /*
 @brief: Check if hashmap is empty.
+@return:
+  1: means hashmap is empty.
+  0: means hashmap is not empty.
 */
 int mckits_hashmap_is_empty(struct MckitsHashMap* map);
 
@@ -93,6 +96,9 @@ void mckits_hashmap_insert(struct MckitsHashMap* map, void* key, void* val);
 
 /*
 @brief: Remove key from hashmap, return pointer to value.
+@return:
+  If key exists, return pointer to value.
+  If key not exists, return NULL.
 */
 void* mckits_hashmap_remove(struct MckitsHashMap* map, void* key);
 

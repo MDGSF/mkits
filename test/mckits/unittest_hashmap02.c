@@ -167,6 +167,7 @@ void test03() {
   mckits_hashmap_drop(map);
 }
 
+// insert same key
 void test04() {
   struct MckitsHashMap* map = mckits_hashmap_with_capacity(2);
   mckits_hashmap_set_hashfunc(map, student_hash);
@@ -192,6 +193,34 @@ void test04() {
   assert(mckits_hashmap_len(map) == 1);
   assert(mckits_hashmap_is_empty(map) == 0);
 
+  char name[1024] = {0};
+  sprintf(name, "name_%02d", 2);
+  struct MckitsString* key = mckits_string_from_int(123);
+  struct Student* stu = mckits_hashmap_get(map, key);
+  assert(stu->age == 2);
+  assert(mckits_strcmp(name, stu->name.data) == 0);
+  mckits_string_drop(key);
+
+  mckits_hashmap_drop(map);
+}
+
+// remove not exists key
+void test05() {
+  struct MckitsHashMap* map = mckits_hashmap_with_capacity(2);
+  mckits_hashmap_set_hashfunc(map, student_hash);
+  mckits_hashmap_set_seed0(map, 0);
+  mckits_hashmap_set_seed1(map, 0);
+  mckits_hashmap_set_compare_func(map, student_compare);
+  mckits_hashmap_set_free_key(map, student_free_key);
+  mckits_hashmap_set_free_val(map, student_free);
+
+  assert(mckits_hashmap_len(map) == 0);
+  assert(mckits_hashmap_is_empty(map) == 1);
+
+  struct MckitsString* key_not_exists = mckits_string_from_int(123);
+  assert(mckits_hashmap_remove(map, key_not_exists) == NULL);
+  mckits_string_drop(key_not_exists);
+
   mckits_hashmap_drop(map);
 }
 
@@ -200,5 +229,6 @@ int main() {
   test02();
   test03();
   test04();
+  test05();
   return 0;
 }
