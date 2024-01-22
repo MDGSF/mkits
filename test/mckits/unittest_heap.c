@@ -10,15 +10,14 @@ void test01() {
   assert(0 == mckits_heap_len(heap));
 
   for (int64_t i = 1; i <= 10; ++i) {
-    mckits_heap_push(heap, (void*)i, (void*)i);
+    mckits_heap_push(heap, (void*)i);
     assert(i == mckits_heap_len(heap));
   }
 
   int64_t i = 1;
   while (!mckits_heap_empty(heap)) {
-    struct MckitsHeapItem item = mckits_heap_pop(heap);
-    assert((int64_t)item.priority == i);
-    assert((int64_t)item.value == i);
+    void* item = mckits_heap_pop(heap);
+    assert((int64_t)item == i);
     i += 1;
   }
 
@@ -30,15 +29,14 @@ void test02() {
   assert(0 == mckits_heap_len(heap));
 
   for (int64_t i = 10; i >= 1; --i) {
-    mckits_heap_push(heap, (void*)i, (void*)i);
+    mckits_heap_push(heap, (void*)i);
     assert(10 - i + 1 == mckits_heap_len(heap));
   }
 
   int64_t i = 1;
   while (!mckits_heap_empty(heap)) {
-    struct MckitsHeapItem item = mckits_heap_pop(heap);
-    assert((int64_t)item.priority == i);
-    assert((int64_t)item.value == i);
+    void* item = mckits_heap_pop(heap);
+    assert((int64_t)item == i);
     i += 1;
   }
 
@@ -49,18 +47,17 @@ void test03() {
   struct MckitsHeap* heap = mckits_heap_new(5, mckits_heap_compare_int);
   assert(0 == mckits_heap_len(heap));
 
-  mckits_heap_push(heap, (void*)3, (void*)3);
-  mckits_heap_push(heap, (void*)2, (void*)2);
-  mckits_heap_push(heap, (void*)4, (void*)4);
-  mckits_heap_push(heap, (void*)5, (void*)5);
-  mckits_heap_push(heap, (void*)1, (void*)1);
+  mckits_heap_push(heap, (void*)3);
+  mckits_heap_push(heap, (void*)2);
+  mckits_heap_push(heap, (void*)4);
+  mckits_heap_push(heap, (void*)5);
+  mckits_heap_push(heap, (void*)1);
   assert(5 == mckits_heap_len(heap));
 
   int64_t i = 1;
   while (!mckits_heap_empty(heap)) {
-    struct MckitsHeapItem item = mckits_heap_pop(heap);
-    assert((int64_t)item.priority == i);
-    assert((int64_t)item.value == i);
+    void* item = mckits_heap_pop(heap);
+    assert((int64_t)item == i);
     i += 1;
   }
 
@@ -84,86 +81,100 @@ struct Student* new_student(const char* name, const char* phone, int sex,
   return student;
 }
 
+void free_student(struct Student* stu) { free(stu); }
+
+int student_compare(const void* item0, const void* item1) {
+  struct Student* stu0 = (struct Student*)item0;
+  struct Student* stu1 = (struct Student*)item1;
+  return strcmp(stu0->name, stu1->name);
+}
+
+int student_max_compare(const void* item0, const void* item1) {
+  struct Student* stu0 = (struct Student*)item0;
+  struct Student* stu1 = (struct Student*)item1;
+  return -strcmp(stu0->name, stu1->name);
+}
+
 void test04() {
-  struct MckitsHeap* heap = mckits_heap_new(5, mckits_heap_compare_str);
+  struct MckitsHeap* heap = mckits_heap_new(5, student_compare);
   assert(0 == mckits_heap_len(heap));
 
   struct Student* s1 = new_student("John", "123000", 1, 18);
-  mckits_heap_push(heap, s1->name, s1);
+  mckits_heap_push(heap, s1);
 
   struct Student* s2 = new_student("Alice", "456000", 0, 19);
-  mckits_heap_push(heap, s2->name, s2);
+  mckits_heap_push(heap, s2);
 
   struct Student* s3 = new_student("Mike", "789000", 1, 20);
-  mckits_heap_push(heap, s3->name, s3);
+  mckits_heap_push(heap, s3);
 
   struct Student* s4 = new_student("Bob", "110119", 1, 21);
-  mckits_heap_push(heap, s4->name, s4);
+  mckits_heap_push(heap, s4);
 
   struct Student* s5 = new_student("Kangkang", "110120", 1, 22);
-  mckits_heap_push(heap, s5->name, s5);
+  mckits_heap_push(heap, s5);
 
   assert(5 == mckits_heap_len(heap));
   assert(0 == mckits_heap_empty(heap));
 
   {
-    struct MckitsHeapItem item = mckits_heap_pop(heap);
-    assert(strcmp(item.priority, "Alice") == 0);
-    struct Student* student = (struct Student*)item.value;
+    void* item = mckits_heap_pop(heap);
+    struct Student* student = (struct Student*)item;
+    assert(strcmp(student->name, "Alice") == 0);
     assert(strcmp(student->phone, "456000") == 0);
     assert(student->sex == 0);
     assert(student->age == 19);
     assert(4 == mckits_heap_len(heap));
     assert(0 == mckits_heap_empty(heap));
-    free(item.value);
+    free_student(student);
   }
 
   {
-    struct MckitsHeapItem item = mckits_heap_pop(heap);
-    assert(strcmp(item.priority, "Bob") == 0);
-    struct Student* student = (struct Student*)item.value;
+    void* item = mckits_heap_pop(heap);
+    struct Student* student = (struct Student*)item;
+    assert(strcmp(student->name, "Bob") == 0);
     assert(strcmp(student->phone, "110119") == 0);
     assert(student->sex == 1);
     assert(student->age == 21);
     assert(3 == mckits_heap_len(heap));
     assert(0 == mckits_heap_empty(heap));
-    free(item.value);
+    free_student(student);
   }
 
   {
-    struct MckitsHeapItem item = mckits_heap_pop(heap);
-    assert(strcmp(item.priority, "John") == 0);
-    struct Student* student = (struct Student*)item.value;
+    void* item = mckits_heap_pop(heap);
+    struct Student* student = (struct Student*)item;
+    assert(strcmp(student->name, "John") == 0);
     assert(strcmp(student->phone, "123000") == 0);
     assert(student->sex == 1);
     assert(student->age == 18);
     assert(2 == mckits_heap_len(heap));
     assert(0 == mckits_heap_empty(heap));
-    free(item.value);
+    free_student(student);
   }
 
   {
-    struct MckitsHeapItem item = mckits_heap_pop(heap);
-    assert(strcmp(item.priority, "Kangkang") == 0);
-    struct Student* student = (struct Student*)item.value;
+    void* item = mckits_heap_pop(heap);
+    struct Student* student = (struct Student*)item;
+    assert(strcmp(student->name, "Kangkang") == 0);
     assert(strcmp(student->phone, "110120") == 0);
     assert(student->sex == 1);
     assert(student->age == 22);
     assert(1 == mckits_heap_len(heap));
     assert(0 == mckits_heap_empty(heap));
-    free(item.value);
+    free_student(student);
   }
 
   {
-    struct MckitsHeapItem item = mckits_heap_pop(heap);
-    assert(strcmp(item.priority, "Mike") == 0);
-    struct Student* student = (struct Student*)item.value;
+    void* item = mckits_heap_pop(heap);
+    struct Student* student = (struct Student*)item;
+    assert(strcmp(student->name, "Mike") == 0);
     assert(strcmp(student->phone, "789000") == 0);
     assert(student->sex == 1);
     assert(student->age == 20);
     assert(0 == mckits_heap_len(heap));
     assert(1 == mckits_heap_empty(heap));
-    free(item.value);
+    free_student(student);
   }
 
   mckits_heap_drop(heap);
@@ -174,46 +185,36 @@ void test05() {
   assert(0 == mckits_heap_len(heap));
 
   {
-    struct MckitsHeapItem* item =
-        (struct MckitsHeapItem*)mckits_array_push(&heap->array);
-    item->priority = (void*)3;
-    item->value = NULL;
+    int64_t* item = (int64_t*)mckits_array_push(&heap->array);
+    *item = 3;
   }
 
   {
-    struct MckitsHeapItem* item =
-        (struct MckitsHeapItem*)mckits_array_push(&heap->array);
-    item->priority = (void*)2;
-    item->value = NULL;
+    int64_t* item = (int64_t*)mckits_array_push(&heap->array);
+    *item = 2;
   }
 
   {
-    struct MckitsHeapItem* item =
-        (struct MckitsHeapItem*)mckits_array_push(&heap->array);
-    item->priority = (void*)4;
-    item->value = NULL;
+    int64_t* item = (int64_t*)mckits_array_push(&heap->array);
+    *item = 4;
   }
 
   {
-    struct MckitsHeapItem* item =
-        (struct MckitsHeapItem*)mckits_array_push(&heap->array);
-    item->priority = (void*)5;
-    item->value = NULL;
+    int64_t* item = (int64_t*)mckits_array_push(&heap->array);
+    *item = 5;
   }
 
   {
-    struct MckitsHeapItem* item =
-        (struct MckitsHeapItem*)mckits_array_push(&heap->array);
-    item->priority = (void*)1;
-    item->value = NULL;
+    int64_t* item = (int64_t*)mckits_array_push(&heap->array);
+    *item = 1;
   }
 
   mckits_heap_heapify(heap);
 
   int64_t i = 1;
   while (!mckits_heap_empty(heap)) {
-    struct MckitsHeapItem item = mckits_heap_pop(heap);
-    assert((int64_t)item.priority == i);
+    void* item = mckits_heap_pop(heap);
+    assert((int64_t)item == i);
     i += 1;
   }
 
@@ -225,15 +226,14 @@ void test06() {
   assert(0 == mckits_heap_len(heap));
 
   for (int64_t i = 1; i <= 10; ++i) {
-    mckits_heap_push(heap, (void*)i, (void*)i);
+    mckits_heap_push(heap, (void*)i);
     assert(i == mckits_heap_len(heap));
   }
 
   int64_t i = 10;
   while (!mckits_heap_empty(heap)) {
-    struct MckitsHeapItem item = mckits_heap_pop(heap);
-    assert((int64_t)item.priority == i);
-    assert((int64_t)item.value == i);
+    void* item = mckits_heap_pop(heap);
+    assert((int64_t)item == i);
     i -= 1;
   }
 
@@ -241,85 +241,85 @@ void test06() {
 }
 
 void test07() {
-  struct MckitsHeap* heap = mckits_heap_new(5, mckits_heap_max_compare_str);
+  struct MckitsHeap* heap = mckits_heap_new(5, student_max_compare);
   assert(0 == mckits_heap_len(heap));
 
   struct Student* s1 = new_student("John", "123000", 1, 18);
-  mckits_heap_push(heap, s1->name, s1);
+  mckits_heap_push(heap, s1);
 
   struct Student* s2 = new_student("Alice", "456000", 0, 19);
-  mckits_heap_push(heap, s2->name, s2);
+  mckits_heap_push(heap, s2);
 
   struct Student* s3 = new_student("Mike", "789000", 1, 20);
-  mckits_heap_push(heap, s3->name, s3);
+  mckits_heap_push(heap, s3);
 
   struct Student* s4 = new_student("Bob", "110119", 1, 21);
-  mckits_heap_push(heap, s4->name, s4);
+  mckits_heap_push(heap, s4);
 
   struct Student* s5 = new_student("Kangkang", "110120", 1, 22);
-  mckits_heap_push(heap, s5->name, s5);
+  mckits_heap_push(heap, s5);
 
   assert(5 == mckits_heap_len(heap));
   assert(0 == mckits_heap_empty(heap));
 
   {
-    struct MckitsHeapItem item = mckits_heap_pop(heap);
-    assert(strcmp(item.priority, "Mike") == 0);
-    struct Student* student = (struct Student*)item.value;
+    void* item = mckits_heap_pop(heap);
+    struct Student* student = (struct Student*)item;
+    assert(strcmp(student->name, "Mike") == 0);
     assert(strcmp(student->phone, "789000") == 0);
     assert(student->sex == 1);
     assert(student->age == 20);
     assert(4 == mckits_heap_len(heap));
     assert(0 == mckits_heap_empty(heap));
-    free(item.value);
+    free_student(student);
   }
 
   {
-    struct MckitsHeapItem item = mckits_heap_pop(heap);
-    assert(strcmp(item.priority, "Kangkang") == 0);
-    struct Student* student = (struct Student*)item.value;
+    void* item = mckits_heap_pop(heap);
+    struct Student* student = (struct Student*)item;
+    assert(strcmp(student->name, "Kangkang") == 0);
     assert(strcmp(student->phone, "110120") == 0);
     assert(student->sex == 1);
     assert(student->age == 22);
     assert(3 == mckits_heap_len(heap));
     assert(0 == mckits_heap_empty(heap));
-    free(item.value);
+    free_student(student);
   }
 
   {
-    struct MckitsHeapItem item = mckits_heap_pop(heap);
-    assert(strcmp(item.priority, "John") == 0);
-    struct Student* student = (struct Student*)item.value;
+    void* item = mckits_heap_pop(heap);
+    struct Student* student = (struct Student*)item;
+    assert(strcmp(student->name, "John") == 0);
     assert(strcmp(student->phone, "123000") == 0);
     assert(student->sex == 1);
     assert(student->age == 18);
     assert(2 == mckits_heap_len(heap));
     assert(0 == mckits_heap_empty(heap));
-    free(item.value);
+    free_student(student);
   }
 
   {
-    struct MckitsHeapItem item = mckits_heap_pop(heap);
-    assert(strcmp(item.priority, "Bob") == 0);
-    struct Student* student = (struct Student*)item.value;
+    void* item = mckits_heap_pop(heap);
+    struct Student* student = (struct Student*)item;
+    assert(strcmp(student->name, "Bob") == 0);
     assert(strcmp(student->phone, "110119") == 0);
     assert(student->sex == 1);
     assert(student->age == 21);
     assert(1 == mckits_heap_len(heap));
     assert(0 == mckits_heap_empty(heap));
-    free(item.value);
+    free_student(student);
   }
 
   {
-    struct MckitsHeapItem item = mckits_heap_pop(heap);
-    assert(strcmp(item.priority, "Alice") == 0);
-    struct Student* student = (struct Student*)item.value;
+    void* item = mckits_heap_pop(heap);
+    struct Student* student = (struct Student*)item;
+    assert(strcmp(student->name, "Alice") == 0);
     assert(strcmp(student->phone, "456000") == 0);
     assert(student->sex == 0);
     assert(student->age == 19);
     assert(0 == mckits_heap_len(heap));
     assert(1 == mckits_heap_empty(heap));
-    free(item.value);
+    free_student(student);
   }
 
   mckits_heap_drop(heap);
@@ -330,7 +330,7 @@ void test08() {
   assert(0 == mckits_heap_len(heap));
 
   for (int64_t i = 1; i <= 10; ++i) {
-    mckits_heap_push(heap, (void*)i, (void*)i);
+    mckits_heap_push(heap, (void*)i);
     assert(i == mckits_heap_len(heap));
   }
   assert(10 == mckits_heap_len(heap));
@@ -338,10 +338,10 @@ void test08() {
   mckits_heap_remove(heap, 4);
   assert(9 == mckits_heap_len(heap));
 
-  struct MckitsHeapItem preitem = mckits_heap_pop(heap);
+  void* preitem = mckits_heap_pop(heap);
   while (!mckits_heap_empty(heap)) {
-    struct MckitsHeapItem item = mckits_heap_pop(heap);
-    assert((int64_t)preitem.priority <= (int64_t)item.priority);
+    void* item = mckits_heap_pop(heap);
+    assert((int64_t)preitem <= (int64_t)item);
   }
 
   mckits_heap_drop(heap);
