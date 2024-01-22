@@ -138,14 +138,14 @@ void test04() {
 
   for (int i = 0; i < 10; ++i) {
     char num_string[128] = {0};
-    mckits_int_to_string(i, num_string, 128);
+    mckits_int_to_char_string(i, num_string, 128);
     struct School* school = new_school(i, num_string);
     mckits_rbtree_insert(&tree, &school->node.node);
   }
 
   for (int i = 0; i < 10; ++i) {
     char num_string[128] = {0};
-    mckits_int_to_string(i, num_string, 128);
+    mckits_int_to_char_string(i, num_string, 128);
 
     struct MckitsString key;
     mckits_string_init(&key, num_string);

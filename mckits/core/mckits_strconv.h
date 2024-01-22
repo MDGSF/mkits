@@ -11,7 +11,7 @@ extern "C" {
 /*
 @brief: Convert a string to int.
 */
-int mckits_string_to_int(const char* str);
+int mckits_char_string_to_int(const char* str);
 
 /*
 @brief: Convert int to string.
@@ -19,12 +19,12 @@ int mckits_string_to_int(const char* str);
 @param str[out]: memory buffer used to store converted string.
 @param size[in]: memory buffer size.
 */
-void mckits_int_to_string(int num, char* str, size_t size);
+void mckits_int_to_char_string(int num, char* str, size_t size);
 
 /*
 @brief: Convert a string to int64_t.
 */
-int64_t mckits_string_to_int64(const char* str);
+int64_t mckits_char_string_to_int64(const char* str);
 
 /*
 @brief: Convert int64_t to string.
@@ -32,7 +32,7 @@ int64_t mckits_string_to_int64(const char* str);
 @param str[out]: memory buffer used to store converted string.
 @param size[in]: memory buffer size.
 */
-void mckits_int64_to_string(int64_t num, char* str, size_t size);
+void mckits_int64_to_char_string(int64_t num, char* str, size_t size);
 
 #ifdef __cplusplus
 }

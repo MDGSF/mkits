@@ -123,8 +123,8 @@ struct MckitsString* mckits_string_from_int64(int64_t num);
 /*
 @brief: Convert mstring to int.
 */
-int mckits_mstring_to_int(struct MckitsString* mstring);
-int64_t mckits_mstring_to_int64(struct MckitsString* mstring);
+int mckits_string_to_int(struct MckitsString* mstring);
+int64_t mckits_string_to_int64(struct MckitsString* mstring);
 
 /*
 @brief: MckitsStr represents a null-terminate string. `len` is the string

@@ -211,11 +211,11 @@ struct MckitsString* mckits_string_from_int64(int64_t num) {
   return mstring;
 }
 
-int mckits_mstring_to_int(struct MckitsString* mstring) {
+int mckits_string_to_int(struct MckitsString* mstring) {
   return atoi((const char*)mstring->data);
 }
 
-int64_t mckits_mstring_to_int64(struct MckitsString* mstring) {
+int64_t mckits_string_to_int64(struct MckitsString* mstring) {
   return (int64_t)atoll((const char*)mstring->data);
 }
 
