@@ -32,6 +32,7 @@ set(mckits_mstl_hash_srcs
 set(mckits_mstl_headers
   ${mckits_mstl_hash_headers}
   mstl/mckits_hashmap.h
+  mstl/mckits_hashset.h
   mstl/mckits_heap.h
   mstl/mckits_list.h
   mstl/mckits_nlist.h
@@ -40,12 +41,14 @@ set(mckits_mstl_headers
   mstl/mckits_skiplist.h
   mstl/mckits_array.h
   mstl/mckits_string.h
+  mstl/mckits_vecdeque.h
   mstl/mckits_vector.h
 )
 
 set(mckits_mstl_srcs
   ${mckits_mstl_hash_srcs}
   mstl/mckits_hashmap.c
+  mstl/mckits_hashset.c
   mstl/mckits_heap.c
   mstl/mckits_list.c
   mstl/mckits_nlist.c
@@ -54,6 +57,7 @@ set(mckits_mstl_srcs
   mstl/mckits_skiplist.c
   mstl/mckits_array.c
   mstl/mckits_string.c
+  mstl/mckits_vecdeque.c
   mstl/mckits_vector.c
 )
 

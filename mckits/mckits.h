@@ -14,6 +14,7 @@ extern "C" {
 // mstl
 #include "mckits_array.h"
 #include "mckits_hashmap.h"
+#include "mckits_hashset.h"
 #include "mckits_heap.h"
 #include "mckits_list.h"
 #include "mckits_nlist.h"
@@ -21,6 +22,7 @@ extern "C" {
 #include "mckits_ring.h"
 #include "mckits_skiplist.h"
 #include "mckits_string.h"
+#include "mckits_vecdeque.h"
 #include "mckits_vector.h"
 
 // mstl/hash
