@@ -436,11 +436,14 @@ static void mckits_hashmap_bucket_list_to_rbtree(
 @brief: Insert new <key, val> into bucket.
 @param map[in]: hashmap handler.
 @param bucket[in]: new <key, val> will insert into this bucket.
+@return
+  1: key not found in hashmap
+  0: key founded in hashamp
 */
-static void mckits_hashmap_bucket_insert(struct MckitsHashMap* map,
-                                         struct MckitsHashMapBucket* bucket,
-                                         void* key, void* val,
-                                         uint64_t key_hash) {
+static int mckits_hashmap_bucket_insert(struct MckitsHashMap* map,
+                                        struct MckitsHashMapBucket* bucket,
+                                        void* key, void* val,
+                                        uint64_t key_hash) {
   if (bucket->store == NULL) {
     // bucket has not been initialized
 
@@ -451,7 +454,7 @@ static void mckits_hashmap_bucket_insert(struct MckitsHashMap* map,
 
     mckits_hashmap_bucket_push_back_list(bucket, key, val, key_hash);
 
-    return;
+    return 1;
   }
 
   if (bucket->store_type == MCKITS_HASHMAP_BUCKET_STORE_TYPE_LIST) {
@@ -462,19 +465,24 @@ static void mckits_hashmap_bucket_insert(struct MckitsHashMap* map,
 
     // found key in list, just replace value
     if (entry_founded != NULL) {
+      void* old_key = entry_founded->key;
       void* old_val = entry_founded->val;
+      entry_founded->key = key;
       entry_founded->val = val;
+      if (map->free_key != NULL) {
+        map->free_key(old_key);
+      }
       if (map->free_val != NULL) {
         map->free_val(old_val);
       }
-      return;
+      return 0;
     }
 
     // not found key, and list not reach max num.
     // just push new <key, value> into list.
     if (bucket->entry_num < map->bucket_list_max_num) {
       mckits_hashmap_bucket_push_back_list(bucket, key, val, key_hash);
-      return;
+      return 1;
     }
 
     // not found key, and list reach max num.
@@ -485,7 +493,7 @@ static void mckits_hashmap_bucket_insert(struct MckitsHashMap* map,
     mckits_hashmap_bucket_insert_into_rbtree(bucket, key, val, key_hash,
                                              map->compare_func);
 
-    return;
+    return 1;
   }
 
   // try to find key in rbtree
@@ -494,17 +502,23 @@ static void mckits_hashmap_bucket_insert(struct MckitsHashMap* map,
 
   // found key in rbtree, just replace value
   if (entry != NULL) {
+    void* old_key = entry->key;
     void* old_val = entry->val;
+    entry->key = key;
     entry->val = val;
+    if (map->free_key != NULL) {
+      map->free_key(old_key);
+    }
     if (map->free_val != NULL) {
       map->free_val(old_val);
     }
-    return;
+    return 0;
   }
 
   // not found key, insert into rbtree
   mckits_hashmap_bucket_insert_into_rbtree(bucket, key, val, key_hash,
                                            map->compare_func);
+  return 1;
 }
 
 /*
@@ -532,8 +546,8 @@ static void mckits_hashmap_grow_size(struct MckitsHashMap* map) {
 
       size_t new_bucket_index = index_for(entry->key_hash, new_bucket_num);
       struct MckitsHashMapBucket* new_bucket = &new_buckets[new_bucket_index];
-      mckits_hashmap_bucket_insert(map, new_bucket, entry->key, entry->val,
-                                   entry->key_hash);
+      (void)mckits_hashmap_bucket_insert(map, new_bucket, entry->key,
+                                         entry->val, entry->key_hash);
 
       mckits_hashmap_list_entry_drop(entry);
     }
@@ -690,8 +704,8 @@ void mckits_hashmap_insert(struct MckitsHashMap* map, void* key, void* val) {
   uint64_t key_hash = map->hash_func(key, map->seed0, map->seed1);
   size_t bucket_index = index_for(key_hash, map->bucket_num);
   struct MckitsHashMapBucket* bucket = &map->buckets[bucket_index];
-  mckits_hashmap_bucket_insert(map, bucket, key, val, key_hash);
-  map->entry_num += 1;
+  int added_num = mckits_hashmap_bucket_insert(map, bucket, key, val, key_hash);
+  map->entry_num += added_num;
 }
 
 void* mckits_hashmap_remove(struct MckitsHashMap* map, void* key) {

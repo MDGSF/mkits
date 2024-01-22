@@ -121,11 +121,84 @@ void test02() {
 }
 
 void test03() {
-  // TODO insert after clear
+  struct MckitsHashMap* map = mckits_hashmap_with_capacity(2);
+  mckits_hashmap_set_hashfunc(map, student_hash);
+  mckits_hashmap_set_seed0(map, 0);
+  mckits_hashmap_set_seed1(map, 0);
+  mckits_hashmap_set_compare_func(map, student_compare);
+  mckits_hashmap_set_free_key(map, student_free_key);
+  mckits_hashmap_set_free_val(map, student_free);
+
+  assert(mckits_hashmap_len(map) == 0);
+  assert(mckits_hashmap_is_empty(map) == 1);
+
+  for (int i = 1; i <= 10; ++i) {
+    struct MckitsString* key = mckits_string_from_int(i);
+
+    char name[1024] = {0};
+    sprintf(name, "name_%02d", i);
+    struct Student* stu = new_student(name, i);
+
+    mckits_hashmap_insert(map, key, stu);
+
+    assert(mckits_hashmap_len(map) == i);
+    assert(mckits_hashmap_is_empty(map) == 0);
+  }
+
+  mckits_hashmap_clear(map);
+
+  assert(mckits_hashmap_len(map) == 0);
+  assert(mckits_hashmap_is_empty(map) == 1);
+
+  // insert after clear
+  for (int i = 1; i <= 10; ++i) {
+    struct MckitsString* key = mckits_string_from_int(i);
+
+    char name[1024] = {0};
+    sprintf(name, "name_%02d", i);
+    struct Student* stu = new_student(name, i);
+
+    mckits_hashmap_insert(map, key, stu);
+
+    assert(mckits_hashmap_len(map) == i);
+    assert(mckits_hashmap_is_empty(map) == 0);
+  }
+
+  mckits_hashmap_drop(map);
+}
+
+void test04() {
+  struct MckitsHashMap* map = mckits_hashmap_with_capacity(2);
+  mckits_hashmap_set_hashfunc(map, student_hash);
+  mckits_hashmap_set_seed0(map, 0);
+  mckits_hashmap_set_seed1(map, 0);
+  mckits_hashmap_set_compare_func(map, student_compare);
+  mckits_hashmap_set_free_key(map, student_free_key);
+  mckits_hashmap_set_free_val(map, student_free);
+
+  assert(mckits_hashmap_len(map) == 0);
+  assert(mckits_hashmap_is_empty(map) == 1);
+
+  for (int i = 1; i <= 2; ++i) {
+    struct MckitsString* key = mckits_string_from_int(123);
+
+    char name[1024] = {0};
+    sprintf(name, "name_%02d", i);
+    struct Student* stu = new_student(name, i);
+
+    mckits_hashmap_insert(map, key, stu);
+  }
+
+  assert(mckits_hashmap_len(map) == 1);
+  assert(mckits_hashmap_is_empty(map) == 0);
+
+  mckits_hashmap_drop(map);
 }
 
 int main() {
   test01();
   test02();
+  test03();
+  test04();
   return 0;
 }
