@@ -1,4 +1,4 @@
-#include "mckits_adt_ring.h"
+#include "mckits_ring.h"
 
 #include <stdlib.h>
 #include <string.h>

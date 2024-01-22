@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <stdio.h>
 
-#include "mckits_adt_hashmap.h"
+#include "mckits_hashmap.h"
 #include "mckits_mtime.h"
 #include "mckits_string.h"
 

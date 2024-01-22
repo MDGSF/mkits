@@ -12,14 +12,14 @@ extern "C" {
 #include "mckits_mlibc_utils.h"
 
 // mstl
-#include "mckits_adt_hashmap.h"
-#include "mckits_adt_heap.h"
-#include "mckits_adt_list.h"
-#include "mckits_adt_nlist.h"
-#include "mckits_adt_rbtree.h"
-#include "mckits_adt_ring.h"
-#include "mckits_adt_skiplist.h"
 #include "mckits_array.h"
+#include "mckits_hashmap.h"
+#include "mckits_heap.h"
+#include "mckits_list.h"
+#include "mckits_nlist.h"
+#include "mckits_rbtree.h"
+#include "mckits_ring.h"
+#include "mckits_skiplist.h"
 #include "mckits_string.h"
 #include "mckits_vector.h"
 

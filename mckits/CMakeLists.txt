@@ -31,13 +31,13 @@ set(mckits_mstl_hash_srcs
 
 set(mckits_mstl_headers
   ${mckits_mstl_hash_headers}
-  mstl/mckits_adt_hashmap.h
-  mstl/mckits_adt_heap.h
-  mstl/mckits_adt_list.h
-  mstl/mckits_adt_nlist.h
-  mstl/mckits_adt_rbtree.h
-  mstl/mckits_adt_ring.h
-  mstl/mckits_adt_skiplist.h
+  mstl/mckits_hashmap.h
+  mstl/mckits_heap.h
+  mstl/mckits_list.h
+  mstl/mckits_nlist.h
+  mstl/mckits_rbtree.h
+  mstl/mckits_ring.h
+  mstl/mckits_skiplist.h
   mstl/mckits_array.h
   mstl/mckits_string.h
   mstl/mckits_vector.h
@@ -45,13 +45,13 @@ set(mckits_mstl_headers
 
 set(mckits_mstl_srcs
   ${mckits_mstl_hash_srcs}
-  mstl/mckits_adt_hashmap.c
-  mstl/mckits_adt_heap.c
-  mstl/mckits_adt_list.c
-  mstl/mckits_adt_nlist.c
-  mstl/mckits_adt_rbtree.c
-  mstl/mckits_adt_ring.c
-  mstl/mckits_adt_skiplist.c
+  mstl/mckits_hashmap.c
+  mstl/mckits_heap.c
+  mstl/mckits_list.c
+  mstl/mckits_nlist.c
+  mstl/mckits_rbtree.c
+  mstl/mckits_ring.c
+  mstl/mckits_skiplist.c
   mstl/mckits_array.c
   mstl/mckits_string.c
   mstl/mckits_vector.c

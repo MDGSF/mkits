@@ -18,7 +18,7 @@ cmake \
   -DBUILD_BENCH=ON \
   ..
 
-make
+make -j 8
 #make VERBOSE=1
 make install
 

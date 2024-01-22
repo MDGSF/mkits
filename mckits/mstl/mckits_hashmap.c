@@ -1,13 +1,13 @@
-#include "mckits_adt_hashmap.h"
+#include "mckits_hashmap.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "mckits_adt_list.h"
-#include "mckits_adt_rbtree.h"
 #include "mckits_hash_fnv.h"
+#include "mckits_list.h"
 #include "mckits_malloc.h"
+#include "mckits_rbtree.h"
 
 #define MCKITS_HASHMAP_BUCKET_STORE_TYPE_LIST 0
 #define MCKITS_HASHMAP_BUCKET_STORE_TYPE_RBTREE 1

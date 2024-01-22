@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-#include "mckits_adt_list.h"
+#include "mckits_list.h"
 
 struct MckitsFlowQueue {
   size_t capacity_;

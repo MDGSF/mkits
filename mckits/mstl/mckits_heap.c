@@ -1,4 +1,4 @@
-#include "mckits_adt_heap.h"
+#include "mckits_heap.h"
 
 #include <stdlib.h>
 #include <string.h>

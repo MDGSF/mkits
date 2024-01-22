@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "mckits_adt_heap.h"
+#include "mckits_heap.h"
 
 void test01() {
   struct MckitsHeap* heap = mckits_heap_new(10, mckits_heap_compare_int);

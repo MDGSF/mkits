@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "mckits_adt_hashmap.h"
+#include "mckits_hashmap.h"
 #include "mckits_string.h"
 
 struct Student {

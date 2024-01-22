@@ -1,4 +1,4 @@
-#include "mckits_adt_nlist.h"
+#include "mckits_nlist.h"
 
 static void mckits_nlist_merge(struct MckitsNList* list,
                                struct MckitsNList* tail,
