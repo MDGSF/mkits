@@ -126,6 +126,28 @@ uint64_t hash_func_fnv_1a_64(const void* data, size_t len, uint64_t seed0,
                              uint64_t seed1);
 
 /*
+@brief: hashmap iterator.
+*/
+struct MckitsHashMapIter;
+
+/*
+@brief: Create a new hashmap iterator. If hashmap insert or remove entry,
+  iterator will invalid.
+*/
+struct MckitsHashMapIter* mckits_hashmap_iterator(struct MckitsHashMap* map);
+
+/*
+@brief: Get next value from iterator.
+@return pointer to value, or NULL if reaches end of iterator.
+*/
+void* mckits_hashmap_iterator_next(struct MckitsHashMapIter* iterator);
+
+/*
+@brief: Drop hashmap iterator.
+*/
+void mckits_hashmap_iterator_drop(struct MckitsHashMapIter* iterator);
+
+/*
 @brief: Debug function, show some basic information.
 */
 void mckits_hashmap_dbg(struct MckitsHashMap* map);
