@@ -109,6 +109,31 @@ int mckits_hashset_contains(struct MckitsHashSet* mset, void* value);
 uint64_t mckits_hashset_hash_func_fnv_1a_64(const void* data, size_t len,
                                             uint64_t seed0, uint64_t seed1);
 
+/*
+@brief: hashset iterator.
+*/
+struct MckitsHashSetIter;
+
+/*
+@brief: Create a new hashset iterator. If hashset insert or remove value,
+  iterator will invalid.
+*/
+struct MckitsHashSetIter* mckits_hashset_iterator(struct MckitsHashSet* mset);
+
+/*
+@brief: Get next value from iterator.
+@param iterator[in]: iterator for hashset.
+@param value[out]: output value.
+@return 1 means has next value, 0 means reached end of hashset.
+*/
+int mckits_hashset_iterator_next(struct MckitsHashSetIter* iterator,
+                                 void** value);
+
+/*
+@brief: Drop hashset iterator.
+*/
+void mckits_hashset_iterator_drop(struct MckitsHashSetIter* iterator);
+
 #ifdef __cplusplus
 }
 #endif

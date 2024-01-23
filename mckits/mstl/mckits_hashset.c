@@ -79,3 +79,23 @@ uint64_t mckits_hashset_hash_func_fnv_1a_64(const void* data, size_t len,
                                             uint64_t seed0, uint64_t seed1) {
   return mckits_hashmap_hash_func_fnv_1a_64(data, len, seed0, seed1);
 }
+
+struct MckitsHashSetIter {
+  struct MckitsHashMapIter* map_iter;
+};
+
+struct MckitsHashSetIter* mckits_hashset_iterator(struct MckitsHashSet* mset) {
+  struct MckitsHashSetIter* iter = (struct MckitsHashSetIter*)mckits_malloc(
+      sizeof(struct MckitsHashSetIter));
+  iter->map_iter = mckits_hashmap_iterator(mset->map);
+  return iter;
+}
+
+int mckits_hashset_iterator_next(struct MckitsHashSetIter* iterator,
+                                 void** value) {
+  return mckits_hashmap_iterator_next(iterator->map_iter, value);
+}
+
+void mckits_hashset_iterator_drop(struct MckitsHashSetIter* iterator) {
+  mckits_hashmap_iterator_drop(iterator->map_iter);
+}
