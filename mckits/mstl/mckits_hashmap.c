@@ -63,8 +63,7 @@ struct MckitsHashMapIter {
   // if bucket->store_type == list, node is struct MckitsListNode*
   // if bucket->store_type == rbtree, node is struct MckitsRbtreeNode*
   void* node;
-  int node_type;  // list or rbtree
-  int node_bucket_index;
+  int node_bucket_index;  // void* node in which bucket.
 };
 
 /*
@@ -779,12 +778,12 @@ struct MckitsHashMapIter* mckits_hashmap_iterator(struct MckitsHashMap* map) {
   iterator->map = map;
   iterator->bucket_index = 0;
   iterator->node = NULL;
-  iterator->node_type = -1;
   iterator->node_bucket_index = -1;
   return iterator;
 }
 
-void* mckits_hashmap_iterator_next(struct MckitsHashMapIter* iterator) {
+int mckits_hashmap_iterator_next(struct MckitsHashMapIter* iterator,
+                                 void** value) {
   struct MckitsHashMap* map = iterator->map;
   while (iterator->bucket_index < map->bucket_num) {
     struct MckitsHashMapBucket* bucket = &map->buckets[iterator->bucket_index];
@@ -797,23 +796,50 @@ void* mckits_hashmap_iterator_next(struct MckitsHashMapIter* iterator) {
       // type is list
 
       struct MckitsList* list = (struct MckitsList*)bucket->store;
-
-      if (iterator->node == NULL) {
-        struct MckitsListNode* node = mckits_list_front(list);
-        iterator->node = node;
-        iterator->node_type = MCKITS_HASHMAP_BUCKET_STORE_TYPE_LIST;
-        iterator->node_bucket_index = iterator->bucket_index;
-        struct MckitsHashMapEntry* entry =
-            (struct MckitsHashMapEntry*)node->value;
-        return entry->val;
+      struct MckitsListNode* node = NULL;
+      if (iterator->node == NULL ||
+          iterator->node_bucket_index != iterator->bucket_index) {
+        node = mckits_list_front(list);
+      } else {
+        node = mckits_list_node_next(iterator->node);
+      }
+      if (node == NULL) {
+        iterator->bucket_index += 1;
+        continue;
       }
 
-      // TODO
+      iterator->node = node;
+      iterator->node_bucket_index = iterator->bucket_index;
+      struct MckitsHashMapEntry* entry =
+          (struct MckitsHashMapEntry*)node->value;
+      *value = entry->val;
+      return 1;
     }
 
     // type is rbtree
+
+    struct MckitsRbtree* tree = (struct MckitsRbtree*)bucket->store;
+    struct MckitsRbtreeNode* node = NULL;
+    if (iterator->node == NULL ||
+        iterator->node_bucket_index != iterator->bucket_index) {
+      node = mckits_rbtree_min(tree->root, tree->sentinel);
+    } else {
+      node = mckits_rbtree_next(tree, iterator->node);
+    }
+    if (node == NULL) {
+      iterator->bucket_index += 1;
+      continue;
+    }
+
+    iterator->node = node;
+    iterator->node_bucket_index = iterator->bucket_index;
+    struct MckitsHashMapRbEntry* entry =
+        mckits_rbtree_data(tree->root, struct MckitsHashMapRbEntry, node);
+    *value = entry->val;
+    return 1;
   }
-  return NULL;
+
+  return 0;
 }
 
 void mckits_hashmap_iterator_drop(struct MckitsHashMapIter* iterator) {

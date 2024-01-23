@@ -138,9 +138,12 @@ struct MckitsHashMapIter* mckits_hashmap_iterator(struct MckitsHashMap* map);
 
 /*
 @brief: Get next value from iterator.
-@return pointer to value, or NULL if reaches end of iterator.
+@param iterator[in]: iterator for hashmap.
+@param value[out]: output value.
+@return 1 means has next value, 0 means reached end of hashmap.
 */
-void* mckits_hashmap_iterator_next(struct MckitsHashMapIter* iterator);
+int mckits_hashmap_iterator_next(struct MckitsHashMapIter* iterator,
+                                 void** value);
 
 /*
 @brief: Drop hashmap iterator.
