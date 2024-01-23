@@ -122,8 +122,8 @@ int mckits_hashmap_contains_key(struct MckitsHashMap* map, void* key);
 @brief: hash function fnv_1a_64.
   you can use it in `mckits_hashmap_set_hashfunc()`.
 */
-uint64_t hash_func_fnv_1a_64(const void* data, size_t len, uint64_t seed0,
-                             uint64_t seed1);
+uint64_t mckits_hashmap_hash_func_fnv_1a_64(const void* data, size_t len,
+                                            uint64_t seed0, uint64_t seed1);
 
 /*
 @brief: hashmap iterator.

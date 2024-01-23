@@ -20,7 +20,8 @@ struct Student* new_student(struct MckitsStr name, int age) {
 
 uint64_t student_hash(void* key, uint64_t seed0, uint64_t seed1) {
   struct MckitsStr* name = (struct MckitsStr*)key;
-  return hash_func_fnv_1a_64(name->data, name->len, seed0, seed1);
+  return mckits_hashmap_hash_func_fnv_1a_64(name->data, name->len, seed0,
+                                            seed1);
 }
 
 int student_compare(void* keya, void* keyb) {

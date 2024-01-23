@@ -65,3 +65,17 @@ int mckits_hashset_is_empty(struct MckitsHashSet* mset) {
 void mckits_hashset_insert(struct MckitsHashSet* mset, void* value) {
   mckits_hashmap_insert(mset->map, value, value);
 }
+
+int mckits_hashset_remove(struct MckitsHashSet* mset, void* value) {
+  void* ptr = mckits_hashmap_remove(mset->map, value);
+  return ptr != NULL ? 1 : 0;
+}
+
+int mckits_hashset_contains(struct MckitsHashSet* mset, void* value) {
+  return mckits_hashmap_contains_key(mset->map, value);
+}
+
+uint64_t mckits_hashset_hash_func_fnv_1a_64(const void* data, size_t len,
+                                            uint64_t seed0, uint64_t seed1) {
+  return mckits_hashmap_hash_func_fnv_1a_64(data, len, seed0, seed1);
+}

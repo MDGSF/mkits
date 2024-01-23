@@ -7,7 +7,8 @@
 
 uint64_t hash_callback(void* key, uint64_t seed0, uint64_t seed1) {
   int64_t key_num = (int64_t)key;
-  return hash_func_fnv_1a_64(&key_num, sizeof(int64_t), seed0, seed1);
+  return mckits_hashmap_hash_func_fnv_1a_64(&key_num, sizeof(int64_t), seed0,
+                                            seed1);
 }
 
 int compare_callback(void* keya, void* keyb) {

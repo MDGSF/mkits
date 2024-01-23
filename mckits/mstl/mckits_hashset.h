@@ -85,6 +85,30 @@ int mckits_hashset_is_empty(struct MckitsHashSet* mset);
 */
 void mckits_hashset_insert(struct MckitsHashSet* mset, void* value);
 
+/*
+@brief: Removes a value from the set. Returns whether the value was present in
+  the set.
+@return:
+  1: the value was present in the set.
+  0: the value was not present int the set.
+*/
+int mckits_hashset_remove(struct MckitsHashSet* mset, void* value);
+
+/*
+@brief: Check if hashset contains value.
+@return:
+  1: means hashset contains value.
+  0: means hashset doesn't contains value.
+*/
+int mckits_hashset_contains(struct MckitsHashSet* mset, void* value);
+
+/*
+@brief: hash function fnv_1a_64.
+  you can use it in `mckits_hashset_set_hashfunc()`.
+*/
+uint64_t mckits_hashset_hash_func_fnv_1a_64(const void* data, size_t len,
+                                            uint64_t seed0, uint64_t seed1);
+
 #ifdef __cplusplus
 }
 #endif

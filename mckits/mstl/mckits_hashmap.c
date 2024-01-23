@@ -765,8 +765,8 @@ int mckits_hashmap_contains_key(struct MckitsHashMap* map, void* key) {
   return value != NULL ? 1 : 0;
 }
 
-uint64_t hash_func_fnv_1a_64(const void* data, size_t len, uint64_t seed0,
-                             uint64_t seed1) {
+uint64_t mckits_hashmap_hash_func_fnv_1a_64(const void* data, size_t len,
+                                            uint64_t seed0, uint64_t seed1) {
   (void)seed0;
   (void)seed1;
   return mckits_fnv_1a_64(data, len);
