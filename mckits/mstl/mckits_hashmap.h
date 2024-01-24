@@ -104,11 +104,14 @@ void* mckits_hashmap_remove(struct MckitsHashMap* map, void* key);
 
 /*
 @brief: Query key in hashmap.
+@param map[in]: hashmap.
+@param key[in]: key will be find in hashmap.
+@param val[out]: output value.
 @return:
-  If found, return pointer to value.
-  If not found, return NULL.
+  If found, return 1
+  If not found, return 0.
 */
-void* mckits_hashmap_get(struct MckitsHashMap* map, void* key);
+int mckits_hashmap_get(struct MckitsHashMap* map, void* key, void** value);
 
 /*
 @brief: Check if hashmap contains key.

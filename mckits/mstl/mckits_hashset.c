@@ -48,6 +48,7 @@ void mckits_hashset_set_free_value(struct MckitsHashSet* mset,
 
 void mckits_hashset_drop(struct MckitsHashSet* mset) {
   mckits_hashmap_drop(mset->map);
+  mckits_free(mset);
 }
 
 void mckits_hashset_clear(struct MckitsHashSet* mset) {

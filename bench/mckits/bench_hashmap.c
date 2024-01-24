@@ -47,7 +47,7 @@ void bench_hashmap_01() {
     int64_t count = test_size;
     int64_t start = mckits_current_clock_nanoseconds();
     for (int64_t i = 0; i < count; ++i) {
-      (void)mckits_hashmap_get(map, (void*)i);
+      (void)mckits_hashmap_get(map, (void*)i, NULL);
     }
     int64_t end = mckits_current_clock_nanoseconds();
     int64_t diff = end - start;
@@ -106,7 +106,7 @@ void bench_hashmap_02() {
     int64_t count = test_size;
     int64_t start = mckits_current_clock_nanoseconds();
     for (int64_t i = 0; i < count; ++i) {
-      (void)mckits_hashmap_get(map, (void*)i);
+      (void)mckits_hashmap_get(map, (void*)i, NULL);
     }
     int64_t end = mckits_current_clock_nanoseconds();
     int64_t diff = end - start;

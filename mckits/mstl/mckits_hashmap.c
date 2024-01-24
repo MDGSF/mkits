@@ -733,36 +733,41 @@ void* mckits_hashmap_remove(struct MckitsHashMap* map, void* key) {
   return value;
 }
 
-void* mckits_hashmap_get(struct MckitsHashMap* map, void* key) {
+int mckits_hashmap_get(struct MckitsHashMap* map, void* key, void** value) {
   uint64_t key_hash = map->hash_func(key, map->seed0, map->seed1);
   size_t bucket_index = index_for(key_hash, map->bucket_num);
   struct MckitsHashMapBucket* bucket = &map->buckets[bucket_index];
 
   if (mckits_hashmap_bucket_is_empty(bucket)) {
-    return NULL;
+    return 0;
   }
 
-  void* value = NULL;
   if (bucket->store_type == MCKITS_HASHMAP_BUCKET_STORE_TYPE_LIST) {
     struct MckitsHashMapEntry* entry = mckits_hashmap_bucket_find_entry_in_list(
         bucket, key, map->compare_func);
     if (entry != NULL) {
-      value = entry->val;
+      if (value != NULL) {
+        *value = entry->val;
+      }
+      return 1;
     }
   } else {
     struct MckitsHashMapRbEntry* entry =
         mckits_hashmap_bucket_find_entry_in_rbtree(bucket, key, key_hash);
     if (entry != NULL) {
-      value = entry->val;
+      if (value != NULL) {
+        *value = entry->val;
+      }
+      return 1;
     }
   }
 
-  return value;
+  return 0;
 }
 
 int mckits_hashmap_contains_key(struct MckitsHashMap* map, void* key) {
-  void* value = mckits_hashmap_get(map, key);
-  return value != NULL ? 1 : 0;
+  void* value = NULL;
+  return mckits_hashmap_get(map, key, &value);
 }
 
 uint64_t mckits_hashmap_hash_func_fnv_1a_64(const void* data, size_t len,

@@ -197,7 +197,8 @@ void test04() {
   char name[1024] = {0};
   sprintf(name, "name_%02d", 2);
   struct MckitsString* key = mckits_string_from_int(123);
-  struct Student* stu = mckits_hashmap_get(map, key);
+  struct Student* stu = NULL;
+  assert(1 == mckits_hashmap_get(map, key, (void**)&stu));
   assert(stu->age == 2);
   assert(mckits_strcmp(name, stu->name.data) == 0);
   mckits_string_drop(key);
