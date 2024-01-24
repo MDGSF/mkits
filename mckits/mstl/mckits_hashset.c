@@ -99,4 +99,5 @@ int mckits_hashset_iterator_next(struct MckitsHashSetIter* iterator,
 
 void mckits_hashset_iterator_drop(struct MckitsHashSetIter* iterator) {
   mckits_hashmap_iterator_drop(iterator->map_iter);
+  mckits_free(iterator);
 }
