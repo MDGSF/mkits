@@ -58,7 +58,7 @@ void mckits_vecdeque_drop(struct MckitsVecDeque* vecdeque);
 /*
 @brief: Drop the VecDeque's data field, reset the len/cap/head to zero.
 */
-void mckits_vecdeque_drop_data(struct MckitsVecDeque* vecdeque);
+void mckits_vecdeque_clear(struct MckitsVecDeque* vecdeque);
 
 /*
 @brief: Returns the number of elements in the VecDeque.
@@ -78,6 +78,58 @@ size_t mckits_vecdeque_capacity(const struct MckitsVecDeque* vecdeque);
   0: means VecDeque is not empty.
 */
 int mckits_vecdeque_is_empty(const struct MckitsVecDeque* vecdeque);
+
+/*
+@brief: Appends an element to the back of the deque.
+*/
+void mckits_vecdeque_push_back(struct MckitsVecDeque* vecdeque, void* value);
+
+/*
+@brief: Prepends an element to the deque.
+*/
+void mckits_vecdeque_push_front(struct MckitsVecDeque* vecdeque, void* value);
+
+/*
+@brief: Removes the last element from the deque. If deque is empty do nothing.
+*/
+void mckits_vecdeque_pop_back(struct MckitsVecDeque* vecdeque);
+
+/*
+@brief: Removes the first element from the deque. If deque is empty do nothing.
+*/
+void mckits_vecdeque_pop_front(struct MckitsVecDeque* vecdeque);
+
+/*
+@brief: Provides a reference to the element at the given index.
+@param vecdeque[in]: VecDeque.
+@param index[in]: index of element will be get.
+@param value[out]: output data pointer.
+@return:
+  If index is valid, return 1.
+  If index is not valid, return 0.
+*/
+int mckits_vecdeque_get(struct MckitsVecDeque* vecdeque, size_t index,
+                        void** value);
+
+/*
+@brief: Provides a reference to the back element.
+@param vecdeque[in]: VecDeque.
+@param value[out]: output data pointer.
+@return:
+  If deque is not empty, return 1.
+  If deque is empty, return 0, and value will not be touched.
+*/
+int mckits_vecdeque_back(struct MckitsVecDeque* vecdeque, void** value);
+
+/*
+@brief: Provides a reference to the front element.
+@param vecdeque[in]: VecDeque.
+@param value[out]: output data pointer.
+@return:
+  If deque is not empty, return 1.
+  If deque is empty, return 0, and value will not be touched.
+*/
+int mckits_vecdeque_front(struct MckitsVecDeque* vecdeque, void** value);
 
 #ifdef __cplusplus
 }
