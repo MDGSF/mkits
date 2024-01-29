@@ -68,8 +68,7 @@ void mckits_hashset_insert(struct MckitsHashSet* mset, void* value) {
 }
 
 int mckits_hashset_remove(struct MckitsHashSet* mset, void* value) {
-  void* ptr = mckits_hashmap_remove(mset->map, value);
-  return ptr != NULL ? 1 : 0;
+  return mckits_hashmap_remove(mset->map, value, NULL);
 }
 
 int mckits_hashset_contains(struct MckitsHashSet* mset, void* value) {

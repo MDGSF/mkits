@@ -103,7 +103,8 @@ void test02() {
       char name[1024] = {0};
       sprintf(name, "name_%02d", i);
 
-      struct Student* stu = (struct Student*)mckits_hashmap_remove(map, key);
+      struct Student* stu = NULL;
+      assert(1 == mckits_hashmap_remove(map, key, (void**)&stu));
       assert(stu != NULL);
       assert(mckits_strcmp(stu->name.data, name) == 0);
       assert(stu->age == i);
@@ -220,8 +221,11 @@ void test05() {
   assert(mckits_hashmap_is_empty(map) == 1);
 
   struct MckitsString* key_not_exists = mckits_string_from_int(123);
-  assert(mckits_hashmap_remove(map, key_not_exists) == NULL);
+  assert(mckits_hashmap_remove(map, key_not_exists, NULL) == 0);
   mckits_string_drop(key_not_exists);
+
+  assert(mckits_hashmap_len(map) == 0);
+  assert(mckits_hashmap_is_empty(map) == 1);
 
   mckits_hashmap_drop(map);
 }

@@ -96,11 +96,12 @@ void mckits_hashmap_insert(struct MckitsHashMap* map, void* key, void* val);
 
 /*
 @brief: Remove key from hashmap, return pointer to value.
+@param val[out]: output value. If you don't want value, pass NULL.
 @return:
-  If key exists, return pointer to value.
-  If key not exists, return NULL.
+  If key exists, return 1.
+  If key not exists, return 0.
 */
-void* mckits_hashmap_remove(struct MckitsHashMap* map, void* key);
+int mckits_hashmap_remove(struct MckitsHashMap* map, void* key, void** value);
 
 /*
 @brief: Query key in hashmap.

@@ -124,7 +124,8 @@ void test03() {
 
   {
     struct MckitsStr name = mckits_str("xiaoming");
-    struct Student* stu = (struct Student*)mckits_hashmap_remove(map, &name);
+    struct Student* stu = NULL;
+    assert(1 == mckits_hashmap_remove(map, &name, (void**)&stu));
     assert(stu != NULL);
     assert(mckits_strcmp(stu->name.data, "xiaoming") == 0);
     assert(stu->age == 18);
@@ -136,7 +137,8 @@ void test03() {
 
   {
     struct MckitsStr name = mckits_str("john");
-    struct Student* stu = (struct Student*)mckits_hashmap_remove(map, &name);
+    struct Student* stu = NULL;
+    assert(1 == mckits_hashmap_remove(map, &name, (void**)&stu));
     assert(stu != NULL);
     assert(mckits_strcmp(stu->name.data, "john") == 0);
     assert(stu->age == 21);
