@@ -102,7 +102,7 @@ int mckits_vecdeque_is_empty(const struct MckitsVecDeque* vecdeque) {
 }
 
 static void mckits_vecdeque_grow_size(struct MckitsVecDeque* vecdeque) {
-  if (mckits_vecdeque_is_empty(vecdeque)) {
+  if (NULL == vecdeque->buffer) {
     // deque is empty
 
     size_t new_capacity = 4;
@@ -160,8 +160,10 @@ void mckits_vecdeque_push_front(struct MckitsVecDeque* vecdeque, void* value) {
   mckits_vecdeque_grow_size(vecdeque);
 
   vecdeque->head = mckits_vecdeque_wrap_sub(vecdeque, vecdeque->head, 1);
+  void* element =
+      (uint8_t*)vecdeque->buffer + vecdeque->head * vecdeque->element_bytes;
+  memcpy(element, value, vecdeque->element_bytes);
   vecdeque->size += 1;
-  memcpy(vecdeque->buffer, value, vecdeque->element_bytes);
 }
 
 void mckits_vecdeque_pop_back(struct MckitsVecDeque* vecdeque) {

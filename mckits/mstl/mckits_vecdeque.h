@@ -81,11 +81,15 @@ int mckits_vecdeque_is_empty(const struct MckitsVecDeque* vecdeque);
 
 /*
 @brief: Appends an element to the back of the deque.
+@param value[in]: pointer to value data, will be copied into VecDeque.
+  VecDeque will not hold value pointer.
 */
 void mckits_vecdeque_push_back(struct MckitsVecDeque* vecdeque, void* value);
 
 /*
 @brief: Prepends an element to the deque.
+@param value[in]: pointer to value data, will be copied into VecDeque.
+  VecDeque will not hold value pointer.
 */
 void mckits_vecdeque_push_front(struct MckitsVecDeque* vecdeque, void* value);
 
