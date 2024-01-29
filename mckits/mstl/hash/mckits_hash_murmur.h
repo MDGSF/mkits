@@ -20,6 +20,16 @@ extern "C" {
 @param seed[in]: hash code initialize value.
 @return hash code
 */
+uint64_t mckits_murmur3_64_86_128(const uint8_t* data, size_t len,
+                                  uint64_t seed);
+
+/*
+@brief: Calculate hash code use murmur3 hash function.
+@param data[in]: Input data.
+@param len[in]: Input data size in bytes.
+@param seed[in]: hash code initialize value.
+@return hash code
+*/
 uint32_t mckits_murmur3_32(const uint8_t* data, size_t len, uint32_t seed);
 
 /*

@@ -22,11 +22,15 @@ set(mckits_mstl_hash_headers
   mstl/hash/mckits_crc.h
   mstl/hash/mckits_hash_fnv.h
   mstl/hash/mckits_hash_murmur.h
+  mstl/hash/mckits_hash_sip.h
+  mstl/hash/mckits_hash_xxhash.h
 )
 
 set(mckits_mstl_hash_srcs
   mstl/hash/mckits_hash_fnv.c
   mstl/hash/mckits_hash_murmur.c
+  mstl/hash/mckits_hash_sip.c
+  mstl/hash/mckits_hash_xxhash.c
 )
 
 set(mckits_mstl_headers

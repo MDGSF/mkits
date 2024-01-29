@@ -29,6 +29,8 @@ extern "C" {
 #include "mckits_crc.h"
 #include "mckits_hash_fnv.h"
 #include "mckits_hash_murmur.h"
+#include "mckits_hash_sip.h"
+#include "mckits_hash_xxhash.h"
 
 // platform
 #include "mckits_mfile.h"
