@@ -72,6 +72,7 @@ endif()
 if(BUILD_UNITTEST)
   enable_testing()
   add_subdirectory(test/mckits)
+  add_subdirectory(test/mcppkits)
 endif()
 
 if(BUILD_BENCH)

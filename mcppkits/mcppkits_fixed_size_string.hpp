@@ -37,12 +37,12 @@ struct fixed_string {
   /*
   @brief: Default move constructor.
   */
-  fixed_string(const fixed_string&&) = default;
+  fixed_string(fixed_string&&) = default;
 
   /*
   @brief: Default move assignment operator.
   */
-  fixed_string& operator=(const fixed_string&&) = default;
+  fixed_string& operator=(fixed_string&&) = default;
 
   /*
   @brief: Construct from a char array.
