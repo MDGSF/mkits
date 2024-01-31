@@ -3,6 +3,7 @@ project(mcppkits VERSION 0.0.1)
 set(mcppkits_headers
   mcppkits.h
   mcppkits_dbgutils.h
+  mcppkits_fixed_size_string.hpp
   mcppkits_fps.h
   mcppkits_strutils.h
 )
