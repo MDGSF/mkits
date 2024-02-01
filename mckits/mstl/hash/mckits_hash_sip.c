@@ -1,5 +1,23 @@
 #include "mckits_hash_sip.h"
 
+static inline void little_endian_encode_u64(uint64_t v, uint8_t *b) {
+  b[0] = (uint8_t)(v);
+  b[1] = (uint8_t)(v >> 8);
+  b[2] = (uint8_t)(v >> 16);
+  b[3] = (uint8_t)(v >> 24);
+  b[4] = (uint8_t)(v >> 32);
+  b[5] = (uint8_t)(v >> 40);
+  b[6] = (uint8_t)(v >> 48);
+  b[7] = (uint8_t)(v >> 56);
+}
+
+static inline uint64_t little_endian_decode_u64(const uint8_t *b) {
+  return (uint64_t)(b[0]) | ((uint64_t)(b[1]) << 8) | ((uint64_t)(b[2]) << 16) |
+         ((uint64_t)(b[3]) << 24) | ((uint64_t)(b[4]) << 32) |
+         ((uint64_t)(b[5]) << 40) | ((uint64_t)(b[6]) << 48) |
+         ((uint64_t)(b[7]) << 56);
+}
+
 //-----------------------------------------------------------------------------
 // SipHash reference C implementation
 //
@@ -19,23 +37,6 @@
 //-----------------------------------------------------------------------------
 static uint64_t sip64(const uint8_t *in, const size_t inlen, uint64_t seed0,
                       uint64_t seed1) {
-#define U8TO64_LE(p)                                          \
-  {(((uint64_t)((p)[0])) | ((uint64_t)((p)[1]) << 8) |        \
-    ((uint64_t)((p)[2]) << 16) | ((uint64_t)((p)[3]) << 24) | \
-    ((uint64_t)((p)[4]) << 32) | ((uint64_t)((p)[5]) << 40) | \
-    ((uint64_t)((p)[6]) << 48) | ((uint64_t)((p)[7]) << 56))}
-#define U64TO8_LE(p, v)                        \
-  {                                            \
-    U32TO8_LE((p), (uint32_t)((v)));           \
-    U32TO8_LE((p) + 4, (uint32_t)((v) >> 32)); \
-  }
-#define U32TO8_LE(p, v)            \
-  {                                \
-    (p)[0] = (uint8_t)((v));       \
-    (p)[1] = (uint8_t)((v) >> 8);  \
-    (p)[2] = (uint8_t)((v) >> 16); \
-    (p)[3] = (uint8_t)((v) >> 24); \
-  }
 #define ROTL(x, b) (uint64_t)(((x) << (b)) | ((x) >> (64 - (b))))
 #define SIPROUND       \
   {                    \
@@ -54,15 +55,15 @@ static uint64_t sip64(const uint8_t *in, const size_t inlen, uint64_t seed0,
     v1 ^= v2;          \
     v2 = ROTL(v2, 32); \
   }
-  uint64_t k0 = U8TO64_LE((uint8_t *)&seed0);
-  uint64_t k1 = U8TO64_LE((uint8_t *)&seed1);
+  uint64_t k0 = little_endian_decode_u64((const uint8_t *)&seed0);
+  uint64_t k1 = little_endian_decode_u64((const uint8_t *)&seed1);
   uint64_t v3 = UINT64_C(0x7465646279746573) ^ k1;
   uint64_t v2 = UINT64_C(0x6c7967656e657261) ^ k0;
   uint64_t v1 = UINT64_C(0x646f72616e646f6d) ^ k1;
   uint64_t v0 = UINT64_C(0x736f6d6570736575) ^ k0;
   const uint8_t *end = in + inlen - (inlen % sizeof(uint64_t));
   for (; in != end; in += 8) {
-    uint64_t m = U8TO64_LE(in);
+    uint64_t m = little_endian_decode_u64(in);
     v3 ^= m;
     SIPROUND;
     SIPROUND;
@@ -100,7 +101,7 @@ static uint64_t sip64(const uint8_t *in, const size_t inlen, uint64_t seed0,
   SIPROUND;
   b = v0 ^ v1 ^ v2 ^ v3;
   uint64_t out = 0;
-  U64TO8_LE((uint8_t *)&out, b);
+  little_endian_encode_u64(b, (uint8_t *)&out);
   return out;
 }
 
