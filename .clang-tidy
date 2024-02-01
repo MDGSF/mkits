@@ -1,0 +1,45 @@
+---
+
+# NOTE: disable clang-analyzer-valist.Uninitialized because of BUG:
+#   https://github.com/llvm/llvm-project/issues/40656
+
+Checks: |-
+  clang-diagnostic-*,
+  clang-analyzer-*,
+  -clang-analyzer-valist.Uninitialized,
+  -clang-analyzer-security.FloatLoopCounter,
+  google-*,
+  -google-readability-function-size,
+  bugprone-*,
+  -bugprone-easily-swappable-parameters,
+  -bugprone-forward-declaration-namespace,
+  cppcoreguidelines-*,
+  -cppcoreguidelines-avoid-c-arrays,
+  -cppcoreguidelines-avoid-magic-numbers,
+  -cppcoreguidelines-avoid-non-const-global-variables,
+  -cppcoreguidelines-owning-memory,
+  -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
+  -cppcoreguidelines-pro-bounds-constant-array-index,
+  -cppcoreguidelines-pro-bounds-pointer-arithmetic,
+  -cppcoreguidelines-pro-type-const-cast,
+  -cppcoreguidelines-pro-type-reinterpret-cast,
+  -cppcoreguidelines-pro-type-union-access,
+  -cppcoreguidelines-pro-type-vararg,
+  -cppcoreguidelines-special-member-functions,
+  hicpp-*,
+  -hicpp-avoid-c-arrays,
+  -hicpp-no-array-decay,
+  -hicpp-special-member-functions,
+  -hicpp-vararg,
+  -hicpp-signed-bitwise,
+  misc-*,
+  -misc-const-correctness,
+  -misc-no-recursion,
+  performance-*,
+WarningsAsErrors: '*'
+HeaderFilterRegex: ''
+AnalyzeTemporaryDtors: false
+CheckOptions:
+  - key: 'misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic'
+    value: '1'
+...
