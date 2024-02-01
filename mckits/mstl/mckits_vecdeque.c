@@ -135,7 +135,7 @@ static void mckits_vecdeque_grow_size(struct MckitsVecDeque* vecdeque) {
       size_t tail_size = tail_len * vecdeque->element_bytes;
 
       memcpy(new_buffer, head, head_size);
-      memcpy(new_buffer + head_size, tail, tail_size);
+      memcpy((uint8_t*)new_buffer + head_size, tail, tail_size);
     }
 
     mckits_free(vecdeque->buffer);

@@ -23,9 +23,15 @@ echo "${mkits_cppcheck_args[@]}"
 
 # cppcheck -h 查看帮助文档
 cppcheck \
+  --enable=all \
+  --inconclusive \
+  --library=posix \
+  --suppress=unusedFunction \
   --project=$BUILD_HOME/compile_commands.json \
   -i ${SOLUTION_HOME}/build \
   -i ${SOLUTION_HOME}/scripts \
+  -i ${SOLUTION_HOME}/bench \
+  -i ${SOLUTION_HOME}/test \
   ${mkits_cppcheck_args[@]} \
   ${SOLUTION_HOME} \
   2> cppcheck_err.txt
