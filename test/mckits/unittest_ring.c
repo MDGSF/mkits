@@ -22,7 +22,7 @@ void verify(struct MckitsRing* r, int N, int64_t sum) {
     assert(s == sum);
   }
 
-  if (r == NULL) {
+  if (r == NULL || N == 0) {
     return;
   }
 
