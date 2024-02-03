@@ -32,7 +32,7 @@ static void err_doit(int show_errno, int log_level, const char* filename,
 
   char buf[MCKITS_LOG_MAX_LINE] = {0};
   vsnprintf(buf, sizeof(buf), fmt, ap);
-  int n = strlen(buf);
+  size_t n = strlen(buf);
 
   if (show_errno) {
     snprintf(buf + n, sizeof(buf) - n, ": %s", strerror(errno_save));

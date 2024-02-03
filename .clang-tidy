@@ -36,6 +36,7 @@ Checks: |-
   -misc-const-correctness,
   -misc-no-recursion,
   performance-*,
+  -clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling,
 WarningsAsErrors: '*'
 HeaderFilterRegex: ''
 AnalyzeTemporaryDtors: false

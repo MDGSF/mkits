@@ -69,7 +69,7 @@ static uint64_t sip64(const uint8_t *in, const size_t inlen, uint64_t seed0,
     SIPROUND;
     v0 ^= m;
   }
-  const int left = inlen & 7;
+  const int left = (const int)(inlen & 7);
   uint64_t b = ((uint64_t)inlen) << 56;
   switch (left) {
     case 7:
@@ -88,6 +88,8 @@ static uint64_t sip64(const uint8_t *in, const size_t inlen, uint64_t seed0,
       b |= ((uint64_t)in[0]);
       break;
     case 0:
+      break;
+    default:
       break;
   }
   v3 ^= b;

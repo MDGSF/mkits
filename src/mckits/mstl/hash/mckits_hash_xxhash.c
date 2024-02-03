@@ -18,13 +18,13 @@
 #define XXH_PRIME_5 2870177450012600261ULL
 
 static uint64_t XXH_read64(const void* memptr) {
-  uint64_t val;
+  uint64_t val = 0;
   memcpy(&val, memptr, sizeof(val));
   return val;
 }
 
 static uint32_t XXH_read32(const void* memptr) {
-  uint32_t val;
+  uint32_t val = 0;
   memcpy(&val, memptr, sizeof(val));
   return val;
 }
@@ -36,7 +36,7 @@ static uint64_t XXH_rotl64(uint64_t x, int r) {
 static uint64_t xxh3(const void* data, size_t len, uint64_t seed) {
   const uint8_t* p = (const uint8_t*)data;
   const uint8_t* const end = p + len;
-  uint64_t h64;
+  uint64_t h64 = 0;
 
   if (len >= 32) {
     const uint8_t* const limit = end - 32;

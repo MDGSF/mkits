@@ -2,6 +2,7 @@
 #define MKITS_MCKITS_CORE_MCKITS_RAWPIPE_H_
 
 #include <stddef.h>
+#include <sys/types.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -49,8 +50,8 @@ int mckits_rawpipe_write_fd(struct MckitsRawPipe* rawpipe);
   On success, the number of bytes written is returned.
   On error, -1 is returned.
 */
-int mckits_rawpipe_write(struct MckitsRawPipe* rawpipe, const void* buf,
-                         size_t count);
+ssize_t mckits_rawpipe_write(struct MckitsRawPipe* rawpipe, const void* buf,
+                             size_t count);
 
 /*
 @brief: Read data from pipe_fd_[0].
@@ -60,7 +61,8 @@ int mckits_rawpipe_write(struct MckitsRawPipe* rawpipe, const void* buf,
   On success, the number of bytes read is returned.
   On error, -1 is returned.
 */
-int mckits_rawpipe_read(struct MckitsRawPipe* rawpipe, void* buf, size_t count);
+ssize_t mckits_rawpipe_read(struct MckitsRawPipe* rawpipe, void* buf,
+                            size_t count);
 
 #ifdef __cplusplus
 }

@@ -44,8 +44,7 @@ static void s_mckits_list_remove(struct MckitsList* list,
 /*
 @brief: Move node next to at.
 */
-static void s_mckits_list_move(struct MckitsList* list,
-                               struct MckitsListNode* node,
+static void s_mckits_list_move(struct MckitsListNode* node,
                                struct MckitsListNode* at) {
   if (node == at) {
     return;
@@ -168,7 +167,7 @@ void mckits_list_move_to_front(struct MckitsList* list,
   if (node->list != list || list->root.next == node) {
     return;
   }
-  s_mckits_list_move(list, node, &list->root);
+  s_mckits_list_move(node, &list->root);
 }
 
 void mckits_list_move_to_back(struct MckitsList* list,
@@ -176,7 +175,7 @@ void mckits_list_move_to_back(struct MckitsList* list,
   if (node->list != list || list->root.prev == node) {
     return;
   }
-  s_mckits_list_move(list, node, list->root.prev);
+  s_mckits_list_move(node, list->root.prev);
 }
 
 void mckits_list_move_before(struct MckitsList* list,
@@ -185,7 +184,7 @@ void mckits_list_move_before(struct MckitsList* list,
   if (node->list != list || node == mark || mark->list != list) {
     return;
   }
-  s_mckits_list_move(list, node, mark->prev);
+  s_mckits_list_move(node, mark->prev);
 }
 
 void mckits_list_move_after(struct MckitsList* list,
@@ -194,7 +193,7 @@ void mckits_list_move_after(struct MckitsList* list,
   if (node->list != list || node == mark || mark->list != list) {
     return;
   }
-  s_mckits_list_move(list, node, mark);
+  s_mckits_list_move(node, mark);
 }
 
 void mckits_list_push_back_list(struct MckitsList* list,

@@ -7,13 +7,13 @@
 // Murmur3_86_128
 //-----------------------------------------------------------------------------
 static uint64_t mm86128(const void* key, const int len, uint32_t seed) {
-#define ROTL32(x, r) ((x << r) | (x >> (32 - r)))
-#define FMIX32(h)  \
-  h ^= h >> 16;    \
-  h *= 0x85ebca6b; \
-  h ^= h >> 13;    \
-  h *= 0xc2b2ae35; \
-  h ^= h >> 16;
+#define ROTL32(x, r) (((x) << (r)) | ((x) >> (32 - (r))))
+#define FMIX32(h)    \
+  (h) ^= (h) >> 16;  \
+  (h) *= 0x85ebca6b; \
+  (h) ^= (h) >> 13;  \
+  (h) *= 0xc2b2ae35; \
+  (h) ^= (h) >> 16;
   const uint8_t* data = (const uint8_t*)key;
   const int nblocks = len / 16;
   uint32_t h1 = seed;
@@ -24,7 +24,7 @@ static uint64_t mm86128(const void* key, const int len, uint32_t seed) {
   uint32_t c2 = 0xab0e9789;
   uint32_t c3 = 0x38b34ae5;
   uint32_t c4 = 0xa1e38b93;
-  const uint32_t* blocks = (const uint32_t*)(data + nblocks * 16);
+  const uint32_t* blocks = (const uint32_t*)(data + (ptrdiff_t)(nblocks * 16));
   for (int i = -nblocks; i; i++) {
     uint32_t k1 = blocks[i * 4 + 0];
     uint32_t k2 = blocks[i * 4 + 1];
@@ -59,7 +59,7 @@ static uint64_t mm86128(const void* key, const int len, uint32_t seed) {
     h4 += h1;
     h4 = h4 * 5 + 0x32ac3b17;
   }
-  const uint8_t* tail = (const uint8_t*)(data + nblocks * 16);
+  const uint8_t* tail = data + (ptrdiff_t)(nblocks * 16);
   uint32_t k1 = 0;
   uint32_t k2 = 0;
   uint32_t k3 = 0;
@@ -139,7 +139,7 @@ static uint64_t mm86128(const void* key, const int len, uint32_t seed) {
 
 uint64_t mckits_murmur3_64_86_128(const uint8_t* data, size_t len,
                                   uint64_t seed) {
-  return mm86128(data, len, seed);
+  return mm86128(data, (const int)len, seed);
 }
 
 uint32_t mckits_murmur3_32(const uint8_t* data, size_t len, uint32_t seed) {
@@ -177,6 +177,8 @@ uint32_t mckits_murmur3_32(const uint8_t* data, size_t len, uint32_t seed) {
       /* fall through */
     case 1:
       k ^= data[0];
+    default:
+      break;
   }
   k *= 0xcc9e2d51;
   k = (k << 15) | (k >> 17);
@@ -224,6 +226,8 @@ uint32_t mckits_murmur2_32(const uint8_t* data, size_t len) {
     case 1:
       h ^= data[0];
       h *= 0x5bd1e995;
+    default:
+      break;
   }
 
   h ^= h >> 13;

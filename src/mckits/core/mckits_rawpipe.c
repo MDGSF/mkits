@@ -8,12 +8,12 @@
 #include "mckits/core/mckits_mlog.h"
 #include "mckits/core/mckits_msock.h"
 
-#define close_fd(fd) \
-  do {               \
-    if (fd != -1) {  \
-      close(fd);     \
-      fd = -1;       \
-    }                \
+#define close_fd(fd)  \
+  do {                \
+    if ((fd) != -1) { \
+      close(fd);      \
+      (fd) = -1;      \
+    }                 \
   } while (0);
 
 static void rawpipe_clear(struct MckitsRawPipe* rawpipe) {
@@ -57,18 +57,18 @@ int mckits_rawpipe_write_fd(struct MckitsRawPipe* rawpipe) {
   return rawpipe->pipe_fd_[1];
 }
 
-int mckits_rawpipe_write(struct MckitsRawPipe* rawpipe, const void* buf,
-                         size_t count) {
-  int ret = 0;
+ssize_t mckits_rawpipe_write(struct MckitsRawPipe* rawpipe, const void* buf,
+                             size_t count) {
+  ssize_t ret = 0;
   do {
     ret = write(rawpipe->pipe_fd_[1], buf, count);
   } while (ret == -1 && errno == EINTR);
   return ret;
 }
 
-int mckits_rawpipe_read(struct MckitsRawPipe* rawpipe, void* buf,
-                        size_t count) {
-  int ret = 0;
+ssize_t mckits_rawpipe_read(struct MckitsRawPipe* rawpipe, void* buf,
+                            size_t count) {
+  ssize_t ret = 0;
   do {
     ret = read(rawpipe->pipe_fd_[0], buf, count);
   } while (ret == -1 && errno == EINTR);
