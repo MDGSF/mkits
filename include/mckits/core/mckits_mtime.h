@@ -1,5 +1,5 @@
-#ifndef MKITS_MCKITS_CORE_MCKITS_MTIME_H_
-#define MKITS_MCKITS_CORE_MCKITS_MTIME_H_
+#ifndef MKITS_INCLUDE_MCKITS_CORE_MCKITS_MTIME_H_
+#define MKITS_INCLUDE_MCKITS_CORE_MCKITS_MTIME_H_
 
 #include <stdint.h>
 
@@ -42,4 +42,4 @@ void mckits_sleep_to(int64_t microtimestamp);
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_CORE_MCKITS_MTIME_H_

@@ -1,5 +1,5 @@
-#ifndef MKITS_MCKITS_PLATFORM_MCKITS_MFILE_H_
-#define MKITS_MCKITS_PLATFORM_MCKITS_MFILE_H_
+#ifndef MKITS_INCLUDE_MCKITS_CORE_MCKITS_MFILE_H_
+#define MKITS_INCLUDE_MCKITS_CORE_MCKITS_MFILE_H_
 
 #include <sys/types.h>
 
@@ -106,4 +106,4 @@ ssize_t mckits_write_to_file(const char* pathname, const void* buf,
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_CORE_MCKITS_MFILE_H_

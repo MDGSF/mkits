@@ -1,6 +1,6 @@
 // Inspired by skynet/atomic.h
-#ifndef MKITS_MCKITS_CORE_THREAD_MCKITS_ATOMIC_H_
-#define MKITS_MCKITS_CORE_THREAD_MCKITS_ATOMIC_H_
+#ifndef MKITS_INCLUDE_MCKITS_CORE_THREAD_MCKITS_ATOMIC_H_
+#define MKITS_INCLUDE_MCKITS_CORE_THREAD_MCKITS_ATOMIC_H_
 
 #include <stdatomic.h>
 #include <stddef.h>
@@ -46,4 +46,4 @@ static inline int ATOM_CAS_POINTER(atomic_uintptr_t *ptr, uintptr_t oval,
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_CORE_THREAD_MCKITS_ATOMIC_H_

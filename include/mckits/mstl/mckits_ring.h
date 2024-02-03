@@ -1,6 +1,6 @@
 // Inspired by go/src/container/ring
-#ifndef MKITS_MCKITS_MSTL_MCKITS_RING_H_
-#define MKITS_MCKITS_MSTL_MCKITS_RING_H_
+#ifndef MKITS_INCLUDE_MCKITS_MSTL_MCKITS_RING_H_
+#define MKITS_INCLUDE_MCKITS_MSTL_MCKITS_RING_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -79,4 +79,4 @@ void mckits_ring_do(struct MckitsRing* ring, void (*f)(void*));
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_MSTL_MCKITS_RING_H_

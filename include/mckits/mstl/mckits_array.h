@@ -1,6 +1,6 @@
 // Inspired by nginx/ngx_array
-#ifndef MKITS_MCKITS_MSTL_MCKITS_ARRAY_H_
-#define MKITS_MCKITS_MSTL_MCKITS_ARRAY_H_
+#ifndef MKITS_INCLUDE_MCKITS_MSTL_MCKITS_ARRAY_H_
+#define MKITS_INCLUDE_MCKITS_MSTL_MCKITS_ARRAY_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -57,4 +57,4 @@ void* mckits_array_push_n(struct MckitsArray* array, size_t n);
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_MSTL_MCKITS_ARRAY_H_

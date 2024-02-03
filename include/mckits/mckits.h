@@ -1,5 +1,5 @@
-#ifndef MKITS_MCKITS_MCKITS_H_
-#define MKITS_MCKITS_MCKITS_H_
+#ifndef MKITS_INCLUDE_MCKITS_MCKITS_H_
+#define MKITS_INCLUDE_MCKITS_MCKITS_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -69,4 +69,4 @@ extern "C" {
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_MCKITS_H_

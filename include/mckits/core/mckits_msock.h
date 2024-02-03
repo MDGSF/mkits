@@ -1,5 +1,5 @@
-#ifndef MKITS_MCKITS_CORE_MCKITS_MSOCK_H_
-#define MKITS_MCKITS_CORE_MCKITS_MSOCK_H_
+#ifndef MKITS_INCLUDE_MCKITS_CORE_MCKITS_MSOCK_H_
+#define MKITS_INCLUDE_MCKITS_CORE_MCKITS_MSOCK_H_
 
 #include <netinet/in.h>
 #include <stdint.h>
@@ -191,4 +191,4 @@ uint16_t mckits_inet_port(const struct sockaddr* addr);
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_CORE_MCKITS_MSOCK_H_

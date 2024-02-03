@@ -1,5 +1,5 @@
-#ifndef MKITS_MCKITS_CORE_QUEUE_MCKITS_ADT_FLOWQUEUE_H_
-#define MKITS_MCKITS_CORE_QUEUE_MCKITS_ADT_FLOWQUEUE_H_
+#ifndef MKITS_INCLUDE_MCKITS_CORE_QUEUE_MCKITS_ADT_FLOWQUEUE_H_
+#define MKITS_INCLUDE_MCKITS_CORE_QUEUE_MCKITS_ADT_FLOWQUEUE_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -84,4 +84,4 @@ void* mckits_flowqueue_pop(struct MckitsFlowQueue* flow_queue);
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_CORE_QUEUE_MCKITS_ADT_FLOWQUEUE_H_

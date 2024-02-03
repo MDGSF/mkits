@@ -1,5 +1,5 @@
-#ifndef MKITS_MCPPKITS_MCPPKITS_FPS_H_
-#define MKITS_MCPPKITS_MCPPKITS_FPS_H_
+#ifndef MKITS_INCLUDE_MCPPKITS_MCPPKITS_FPS_H_
+#define MKITS_INCLUDE_MCPPKITS_MCPPKITS_FPS_H_
 
 #include <chrono>
 #include <cstdio>
@@ -48,4 +48,4 @@ class CFPS {
 }  // namespace fps
 }  // namespace mcppkits
 
-#endif
+#endif  // MKITS_INCLUDE_MCPPKITS_MCPPKITS_FPS_H_

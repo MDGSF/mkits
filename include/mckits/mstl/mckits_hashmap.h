@@ -1,5 +1,5 @@
-#ifndef MKITS_MCKITS_MSTL_MCKITS_HASHMAP_H_
-#define MKITS_MCKITS_MSTL_MCKITS_HASHMAP_H_
+#ifndef MKITS_INCLUDE_MCKITS_MSTL_MCKITS_HASHMAP_H_
+#define MKITS_INCLUDE_MCKITS_MSTL_MCKITS_HASHMAP_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -163,4 +163,4 @@ void mckits_hashmap_dbg(struct MckitsHashMap* map);
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_MSTL_MCKITS_HASHMAP_H_

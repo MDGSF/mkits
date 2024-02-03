@@ -1,5 +1,5 @@
-#ifndef MKITS_MCKITS_MSTL_MCKITS_STRING_H_
-#define MKITS_MCKITS_MSTL_MCKITS_STRING_H_
+#ifndef MKITS_INCLUDE_MCKITS_MSTL_MCKITS_STRING_H_
+#define MKITS_INCLUDE_MCKITS_MSTL_MCKITS_STRING_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -299,4 +299,4 @@ int mckits_strncasecmp(uint8_t* s1, uint8_t* s2, size_t n);
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_MSTL_MCKITS_STRING_H_

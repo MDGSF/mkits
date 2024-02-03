@@ -1,5 +1,5 @@
-#ifndef MKITS_MCKITS_CORE_MCKITS_RAWPIPE_H_
-#define MKITS_MCKITS_CORE_MCKITS_RAWPIPE_H_
+#ifndef MKITS_INCLUDE_MCKITS_CORE_MCKITS_RAWPIPE_H_
+#define MKITS_INCLUDE_MCKITS_CORE_MCKITS_RAWPIPE_H_
 
 #include <stddef.h>
 #include <sys/types.h>
@@ -68,4 +68,4 @@ ssize_t mckits_rawpipe_read(struct MckitsRawPipe* rawpipe, void* buf,
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_CORE_MCKITS_RAWPIPE_H_

@@ -1,11 +1,11 @@
 // Inspired by nginx/ngx_rbtree
-#ifndef MKITS_MCKITS_MSTL_MCKITS_RBTREE_H_
-#define MKITS_MCKITS_MSTL_MCKITS_RBTREE_H_
+#ifndef MKITS_INCLUDE_MCKITS_MSTL_MCKITS_RBTREE_H_
+#define MKITS_INCLUDE_MCKITS_MSTL_MCKITS_RBTREE_H_
 
 #include <stddef.h>
 #include <stdint.h>
 
-#include "mckits_string.h"
+#include "mckits/mstl/mckits_string.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -155,4 +155,4 @@ struct MckitsRbtreeStrNode* mckits_rbtree_str_lookup(struct MckitsRbtree* tree,
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_MSTL_MCKITS_RBTREE_H_

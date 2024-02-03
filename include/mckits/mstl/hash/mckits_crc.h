@@ -1,5 +1,5 @@
-#ifndef MKITS_MCKITS_CORE_HASH_MCKITS_CRC_H_
-#define MKITS_MCKITS_CORE_HASH_MCKITS_CRC_H_
+#ifndef MKITS_INCLUDE_MCKITS_MSTL_HASH_MCKITS_CRC_H_
+#define MKITS_INCLUDE_MCKITS_MSTL_HASH_MCKITS_CRC_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -26,4 +26,4 @@ static inline uint32_t mckits_crc(const uint8_t* data, size_t size) {
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_MSTL_HASH_MCKITS_CRC_H_

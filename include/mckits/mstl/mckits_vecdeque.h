@@ -1,5 +1,5 @@
-#ifndef MKITS_MCKITS_MSTL_MCKITS_VECDEQUE_H_
-#define MKITS_MCKITS_MSTL_MCKITS_VECDEQUE_H_
+#ifndef MKITS_INCLUDE_MCKITS_MSTL_MCKITS_VECDEQUE_H_
+#define MKITS_INCLUDE_MCKITS_MSTL_MCKITS_VECDEQUE_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -139,4 +139,4 @@ int mckits_vecdeque_front(struct MckitsVecDeque* vecdeque, void** value);
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_MSTL_MCKITS_VECDEQUE_H_

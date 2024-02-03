@@ -1,11 +1,11 @@
-#ifndef MKITS_MCPPKITS_MCPPKITS_H_
-#define MKITS_MCPPKITS_MCPPKITS_H_
+#ifndef MKITS_INCLUDE_MCPPKITS_MCPPKITS_H_
+#define MKITS_INCLUDE_MCPPKITS_MCPPKITS_H_
 
-#include "mcppkits_dbgutils.h"
-#include "mcppkits_fixed_size_string.hpp"
-#include "mcppkits_fps.h"
-#include "mcppkits_strutils.h"
+#include "mcppkits/mcppkits_dbgutils.h"
+#include "mcppkits/mcppkits_fixed_size_string.hpp"
+#include "mcppkits/mcppkits_fps.h"
+#include "mcppkits/mcppkits_strutils.h"
 
 namespace mcppkits {}
 
-#endif
+#endif  // MKITS_INCLUDE_MCPPKITS_MCPPKITS_H_

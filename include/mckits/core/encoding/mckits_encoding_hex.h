@@ -1,5 +1,5 @@
-#ifndef MKITS_MCKITS_CORE_ENCODING_MCKITS_ENCODING_HEX_H_
-#define MKITS_MCKITS_CORE_ENCODING_MCKITS_ENCODING_HEX_H_
+#ifndef MKITS_INCLUDE_MCKITS_CORE_ENCODING_MCKITS_ENCODING_HEX_H_
+#define MKITS_INCLUDE_MCKITS_CORE_ENCODING_MCKITS_ENCODING_HEX_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -45,4 +45,4 @@ int mckits_hex_decode(uint8_t* dst, const uint8_t* src, size_t src_size);
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_CORE_ENCODING_MCKITS_ENCODING_HEX_H_

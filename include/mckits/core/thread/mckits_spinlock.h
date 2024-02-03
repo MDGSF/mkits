@@ -1,8 +1,8 @@
 // Inspired by skynet/spinlock.h
-#ifndef MKITS_MCKITS_CORE_THREAD_MCKITS_SPINLOCK_H_
-#define MKITS_MCKITS_CORE_THREAD_MCKITS_SPINLOCK_H_
+#ifndef MKITS_INCLUDE_MCKITS_CORE_THREAD_MCKITS_SPINLOCK_H_
+#define MKITS_INCLUDE_MCKITS_CORE_THREAD_MCKITS_SPINLOCK_H_
 
-#include "mckits_atomic.h"
+#include "mckits/core/thread/mckits_atomic.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -45,4 +45,4 @@ static inline void mckits_spinlock_unlock(struct MckitsSpinlock* lock) {
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_CORE_THREAD_MCKITS_SPINLOCK_H_

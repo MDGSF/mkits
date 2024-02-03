@@ -1,5 +1,5 @@
-#ifndef MKITS_MCKITS_CORE_MCKITS_STRCONV_H_
-#define MKITS_MCKITS_CORE_MCKITS_STRCONV_H_
+#ifndef MKITS_INCLUDE_MCKITS_CORE_MCKITS_STRCONV_H_
+#define MKITS_INCLUDE_MCKITS_CORE_MCKITS_STRCONV_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -38,4 +38,4 @@ void mckits_int64_to_char_string(int64_t num, char* str, size_t size);
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_CORE_MCKITS_STRCONV_H_

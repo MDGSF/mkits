@@ -1,5 +1,5 @@
-#ifndef MKITS_MCKITS_PLATFORM_MCKITS_MOS_H_
-#define MKITS_MCKITS_PLATFORM_MCKITS_MOS_H_
+#ifndef MKITS_INCLUDE_MCKITS_CORE_MCKITS_MOS_H_
+#define MKITS_INCLUDE_MCKITS_CORE_MCKITS_MOS_H_
 
 #include <stddef.h>
 #include <sys/types.h>
@@ -48,4 +48,4 @@ int mckits_hardware_concurrency();
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_CORE_MCKITS_MOS_H_

@@ -1,7 +1,8 @@
-#ifndef MKITS_MCPPKITS_MCPPKITS_STRUTILS_H_
-#define MKITS_MCPPKITS_MCPPKITS_STRUTILS_H_
+#ifndef MKITS_INCLUDE_MCPPKITS_MCPPKITS_STRUTILS_H_
+#define MKITS_INCLUDE_MCPPKITS_MCPPKITS_STRUTILS_H_
 
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace mcppkits {
@@ -145,4 +146,4 @@ std::vector<std::pair<std::string, std::string>> parse_key_value_list(
 }  // namespace strutils
 }  // namespace mcppkits
 
-#endif
+#endif  // MKITS_INCLUDE_MCPPKITS_MCPPKITS_STRUTILS_H_

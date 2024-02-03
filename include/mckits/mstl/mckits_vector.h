@@ -1,5 +1,5 @@
-#ifndef MKITS_MCKITS_MSTL_MCKITS_VECTOR_H_
-#define MKITS_MCKITS_MSTL_MCKITS_VECTOR_H_
+#ifndef MKITS_INCLUDE_MCKITS_MSTL_MCKITS_VECTOR_H_
+#define MKITS_INCLUDE_MCKITS_MSTL_MCKITS_VECTOR_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -157,4 +157,4 @@ void mckits_vec_swap(struct MckitsVector* mvec, size_t a, size_t b);
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_MSTL_MCKITS_VECTOR_H_

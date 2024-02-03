@@ -1,5 +1,5 @@
-#ifndef MKITS_MCKITS_CORE_MCKITS_MLOG_H_
-#define MKITS_MCKITS_CORE_MCKITS_MLOG_H_
+#ifndef MKITS_INCLUDE_MCKITS_CORE_MCKITS_MLOG_H_
+#define MKITS_INCLUDE_MCKITS_CORE_MCKITS_MLOG_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -56,4 +56,4 @@ void err_quit_impl(const char* filename, int line, const char* fmt, ...);
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_CORE_MCKITS_MLOG_H_

@@ -1,5 +1,5 @@
-#ifndef MKITS_MCKITS_MLIBC_MCKITS_MSTL_UTILS_H_
-#define MKITS_MCKITS_MLIBC_MCKITS_MSTL_UTILS_H_
+#ifndef MKITS_INCLUDE_MCKITS_MLIBC_MCKITS_MLIBC_UTILS_H_
+#define MKITS_INCLUDE_MCKITS_MLIBC_MCKITS_MLIBC_UTILS_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -58,4 +58,4 @@ int found_int_array(int num, const int* array, size_t size);
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_MLIBC_MCKITS_MLIBC_UTILS_H_

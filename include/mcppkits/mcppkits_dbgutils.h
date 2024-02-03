@@ -1,5 +1,5 @@
-#ifndef MKITS_MCPPKITS_MCPPKITS_DBGUTILS_H_
-#define MKITS_MCPPKITS_MCPPKITS_DBGUTILS_H_
+#ifndef MKITS_INCLUDE_MCPPKITS_MCPPKITS_DBGUTILS_H_
+#define MKITS_INCLUDE_MCPPKITS_MCPPKITS_DBGUTILS_H_
 
 #include <iostream>
 #include <map>
@@ -49,4 +49,4 @@ void PrintMap(const std::map<KeyType, ValType>& m) {
 
 }  // namespace mcppkits
 
-#endif
+#endif  // MKITS_INCLUDE_MCPPKITS_MCPPKITS_DBGUTILS_H_

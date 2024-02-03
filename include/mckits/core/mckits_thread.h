@@ -1,5 +1,5 @@
-#ifndef MKITS_MCKITS_PLATFORM_MCKITS_THREAD_H_
-#define MKITS_MCKITS_PLATFORM_MCKITS_THREAD_H_
+#ifndef MKITS_INCLUDE_MCKITS_CORE_MCKITS_THREAD_H_
+#define MKITS_INCLUDE_MCKITS_CORE_MCKITS_THREAD_H_
 
 #include <stddef.h>
 #include <sys/types.h>
@@ -57,4 +57,4 @@ ssize_t mckits_get_thread_cpu_affinity(int* cpus, size_t len);
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_CORE_MCKITS_THREAD_H_

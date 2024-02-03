@@ -1,5 +1,5 @@
-#ifndef MKITS_MCKITS_MSTL_MCKITS_HASHSET_H_
-#define MKITS_MCKITS_MSTL_MCKITS_HASHSET_H_
+#ifndef MKITS_INCLUDE_MCKITS_MSTL_MCKITS_HASHSET_H_
+#define MKITS_INCLUDE_MCKITS_MSTL_MCKITS_HASHSET_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -138,4 +138,4 @@ void mckits_hashset_iterator_drop(struct MckitsHashSetIter* iterator);
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_MSTL_MCKITS_HASHSET_H_

@@ -1,5 +1,5 @@
-#ifndef MKITS_MCKITS_MLIBC_MCKITS_MALLOC_H_
-#define MKITS_MCKITS_MLIBC_MCKITS_MALLOC_H_
+#ifndef MKITS_INCLUDE_MCKITS_MLIBC_MCKITS_MALLOC_H_
+#define MKITS_INCLUDE_MCKITS_MLIBC_MCKITS_MALLOC_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -48,4 +48,4 @@ void mckits_free(void* ptr);
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_MLIBC_MCKITS_MALLOC_H_

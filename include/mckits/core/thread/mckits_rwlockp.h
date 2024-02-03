@@ -1,6 +1,6 @@
 // Inspired by skynet/rwlock.h
-#ifndef MKITS_MCKITS_CORE_THREAD_MCKITS_RWLOCKP_H_
-#define MKITS_MCKITS_CORE_THREAD_MCKITS_RWLOCKP_H_
+#ifndef MKITS_INCLUDE_MCKITS_CORE_THREAD_MCKITS_RWLOCKP_H_
+#define MKITS_INCLUDE_MCKITS_CORE_THREAD_MCKITS_RWLOCKP_H_
 
 #include <pthread.h>
 
@@ -36,4 +36,4 @@ static inline void mckits_rwlockp_runlock(struct MckitsRWLockP* lock) {
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_CORE_THREAD_MCKITS_RWLOCKP_H_

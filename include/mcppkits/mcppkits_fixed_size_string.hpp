@@ -1,5 +1,5 @@
-#ifndef MKITS_MCPPKITS_MCPPKITS_FIXED_SIZE_STRING_H_
-#define MKITS_MCPPKITS_MCPPKITS_FIXED_SIZE_STRING_H_
+#ifndef MKITS_INCLUDE_MCPPKITS_MCPPKITS_FIXED_SIZE_STRING_HPP_
+#define MKITS_INCLUDE_MCPPKITS_MCPPKITS_FIXED_SIZE_STRING_HPP_
 
 #include <cstring>
 #include <string>
@@ -72,7 +72,7 @@ struct fixed_string {
   /*
   @brief: Construct from a C string.
   */
-  fixed_string(const char* c_string) noexcept : fixed_string() {
+  explicit fixed_string(const char* c_string) noexcept : fixed_string() {
     set(c_string != nullptr ? c_string : "");
   }
 
@@ -87,7 +87,7 @@ struct fixed_string {
   /*
   @brief: Construct from a std::string.
   */
-  fixed_string(const std::string& str) noexcept : fixed_string() {
+  explicit fixed_string(const std::string& str) noexcept : fixed_string() {
     set(str.c_str());
   }
 
@@ -214,8 +214,10 @@ struct fixed_string {
 
  private:
   void set(const char* c_string) noexcept {
-    char* result = (char*)memccpy(data_, c_string, '\0', MAX_CHARS);
-    len_ = (result == nullptr) ? MAX_CHARS : (size_t)(result - data_) - 1u;
+    char* result =
+        reinterpret_cast<char*>(memccpy(data_, c_string, '\0', MAX_CHARS));
+    len_ = (result == nullptr) ? MAX_CHARS
+                               : static_cast<size_t>(result - data_) - 1u;
   }
 
   // string data, including ending null character.
@@ -229,4 +231,4 @@ using string_255 = fixed_string<255>;
 }  // namespace mstl
 }  // namespace mcppkits
 
-#endif
+#endif  // MKITS_INCLUDE_MCPPKITS_MCPPKITS_FIXED_SIZE_STRING_HPP_

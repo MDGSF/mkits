@@ -1,5 +1,5 @@
-#ifndef MKITS_MCKITS_CORE_MCKITS_MRANDOM_H_
-#define MKITS_MCKITS_CORE_MCKITS_MRANDOM_H_
+#ifndef MKITS_INCLUDE_MCKITS_CORE_MCKITS_MRANDOM_H_
+#define MKITS_INCLUDE_MCKITS_CORE_MCKITS_MRANDOM_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -41,4 +41,4 @@ int mckits_random_num(int start, int end);
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_CORE_MCKITS_MRANDOM_H_

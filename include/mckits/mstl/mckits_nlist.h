@@ -1,6 +1,6 @@
 // Inspired by nginx/ngx_queue
-#ifndef MKITS_MCKITS_MSTL_MCKITS_NLIST_H_
-#define MKITS_MCKITS_MSTL_MCKITS_NLIST_H_
+#ifndef MKITS_INCLUDE_MCKITS_MSTL_MCKITS_NLIST_H_
+#define MKITS_INCLUDE_MCKITS_MSTL_MCKITS_NLIST_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -154,4 +154,4 @@ void mckits_nlist_sort(struct MckitsNList* list,
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_MSTL_MCKITS_NLIST_H_

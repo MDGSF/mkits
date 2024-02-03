@@ -1,5 +1,5 @@
-#ifndef MKITS_MCKITS_MLIBC_MCKITS_CONFIG_H_
-#define MKITS_MCKITS_MLIBC_MCKITS_CONFIG_H_
+#ifndef MKITS_INCLUDE_MCKITS_MLIBC_MCKITS_CONFIG_H_
+#define MKITS_INCLUDE_MCKITS_MLIBC_MCKITS_CONFIG_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -23,4 +23,4 @@ extern "C" {
 }
 #endif
 
-#endif
+#endif  // MKITS_INCLUDE_MCKITS_MLIBC_MCKITS_CONFIG_H_
