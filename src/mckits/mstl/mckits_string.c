@@ -315,12 +315,9 @@ uint8_t* mckits_cpystrn(uint8_t* dst, uint8_t* src, size_t n) {
 }
 
 int mckits_strcasecmp(uint8_t* s1, uint8_t* s2) {
-  int c1 = 0;
-  int c2 = 0;
-
   for (;;) {
-    c1 = (int)*s1++;
-    c2 = (int)*s2++;
+    int c1 = (int)*s1++;
+    int c2 = (int)*s2++;
 
     c1 = (c1 >= 'A' && c1 <= 'Z') ? (c1 | 0x20) : c1;
     c2 = (c2 >= 'A' && c2 <= 'Z') ? (c2 | 0x20) : c2;
@@ -338,12 +335,9 @@ int mckits_strcasecmp(uint8_t* s1, uint8_t* s2) {
 }
 
 int mckits_strncasecmp(uint8_t* s1, uint8_t* s2, size_t n) {
-  int c1 = 0;
-  int c2 = 0;
-
   while (n) {
-    c1 = (int)*s1++;
-    c2 = (int)*s2++;
+    int c1 = (int)*s1++;
+    int c2 = (int)*s2++;
 
     c1 = (c1 >= 'A' && c1 <= 'Z') ? (c1 | 0x20) : c1;
     c2 = (c2 >= 'A' && c2 <= 'Z') ? (c2 | 0x20) : c2;

@@ -11,11 +11,10 @@ namespace fps {
 
 class CFPS {
  public:
-  CFPS() { pre_time_ = std::chrono::steady_clock::now(); }
+  CFPS() : pre_time_(std::chrono::steady_clock::now()) {}
 
-  explicit CFPS(const std::string &name) : name_(name) {
-    pre_time_ = std::chrono::steady_clock::now();
-  }
+  explicit CFPS(const std::string &name)
+      : name_(name), pre_time_(std::chrono::steady_clock::now()) {}
 
   virtual ~CFPS() = default;
 
@@ -39,10 +38,10 @@ class CFPS {
   }
 
  private:
-  std::string name_ = "";
   int count_ = 0;
   int pre_count_ = 0;
   double fps_ = 0.0;
+  std::string name_ = "";
   std::chrono::time_point<std::chrono::steady_clock> pre_time_;
 };
 

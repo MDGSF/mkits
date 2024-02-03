@@ -11,14 +11,14 @@
 int mckits_global_loglevel = LOG_LEVEL_ERROR;
 
 void simple_log_impl(int log_level, const char* filename, int line,
-                     const char* fmt, ...) {
+                     const char* format, ...) {
   if (mckits_global_loglevel <= log_level) {
     va_list ap;
-    va_start(ap, fmt);
+    va_start(ap, format);
 
     char* p = strrchr(filename, '/');
     char buf[MCKITS_LOG_MAX_LINE] = {0};
-    vsnprintf(buf, sizeof(buf), fmt, ap);
+    vsnprintf(buf, sizeof(buf), format, ap);
     fprintf(stderr, "[%s] %s:%d: %s\n", mckits_log_level_name[log_level],
             p ? p + 1 : filename, line, buf);
 
@@ -68,7 +68,7 @@ void err_dump_impl(const char* filename, int line, const char* fmt, ...) {
   err_doit(1, LOG_LEVEL_ERROR, filename, line, fmt, ap);
   va_end(ap);
   abort();  // dump core and terminate
-  exit(1);  // shouldn't get here
+  // exit(1);  // shouldn't get here
 }
 
 void err_msg_impl(const char* filename, int line, const char* fmt, ...) {

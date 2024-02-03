@@ -15,7 +15,6 @@ cmake \
   -DCMAKE_INSTALL_PREFIX=output \
   -DBUILD_UNITTEST=ON \
   -DBUILD_BENCH=ON \
-  -DSOLUTION_HOME=$SOLUTION_HOME \
   ..
 
 make

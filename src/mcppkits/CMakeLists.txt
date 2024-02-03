@@ -3,11 +3,11 @@ project(mcppkits VERSION 0.0.1)
 set(MCPPKITS_INCLUDE_HOME "${SOLUTION_INCLUDE_HOME}/mcppkits")
 set(MCPPKITS_SRC_HOME "${SOLUTION_SRC_HOME}/mcppkits")
 
-message(STATUS "[mckits] CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
-message(STATUS "[mckits] BUILD_SHARED: ${BUILD_SHARED}")
-message(STATUS "[mckits] BUILD_STATIC: ${BUILD_STATIC}")
-message(STATUS "[mckits] MCPPKITS_INCLUDE_HOME: ${MCPPKITS_INCLUDE_HOME}")
-message(STATUS "[mckits] MCPPKITS_SRC_HOME: ${MCPPKITS_SRC_HOME}")
+message(STATUS "[mcppkits] CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
+message(STATUS "[mcppkits] BUILD_SHARED: ${BUILD_SHARED}")
+message(STATUS "[mcppkits] BUILD_STATIC: ${BUILD_STATIC}")
+message(STATUS "[mcppkits] MCPPKITS_INCLUDE_HOME: ${MCPPKITS_INCLUDE_HOME}")
+message(STATUS "[mcppkits] MCPPKITS_SRC_HOME: ${MCPPKITS_SRC_HOME}")
 
 set(mcppkits_headers
   ${MCPPKITS_INCLUDE_HOME}/mcppkits.h

@@ -18,7 +18,7 @@ void PrintVec01(const std::vector<T> vec, const std::string& name) {
 }
 
 template <typename T>
-void PrintVec02(const std::vector<T> vec, const std::string& name) {
+void PrintVec02(const std::vector<T>& vec, const std::string& name) {
   int i = 0;
   std::cout << "vector: " << name << ", size: " << vec.size() << std::endl;
   std::cout << "[";

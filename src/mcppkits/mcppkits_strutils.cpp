@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cstring>
 #include <fstream>
+#include <iterator>
 #include <random>
 #include <sstream>
 
@@ -155,9 +156,11 @@ std::string merge_key_value_list(
     const std::vector<std::pair<std::string, std::string>>& vp,
     const std::string& entry_sep, const std::string& kv_sep) {
   std::vector<std::string> v;
-  for (auto kv : vp) {
-    v.push_back(kv.first + kv_sep + kv.second);
-  }
+  v.reserve(vp.size());
+  std::transform(vp.begin(), vp.end(), std::back_inserter(v),
+                 [&](const std::pair<std::string, std::string>& kv) {
+                   return kv.first + kv_sep + kv.second;
+                 });
   return join_strings(v, entry_sep);
 }
 

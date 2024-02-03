@@ -117,8 +117,14 @@ ssize_t mckits_path_base(const char* pathname, char* basename, size_t count) {
     return -1;
   }
 
+  if (pathname == NULL) {
+    basename[0] = '.';
+    basename[1] = '\0';
+    return 1;
+  }
+
   size_t pathname_size = strlen(pathname);
-  if (pathname == NULL || pathname_size == 0) {
+  if (pathname_size == 0) {
     basename[0] = '.';
     basename[1] = '\0';
     return 1;

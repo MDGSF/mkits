@@ -62,12 +62,7 @@ void mckits_sleep_milliseconds(int64_t milliseconds) {
 }
 
 void mckits_sleep_microseconds(int64_t microseconds) {
-  static const int64_t MAX_MICROSECONDS = 1000000;
-  if (microseconds >= MAX_MICROSECONDS) {
-    mckits_sleep_nanoseconds(microseconds * 1000);
-  } else {
-    usleep(microseconds);
-  }
+  mckits_sleep_nanoseconds(microseconds * 1000);
 }
 
 void mckits_sleep_nanoseconds(int64_t nanoseconds) {

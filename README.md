@@ -6,8 +6,8 @@ comments and unit test.
 ## architecture
 
 - mckits
-  - mlibc: libc wrapper
-  - mstl: only use libc
+  - mlibc: libc wrapper, only use libc, don't call system api in mstl.
+  - mstl: only use libc, don't call system api in mstl.
     - hash
     - hashmap
     - heap
@@ -19,10 +19,6 @@ comments and unit test.
     - array
     - string
     - vector
-  - platform
-    - os
-    - file
-    - thread
   - core
     - log
     - encoding
@@ -31,6 +27,9 @@ comments and unit test.
     - math
     - meta
     - time
+    - os
+    - file
+    - thread
   - web server
   - tools
   - other module
@@ -45,4 +44,30 @@ comments and unit test.
 
 ## code of conduct
 
+### pre-commit
+
 - pre-commit: <https://github.com/pre-commit/pre-commit>
+
+```sh
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pre-commit
+pre-commit install
+pre-commit run --all-files
+```
+
+### cpplint
+
+```sh
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple cpplint
+```
+
+### cppcheck
+
+```sh
+sudo apt-get install cppcheck
+```
+
+### clang-tidy
+
+```sh
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple clang-tidy
+```

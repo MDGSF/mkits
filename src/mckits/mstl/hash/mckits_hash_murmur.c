@@ -134,8 +134,6 @@ static uint64_t mm86128(const void* key, const int len, uint32_t seed) {
   h1 += h3;
   h1 += h4;
   h2 += h1;
-  h3 += h1;
-  h4 += h1;
   return (((uint64_t)h2) << 32) | h1;
 }
 
@@ -197,11 +195,10 @@ uint32_t mckits_murmur3_32(const uint8_t* data, size_t len, uint32_t seed) {
 }
 
 uint32_t mckits_murmur2_32(const uint8_t* data, size_t len) {
-  uint32_t k = 0;
   uint32_t h = 0 ^ len;
 
   while (len >= 4) {
-    k = data[0];
+    uint32_t k = data[0];
     k |= data[1] << 8;
     k |= data[2] << 16;
     k |= data[3] << 24;
