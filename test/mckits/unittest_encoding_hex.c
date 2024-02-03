@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "mckits_encoding_hex.h"
+#include "mckits/core/encoding/mckits_encoding_hex.h"
 
 void test01() {
   {

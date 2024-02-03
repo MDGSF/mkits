@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "mckits_mfile.h"
+#include "mckits/core/mckits_mfile.h"
 
 void test01() {
   const char* pathname = "/tmp/mckits_test_file.txt";

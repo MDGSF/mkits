@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "mckits_rawpipe.h"
+#include "mckits/core/mckits_rawpipe.h"
 
 void test01() {
   struct MckitsRawPipe* rawpipe = mckits_rawpipe_new();

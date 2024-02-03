@@ -4,8 +4,8 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "mckits_msock.h"
-#include "mckits_mtime.h"
+#include "mckits/core/mckits_msock.h"
+#include "mckits/core/mckits_mtime.h"
 
 void* thread_func1(void* arg) {
   int* ps = (int*)arg;

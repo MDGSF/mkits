@@ -2,11 +2,11 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "mckits_crc.h"
-#include "mckits_malloc.h"
-#include "mckits_rbtree.h"
-#include "mckits_strconv.h"
-#include "mckits_string.h"
+#include "mckits/core/mckits_strconv.h"
+#include "mckits/mlibc/mckits_malloc.h"
+#include "mckits/mstl/hash/mckits_crc.h"
+#include "mckits/mstl/mckits_rbtree.h"
+#include "mckits/mstl/mckits_string.h"
 
 struct Student {
   struct MckitsRbtreeNode node;

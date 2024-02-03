@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "mckits_array.h"
+#include "mckits/mstl/mckits_array.h"
 
 void test01() {
   struct MckitsArray array;

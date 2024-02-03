@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "mckits_nlist.h"
+#include "mckits/mstl/mckits_nlist.h"
 
 typedef struct Student {
   int id;

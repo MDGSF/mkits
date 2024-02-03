@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "mckits_vector.h"
+#include "mckits/mstl/mckits_vector.h"
 
 static void test_int_mvec(struct MckitsVector* mvec, int* expected_nums,
                           size_t expected_len) {

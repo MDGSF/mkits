@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "mckits_mrandom.h"
+#include "mckits/core/mckits_mrandom.h"
 
 void test01() {
   char buf[8] = {0};

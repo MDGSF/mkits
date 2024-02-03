@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <string.h>
 
-#include "mckits_strconv.h"
+#include "mckits/core/mckits_strconv.h"
 
 void test01() {
   const char* str01 = "123";

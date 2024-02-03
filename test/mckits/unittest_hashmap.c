@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "mckits_hashmap.h"
-#include "mckits_string.h"
+#include "mckits/mstl/mckits_hashmap.h"
+#include "mckits/mstl/mckits_string.h"
 
 struct Student {
   struct MckitsStr name;

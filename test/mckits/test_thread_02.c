@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "mckits_mos.h"
-#include "mckits_thread.h"
+#include "mckits/core/mckits_mos.h"
+#include "mckits/core/mckits_thread.h"
 
 void show_current_thread_affinity() {
   int cpus[128] = {0};

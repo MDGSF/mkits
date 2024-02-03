@@ -6,8 +6,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "mckits_adt_mpmcqueue.h"
-#include "mckits_mtime.h"
+#include "mckits/core/mckits_mtime.h"
+#include "mckits/core/queue/mckits_adt_mpmcqueue.h"
 
 void test01() {
   struct MckitsMpmcQueue* mpmc_queue = mckits_mpmcqueue_new(10, NULL);

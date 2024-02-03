@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "mckits_hash_fnv.h"
+#include "mckits/mstl/hash/mckits_hash_fnv.h"
 
 void test01() {
   {

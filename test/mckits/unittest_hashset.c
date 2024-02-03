@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "mckits_hashset.h"
-#include "mckits_string.h"
+#include "mckits/mstl/mckits_hashset.h"
+#include "mckits/mstl/mckits_string.h"
 
 uint64_t hash_func(void* value, uint64_t seed0, uint64_t seed1) {
   int* num = (int*)value;

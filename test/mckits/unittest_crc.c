@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "mckits_crc.h"
+#include "mckits/mstl/hash/mckits_crc.h"
 
 void test01() {
   {

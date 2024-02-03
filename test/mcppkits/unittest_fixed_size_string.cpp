@@ -1,7 +1,7 @@
 #include <cassert>
 #include <iostream>
 
-#include "mcppkits_fixed_size_string.hpp"
+#include "mcppkits/mcppkits_fixed_size_string.hpp"
 
 using namespace mcppkits::mstl;
 

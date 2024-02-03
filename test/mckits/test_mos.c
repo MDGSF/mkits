@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "mckits_mos.h"
+#include "mckits/core/mckits_mos.h"
 
 void test01() {
   char buf[4096] = {0};

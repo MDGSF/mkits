@@ -2,7 +2,7 @@
 #include <pthread.h>
 #include <stdio.h>
 
-#include "mckits_rwlock.h"
+#include "mckits/core/thread/mckits_rwlock.h"
 
 void test01() {
   struct MckitsRWLock mtx;

@@ -27,6 +27,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_CXX_FLAGS_DEBUG "-std=c++11 -Wall -Werror -g")
 set(CMAKE_CXX_FLAGS_RELEASE "-std=c++11 -Wall -Werror -O3")
 
+set(SOLUTION_INCLUDE_HOME "${SOLUTION_HOME}/include")
+set(SOLUTION_SRC_HOME "${SOLUTION_HOME}/src")
+
 if(WIN32)
   option(ENABLE_WINDUMP "Windows MiniDumpWriteDump" OFF)
   option(BUILD_FOR_MT "build for /MT" OFF)
@@ -62,11 +65,11 @@ if(UNIX)
 endif()
 
 if(BUILD_MCKITS)
-  add_subdirectory(mckits)
+  add_subdirectory(src/mckits)
 endif()
 
 if(BUILD_MCPPKITS)
-  add_subdirectory(mcppkits)
+  add_subdirectory(src/mcppkits)
 endif()
 
 if(BUILD_UNITTEST)

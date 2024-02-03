@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "mckits_ring.h"
+#include "mckits/mstl/mckits_ring.h"
 
 void verify(struct MckitsRing* r, int N, int64_t sum) {
   assert(mckits_ring_len(r) == N);

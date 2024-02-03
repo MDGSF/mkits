@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "mckits_thread.h"
+#include "mckits/core/mckits_thread.h"
 
 void test01() {
   char name[16] = {0};

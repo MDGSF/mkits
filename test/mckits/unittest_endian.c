@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "mckits_endian.h"
+#include "mckits/core/encoding/mckits_endian.h"
 
 int is_little_endian() {
   int num = 1;

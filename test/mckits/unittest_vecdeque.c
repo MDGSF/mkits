@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "mckits_vecdeque.h"
+#include "mckits/mstl/mckits_vecdeque.h"
 
 void test01() {
   struct MckitsVecDeque* vecdeque = mckits_vecdeque_new(sizeof(int));

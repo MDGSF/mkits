@@ -1,8 +1,8 @@
 #include <assert.h>
 #include <stdio.h>
 
-#include "mckits_list.h"
-#include "mckits_mlibc_utils.h"
+#include "mckits/mlibc/mckits_mlibc_utils.h"
+#include "mckits/mstl/mckits_list.h"
 
 void check_list_len(struct MckitsList* list, int expected_len) {
   int listlen = mckits_list_len(list);

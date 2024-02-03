@@ -2,7 +2,7 @@
 #include <pthread.h>
 #include <stdio.h>
 
-#include "mckits_spinlock.h"
+#include "mckits/core/thread/mckits_spinlock.h"
 
 void test01() {
   struct MckitsSpinlock mtx;

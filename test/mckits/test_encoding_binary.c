@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <stdio.h>
 
-#include "mckits_encoding_binary.h"
+#include "mckits/core/encoding/mckits_encoding_binary.h"
 
 void test_little_endian_u16_01() {
   uint16_t v1 = 0x1234;

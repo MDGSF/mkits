@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "mckits_hash_murmur.h"
+#include "mckits/mstl/hash/mckits_hash_murmur.h"
 
 void test01() {
   {

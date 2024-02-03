@@ -1,9 +1,9 @@
 #include <assert.h>
 #include <stdio.h>
 
-#include "mckits_hashmap.h"
-#include "mckits_mtime.h"
-#include "mckits_string.h"
+#include "mckits/core/mckits_mtime.h"
+#include "mckits/mstl/mckits_hashmap.h"
+#include "mckits/mstl/mckits_string.h"
 
 uint64_t hash_callback(void* key, uint64_t seed0, uint64_t seed1) {
   int64_t key_num = (int64_t)key;

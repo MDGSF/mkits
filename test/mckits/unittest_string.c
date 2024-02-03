@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "mckits_string.h"
+#include "mckits/mstl/mckits_string.h"
 
 void test01() {
   const char* data = "hello";

@@ -1,4 +1,4 @@
-#include "mckits_mlog.h"
+#include "mckits/core/mckits_mlog.h"
 
 int main() {
   mckits_global_loglevel = LOG_LEVEL_VERBOSE;

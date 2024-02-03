@@ -1,6 +1,6 @@
 #include <assert.h>
 
-#include "mckits_mlibc_utils.h"
+#include "mckits/mlibc/mckits_mlibc_utils.h"
 
 void test01() {
   int ret = 0;
