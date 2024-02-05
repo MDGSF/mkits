@@ -45,7 +45,7 @@ void mckits_heap_heapify(struct MckitsHeap* heap);
 /*
 @brief: Returns the number of element in heap.
 */
-int mckits_heap_len(struct MckitsHeap* heap);
+size_t mckits_heap_len(struct MckitsHeap* heap);
 
 /*
 @brief: Check if the heap is empty.

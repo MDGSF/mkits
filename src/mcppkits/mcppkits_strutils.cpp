@@ -1,14 +1,14 @@
 #include "mcppkits/mcppkits_strutils.h"
 
-#include <inttypes.h>
-#include <wctype.h>
-
 #include <algorithm>
+#include <cinttypes>
 #include <cstring>
+#include <cwctype>
 #include <fstream>
 #include <iterator>
 #include <random>
 #include <sstream>
+#include <utility>
 
 namespace mcppkits {
 namespace strutils {
@@ -18,7 +18,7 @@ std::string random_str(int size) {
   result.resize(size);
   std::mt19937 rng(std::random_device{}());
   for (int i = 0; i < size; ++i) {
-    result[i] = rng() % 0xFF;
+    result[i] = static_cast<char>(rng() % 0xFF);
   }
   return result;
 }
@@ -56,27 +56,26 @@ std::string str_to_upper(std::string&& str) {
   return std::move(str);
 }
 
-#define TRIM(str, chars)                                      \
-  do {                                                        \
-    std::string m(0xFF, '\0');                                \
-    for (auto& ch : chars) {                                  \
-      m[(unsigned char&)ch] = '\1';                           \
-    }                                                         \
-    while (str.size() && m.at((unsigned char&)str.back())) {  \
-      str.pop_back();                                         \
-    }                                                         \
-    while (str.size() && m.at((unsigned char&)str.front())) { \
-      str.erase(0, 1);                                        \
-    }                                                         \
-  } while (0);
+static inline void s_trim(std::string& str, const std::string& chars) {
+  std::string m(0xFF, '\0');
+  for (auto& ch : chars) {
+    m[static_cast<unsigned char>(ch)] = '\1';
+  }
+  while (str.size() && m.at(static_cast<unsigned char>(str.back()))) {
+    str.pop_back();
+  }
+  while (str.size() && m.at(static_cast<unsigned char>(str.front()))) {
+    str.erase(0, 1);
+  }
+}
 
 std::string& trim(std::string& str, const std::string& chars) {
-  TRIM(str, chars);
+  s_trim(str, chars);
   return str;
 }
 
 std::string trim(std::string&& str, const std::string& chars) {
-  TRIM(str, chars);
+  s_trim(str, chars);
   return std::move(str);
 }
 
@@ -169,13 +168,13 @@ std::vector<std::pair<std::string, std::string>> parse_key_value_list(
     const std::string& kv_sep) {
   std::vector<std::pair<std::string, std::string>> vp;
   auto entries = split_string(str, entry_sep);
-  for (auto entry : entries) {
+  for (const auto& entry : entries) {
     if (entry.size() == 0) {
       continue;  // empty string
     }
     auto frags = split_string(entry, kv_sep);
     if (frags.size() == 2) {
-      vp.push_back({frags[0], frags[1]});
+      vp.emplace_back(frags[0], frags[1]);
     }
   }
   return vp;

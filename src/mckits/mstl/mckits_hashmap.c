@@ -58,19 +58,19 @@ struct MckitsHashMap {
 
 struct MckitsHashMapIter {
   struct MckitsHashMap* map;
-  size_t bucket_index;
+  int64_t bucket_index;
 
   // if bucket->store_type == list, node is struct MckitsListNode*
   // if bucket->store_type == rbtree, node is struct MckitsRbtreeNode*
   void* node;
-  int node_bucket_index;  // void* node in which bucket.
+  int64_t node_bucket_index;  // void* node in which bucket.
 };
 
 /*
 @brief: Calculate bucket index with hash code and bucket_num.
 */
 static inline size_t index_for(uint64_t hash, size_t bucket_num) {
-  return hash % bucket_num;
+  return (size_t)hash % bucket_num;
 }
 
 /*

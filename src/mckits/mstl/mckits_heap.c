@@ -73,13 +73,13 @@ void mckits_heap_drop(struct MckitsHeap* heap) {
 }
 
 void mckits_heap_heapify(struct MckitsHeap* heap) {
-  int n = mckits_heap_len(heap);
+  int n = (int)mckits_heap_len(heap);
   for (int i = n / 2 - 1; i >= 0; --i) {
     mckits_heap_down(heap, i, n);
   }
 }
 
-int mckits_heap_len(struct MckitsHeap* heap) { return heap->array.size; }
+size_t mckits_heap_len(struct MckitsHeap* heap) { return heap->array.size; }
 
 int mckits_heap_empty(struct MckitsHeap* heap) {
   return mckits_heap_len(heap) == 0 ? 1 : 0;
@@ -88,7 +88,7 @@ int mckits_heap_empty(struct MckitsHeap* heap) {
 void mckits_heap_push(struct MckitsHeap* heap, void* item) {
   void** ptr = (void**)mckits_array_push(&heap->array);
   *ptr = item;
-  mckits_heap_up(heap, mckits_heap_len(heap) - 1);
+  mckits_heap_up(heap, (int)mckits_heap_len(heap) - 1);
 }
 
 void* mckits_heap_pop(struct MckitsHeap* heap) {
@@ -96,7 +96,7 @@ void* mckits_heap_pop(struct MckitsHeap* heap) {
     return NULL;
   }
 
-  int n = mckits_heap_len(heap) - 1;
+  int n = (int)mckits_heap_len(heap) - 1;
   mckits_heap_swap(heap, 0, n);
   mckits_heap_down(heap, 0, n);
 
@@ -108,7 +108,7 @@ void* mckits_heap_pop(struct MckitsHeap* heap) {
 }
 
 void* mckits_heap_remove(struct MckitsHeap* heap, int i) {
-  int n = mckits_heap_len(heap) - 1;
+  int n = (int)mckits_heap_len(heap) - 1;
   if (n != i) {
     mckits_heap_swap(heap, i, n);
     if (!mckits_heap_down(heap, i, n)) {

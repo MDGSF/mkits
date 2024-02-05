@@ -53,8 +53,7 @@ int mckits_create_tcpserver(int port) {
 }
 
 int mckits_accept_client(int server_socket) {
-  int s;
-
+  int s = 0;
   while (1) {
     struct sockaddr_in sa;
     socklen_t slen = sizeof(sa);
@@ -81,7 +80,7 @@ int mckits_tcpconnect(char* addr, int port, int nonblock) {
   hints.ai_family = AF_UNSPEC;
   hints.ai_socktype = SOCK_STREAM;
 
-  struct addrinfo* servinfo;
+  struct addrinfo* servinfo = NULL;
 
   if (getaddrinfo(addr, portstr, &hints, &servinfo) != 0) {
     perror("getaddrinfo failed");

@@ -92,7 +92,7 @@ void mckits_string_trim(struct MckitsString* mstring, const char* chars) {
   }
 
   // trim right
-  int right = mstring->len - 1;
+  int64_t right = (int64_t)mstring->len - 1;
   while (right > 0) {
     uint8_t c = mstring->data[right];
     if (m[c]) {
@@ -126,8 +126,8 @@ int mckits_string_end_with(struct MckitsString* mstring, const char* substr) {
     return 0;
   }
 
-  int i = substr_length - 1;
-  int j = mstring->len - 1;
+  int64_t i = (int64_t)substr_length - 1;
+  int64_t j = (int64_t)mstring->len - 1;
   while (i >= 0) {
     if ((uint8_t)substr[i] != mstring->data[j]) {
       return 0;

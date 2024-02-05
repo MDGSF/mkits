@@ -109,7 +109,7 @@ ssize_t mckits_path_dir(const char* pathname, char* dirpath, size_t count) {
   memcpy(dirpath, pathname, length);
   dirpath[length] = '\0';
 
-  return length;
+  return (ssize_t)length;
 }
 
 ssize_t mckits_path_base(const char* pathname, char* basename, size_t count) {
@@ -138,7 +138,7 @@ ssize_t mckits_path_base(const char* pathname, char* basename, size_t count) {
 
     memcpy(basename, pathname, pathname_size);
     basename[pathname_size] = '\0';
-    return pathname_size;
+    return (ssize_t)pathname_size;
   }
 
   const char* last_element = last_separator + 1;
@@ -154,7 +154,7 @@ ssize_t mckits_path_base(const char* pathname, char* basename, size_t count) {
 
   memcpy(basename, last_element, last_element_size);
   basename[last_element_size] = '\0';
-  return last_element_size;
+  return (ssize_t)last_element_size;
 }
 
 ssize_t mckits_read_whole_file(const char* pathname, void* buf, size_t count) {
@@ -184,7 +184,7 @@ ssize_t mckits_read_whole_file(const char* pathname, void* buf, size_t count) {
     return -4;
   }
 
-  return read_size;
+  return (ssize_t)read_size;
 }
 
 ssize_t mckits_write_to_file(const char* pathname, const void* buf,
@@ -199,5 +199,5 @@ ssize_t mckits_write_to_file(const char* pathname, const void* buf,
   }
   size_t bytes_written = fwrite(buf, 1, count, file);
   fclose(file);
-  return bytes_written;
+  return (ssize_t)bytes_written;
 }
