@@ -37,9 +37,12 @@ comments and unit test.
 ## build
 
 ```sh
+sudo apt install gcc g++ cmake lcov
+
 ./build_clang.sh
 ./build_gcc.sh
 ./build_gcc_release.sh
+./build_coverage.sh
 ```
 
 ## code of conduct
