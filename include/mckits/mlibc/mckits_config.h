@@ -8,6 +8,15 @@
 extern "C" {
 #endif
 
+#ifdef __linux__
+#define MCKITS_OS_LINUX
+#endif
+
+#if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || \
+    defined(__NetBSD__)
+#define MCKITS_OS_BSD
+#endif
+
 #define MCKITS_OK 0
 #define MCKITS_ERROR -1
 

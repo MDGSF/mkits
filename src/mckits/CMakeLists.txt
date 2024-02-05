@@ -116,11 +116,12 @@ set(mckits_core_headers
   ${MCKITS_INCLUDE_HOME}/core/mckits_mlog.h
   ${MCKITS_INCLUDE_HOME}/core/mckits_mrandom.h
   ${MCKITS_INCLUDE_HOME}/core/mckits_mtime.h
-  ${MCKITS_INCLUDE_HOME}/core/mckits_strconv.h
   ${MCKITS_INCLUDE_HOME}/core/mckits_mfile.h
   ${MCKITS_INCLUDE_HOME}/core/mckits_mos.h
   ${MCKITS_INCLUDE_HOME}/core/mckits_msock.h
   ${MCKITS_INCLUDE_HOME}/core/mckits_rawpipe.h
+  ${MCKITS_INCLUDE_HOME}/core/mckits_socket_poller.h
+  ${MCKITS_INCLUDE_HOME}/core/mckits_strconv.h
   ${MCKITS_INCLUDE_HOME}/core/mckits_thread.h
 )
 
@@ -131,11 +132,12 @@ set(mckits_core_srcs
   ${MCKITS_SRC_HOME}/core/mckits_mlog.c
   ${MCKITS_SRC_HOME}/core/mckits_mrandom.c
   ${MCKITS_SRC_HOME}/core/mckits_mtime.c
-  ${MCKITS_SRC_HOME}/core/mckits_strconv.c
   ${MCKITS_SRC_HOME}/core/mckits_mfile.c
   ${MCKITS_SRC_HOME}/core/mckits_mos.c
   ${MCKITS_SRC_HOME}/core/mckits_msock.c
   ${MCKITS_SRC_HOME}/core/mckits_rawpipe.c
+  ${MCKITS_SRC_HOME}/core/mckits_socket_poller.c
+  ${MCKITS_SRC_HOME}/core/mckits_strconv.c
   ${MCKITS_SRC_HOME}/core/mckits_thread.c
 )
 
@@ -167,14 +169,11 @@ if(UNIX)
   )
 endif()
 
-set(mckits_include_directories
-  ${SOLUTION_INCLUDE_HOME}
-)
-
 if(BUILD_SHARED)
   add_library(mckits SHARED ${mckits_srcs})
   target_include_directories(mckits PUBLIC
-    ${mckits_include_directories}
+    ${SOLUTION_INCLUDE_HOME}
+    ${SOLUTION_HOME}
   )
   target_link_libraries(mckits ${mckits_libs})
   target_compile_options(mckits PRIVATE ${mckits_compile_options})
@@ -190,7 +189,8 @@ endif()
 if(BUILD_STATIC)
   add_library(mckits_static STATIC ${mckits_srcs})
   target_include_directories(mckits_static PUBLIC
-    ${mckits_include_directories}
+    ${SOLUTION_INCLUDE_HOME}
+    ${SOLUTION_HOME}
   )
   target_link_libraries(mckits_static ${mckits_libs})
   target_compile_options(mckits_static PRIVATE ${mckits_compile_options})

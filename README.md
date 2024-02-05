@@ -1,7 +1,7 @@
 # mkits
 
-A collections of C language module, from go, nginx, redis, etc. With many
-comments and unit test.
+A collections of C/C++ language module, from go, nginx, redis, skynet, etc.
+With many comments and unit test. Just for study.
 
 ## architecture
 

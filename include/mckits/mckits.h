@@ -62,6 +62,7 @@ extern "C" {
 #include "mckits/core/mckits_msock.h"
 #include "mckits/core/mckits_mtime.h"
 #include "mckits/core/mckits_rawpipe.h"
+#include "mckits/core/mckits_socket_poller.h"
 #include "mckits/core/mckits_strconv.h"
 #include "mckits/core/mckits_thread.h"
 
