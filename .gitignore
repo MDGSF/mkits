@@ -54,5 +54,6 @@ dkms.conf
 build
 output
 .vscode
+.cache
 
 cppcheck_err.txt
