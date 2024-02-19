@@ -14,7 +14,21 @@ void test01() {
   }
 }
 
+void test02() {
+  assert(mckits_fequal(1.0f, 1.0f) == 1);
+  assert(mckits_fequal(1.1f, 1.1f) == 1);
+  assert(mckits_fequal(1.0f, 1.1f) == 0);
+}
+
+void test03() {
+  assert(mckits_dequal(1.0, 1.0) == 1);
+  assert(mckits_dequal(1.1, 1.1) == 1);
+  assert(mckits_dequal(1.0, 1.1) == 0);
+}
+
 int main() {
   test01();
+  test02();
+  test03();
   return 0;
 }
