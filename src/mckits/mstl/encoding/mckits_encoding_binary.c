@@ -1,4 +1,4 @@
-#include "mckits/core/encoding/mckits_encoding_binary.h"
+#include "mckits/mstl/encoding/mckits_encoding_binary.h"
 
 void mckits_little_endian_encode_u16(uint16_t v, uint8_t* b) {
   b[0] = (uint8_t)(v);

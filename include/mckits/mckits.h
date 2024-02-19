@@ -25,6 +25,12 @@ extern "C" {
 #include "mckits/mstl/mckits_vecdeque.h"
 #include "mckits/mstl/mckits_vector.h"
 
+// mstl/encoding
+#include "mckits/mstl/encoding/mckits_encoding_base32.h"
+#include "mckits/mstl/encoding/mckits_encoding_base64.h"
+#include "mckits/mstl/encoding/mckits_encoding_binary.h"
+#include "mckits/mstl/encoding/mckits_encoding_hex.h"
+
 // mstl/hash
 #include "mckits/mstl/hash/mckits_crc.h"
 #include "mckits/mstl/hash/mckits_hash_fnv.h"
@@ -34,10 +40,6 @@ extern "C" {
 
 // core
 // core/encoding
-#include "mckits/core/encoding/mckits_encoding_base32.h"
-#include "mckits/core/encoding/mckits_encoding_base64.h"
-#include "mckits/core/encoding/mckits_encoding_binary.h"
-#include "mckits/core/encoding/mckits_encoding_hex.h"
 #include "mckits/core/encoding/mckits_encoding_iniparser.h"
 #include "mckits/core/encoding/mckits_encoding_json.h"
 #include "mckits/core/encoding/mckits_encoding_toml.h"

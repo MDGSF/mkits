@@ -2,7 +2,7 @@
 
 #include <endian.h>
 
-#include "mckits/core/encoding/mckits_encoding_binary.h"
+#include "mckits/mstl/encoding/mckits_encoding_binary.h"
 
 int mckits_is_little_endian() {
 #if BYTE_ORDER == LITTLE_ENDIAN

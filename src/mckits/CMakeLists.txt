@@ -22,6 +22,20 @@ set(mckits_mlibc_srcs
   ${MCKITS_SRC_HOME}/mlibc/mckits_mlibc_utils.c
 )
 
+set(mckits_mstl_encoding_headers
+  ${MCKITS_INCLUDE_HOME}/mstl/encoding/mckits_encoding_base32.h
+  ${MCKITS_INCLUDE_HOME}/mstl/encoding/mckits_encoding_base64.h
+  ${MCKITS_INCLUDE_HOME}/mstl/encoding/mckits_encoding_binary.h
+  ${MCKITS_INCLUDE_HOME}/mstl/encoding/mckits_encoding_hex.h
+)
+
+set(mckits_mstl_encoding_srcs
+  ${MCKITS_SRC_HOME}/mstl/encoding/mckits_encoding_base32.c
+  ${MCKITS_SRC_HOME}/mstl/encoding/mckits_encoding_base64.c
+  ${MCKITS_SRC_HOME}/mstl/encoding/mckits_encoding_binary.c
+  ${MCKITS_SRC_HOME}/mstl/encoding/mckits_encoding_hex.c
+)
+
 set(mckits_mstl_hash_headers
   ${MCKITS_INCLUDE_HOME}/mstl/hash/mckits_crc.h
   ${MCKITS_INCLUDE_HOME}/mstl/hash/mckits_hash_fnv.h
@@ -38,6 +52,7 @@ set(mckits_mstl_hash_srcs
 )
 
 set(mckits_mstl_headers
+  ${mckits_mstl_encoding_headers}
   ${mckits_mstl_hash_headers}
   ${MCKITS_INCLUDE_HOME}/mstl/mckits_hashmap.h
   ${MCKITS_INCLUDE_HOME}/mstl/mckits_hashset.h
@@ -54,6 +69,7 @@ set(mckits_mstl_headers
 )
 
 set(mckits_mstl_srcs
+  ${mckits_mstl_encoding_srcs}
   ${mckits_mstl_hash_srcs}
   ${MCKITS_SRC_HOME}/mstl/mckits_hashmap.c
   ${MCKITS_SRC_HOME}/mstl/mckits_hashset.c
@@ -70,10 +86,6 @@ set(mckits_mstl_srcs
 )
 
 set(mckits_core_encoding_headers
-  ${MCKITS_INCLUDE_HOME}/core/encoding/mckits_encoding_base32.h
-  ${MCKITS_INCLUDE_HOME}/core/encoding/mckits_encoding_base64.h
-  ${MCKITS_INCLUDE_HOME}/core/encoding/mckits_encoding_binary.h
-  ${MCKITS_INCLUDE_HOME}/core/encoding/mckits_encoding_hex.h
   ${MCKITS_INCLUDE_HOME}/core/encoding/mckits_encoding_iniparser.h
   ${MCKITS_INCLUDE_HOME}/core/encoding/mckits_encoding_json.h
   ${MCKITS_INCLUDE_HOME}/core/encoding/mckits_encoding_toml.h
@@ -81,10 +93,6 @@ set(mckits_core_encoding_headers
 )
 
 set(mckits_core_encoding_srcs
-  ${MCKITS_SRC_HOME}/core/encoding/mckits_encoding_base32.c
-  ${MCKITS_SRC_HOME}/core/encoding/mckits_encoding_base64.c
-  ${MCKITS_SRC_HOME}/core/encoding/mckits_encoding_binary.c
-  ${MCKITS_SRC_HOME}/core/encoding/mckits_encoding_hex.c
   ${MCKITS_SRC_HOME}/core/encoding/mckits_encoding_iniparser.c
   ${MCKITS_SRC_HOME}/core/encoding/mckits_encoding_json.c
   ${MCKITS_SRC_HOME}/core/encoding/mckits_encoding_toml.c
