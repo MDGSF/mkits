@@ -21,15 +21,18 @@ extern int mckits_global_loglevel;
 void simple_log_impl(int log_level, const char* filename, int line,
                      const char* format, ...);
 
-#define simple_log(level, format, ...) \
-  simple_log_impl(level, __FILE__, __LINE__, format, __VA_ARGS__)
-
-#define verbolog(...) simple_log(LOG_LEVEL_VERBOSE, __VA_ARGS__)
-#define dbglog(...) simple_log(LOG_LEVEL_DEBUG, __VA_ARGS__)
-#define infolog(...) simple_log(LOG_LEVEL_INFO, __VA_ARGS__)
-#define warnlog(...) simple_log(LOG_LEVEL_WARNING, __VA_ARGS__)
-#define errlog(...) simple_log(LOG_LEVEL_ERROR, __VA_ARGS__)
-#define fatallog(...) simple_log(LOG_LEVEL_FATAL, __VA_ARGS__)
+#define verbolog(...) \
+  simple_log_impl(LOG_LEVEL_VERBOSE, __FILE__, __LINE__, __VA_ARGS__)
+#define dbglog(...) \
+  simple_log_impl(LOG_LEVEL_DEBUG, __FILE__, __LINE__, __VA_ARGS__)
+#define infolog(...) \
+  simple_log_impl(LOG_LEVEL_INFO, __FILE__, __LINE__, __VA_ARGS__)
+#define warnlog(...) \
+  simple_log_impl(LOG_LEVEL_WARNING, __FILE__, __LINE__, __VA_ARGS__)
+#define errlog(...) \
+  simple_log_impl(LOG_LEVEL_ERROR, __FILE__, __LINE__, __VA_ARGS__)
+#define fatallog(...) \
+  simple_log_impl(LOG_LEVEL_FATAL, __FILE__, __LINE__, __VA_ARGS__)
 
 // show filename, line, errno, msg
 void err_ret_impl(const char* filename, int line, const char* fmt, ...);

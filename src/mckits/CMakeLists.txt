@@ -121,10 +121,11 @@ set(mckits_core_headers
   ${mckits_core_queue_headers}
   ${mckits_core_thread_headers}
   ${MCKITS_INCLUDE_HOME}/core/mckits_core_utils.h
+  ${MCKITS_INCLUDE_HOME}/core/mckits_daemon.h
+  ${MCKITS_INCLUDE_HOME}/core/mckits_mfile.h
   ${MCKITS_INCLUDE_HOME}/core/mckits_mlog.h
   ${MCKITS_INCLUDE_HOME}/core/mckits_mrandom.h
   ${MCKITS_INCLUDE_HOME}/core/mckits_mtime.h
-  ${MCKITS_INCLUDE_HOME}/core/mckits_mfile.h
   ${MCKITS_INCLUDE_HOME}/core/mckits_mos.h
   ${MCKITS_INCLUDE_HOME}/core/mckits_msock.h
   ${MCKITS_INCLUDE_HOME}/core/mckits_rawpipe.h
@@ -137,10 +138,11 @@ set(mckits_core_srcs
   ${mckits_core_encoding_srcs}
   ${mckits_core_queue_srcs}
   ${MCKITS_SRC_HOME}/core/mckits_core_utils.c
+  ${MCKITS_SRC_HOME}/core/mckits_daemon.c
+  ${MCKITS_SRC_HOME}/core/mckits_mfile.c
   ${MCKITS_SRC_HOME}/core/mckits_mlog.c
   ${MCKITS_SRC_HOME}/core/mckits_mrandom.c
   ${MCKITS_SRC_HOME}/core/mckits_mtime.c
-  ${MCKITS_SRC_HOME}/core/mckits_mfile.c
   ${MCKITS_SRC_HOME}/core/mckits_mos.c
   ${MCKITS_SRC_HOME}/core/mckits_msock.c
   ${MCKITS_SRC_HOME}/core/mckits_rawpipe.c

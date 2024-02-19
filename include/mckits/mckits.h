@@ -57,6 +57,7 @@ extern "C" {
 
 // core/others
 #include "mckits/core/mckits_core_utils.h"
+#include "mckits/core/mckits_daemon.h"
 #include "mckits/core/mckits_mfile.h"
 #include "mckits/core/mckits_mlog.h"
 #include "mckits/core/mckits_mos.h"
