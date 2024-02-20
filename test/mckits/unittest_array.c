@@ -83,9 +83,29 @@ void test03() {
   mckits_array_destroy(&array);
 }
 
+void test04() {
+  struct MckitsArray array;
+  assert(0 == mckits_array_init(&array, 1, sizeof(int)));
+  assert(array.size == 0);
+  assert(array.capacity == 1);
+  assert(array.element_bytes == sizeof(int));
+
+  int* ptr = (int*)mckits_array_push_n(&array, 10);
+  assert(array.size == 10);
+
+  for (int i = 0; i < 10; ++i) {
+    ptr[i] = i + 1;
+  }
+
+  assert(array.size == 10);
+
+  mckits_array_destroy(&array);
+}
+
 int main() {
   test01();
   test02();
   test03();
+  test04();
   return 0;
 }

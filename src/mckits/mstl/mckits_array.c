@@ -3,15 +3,14 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "mckits/mlibc/mckits_malloc.h"
+
 int mckits_array_init(struct MckitsArray* array, size_t capacity,
                       size_t element_bytes) {
   array->size = 0;
   array->capacity = capacity;
   array->element_bytes = element_bytes;
-  array->buffer = malloc(capacity * element_bytes);
-  if (NULL == array->buffer) {
-    return -1;
-  }
+  array->buffer = mckits_malloc(capacity * element_bytes);
   memset(array->buffer, 0, capacity * element_bytes);
   return 0;
 }
@@ -27,10 +26,7 @@ void* mckits_array_push(struct MckitsArray* array) {
 
     size_t new_capacity = 2 * array->capacity;
     size_t new_size = new_capacity * array->element_bytes;
-    void* new_buffer = malloc(new_size);
-    if (NULL == new_buffer) {
-      return NULL;
-    }
+    void* new_buffer = mckits_malloc(new_size);
 
     memcpy(new_buffer, array->buffer, array->capacity * array->element_bytes);
     free(array->buffer);
@@ -50,10 +46,7 @@ void* mckits_array_push_n(struct MckitsArray* array, size_t n) {
 
     size_t new_capacity = 2 * ((n > array->capacity ? n : array->capacity));
     size_t new_size = new_capacity * array->element_bytes;
-    void* new_buffer = malloc(new_size);
-    if (NULL == new_buffer) {
-      return NULL;
-    }
+    void* new_buffer = mckits_malloc(new_size);
 
     memcpy(new_buffer, array->buffer, array->capacity * array->element_bytes);
     free(array->buffer);

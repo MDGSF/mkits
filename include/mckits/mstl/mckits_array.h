@@ -30,7 +30,7 @@ struct MckitsArray {
 @param element_bytes[in]: each element size in array (byte).
 @return:
   On success, return 0.
-  On error, -1 is returned, malloc failed.
+  On error, malloc failed, abort the program.
 */
 int mckits_array_init(struct MckitsArray* array, size_t capacity,
                       size_t element_bytes);
@@ -43,13 +43,13 @@ void mckits_array_destroy(struct MckitsArray* array);
 /*
 @brief: Push an new element to array. If array is full, it will automatically
   malloc a new memory block twice as large.
-@return: Pointer to new element address. Or NULL if malloc failed.
+@return: Pointer to new element address. If malloc failed, abort the program.
 */
 void* mckits_array_push(struct MckitsArray* array);
 
 /*
 @brief: The same as mckits_array_push, except `array->size += n`.
-@return: Pointer to first element address. Or NULL if malloc failed.
+@return: Pointer to first element address. If malloc failed, abort the program.
 */
 void* mckits_array_push_n(struct MckitsArray* array, size_t n);
 
