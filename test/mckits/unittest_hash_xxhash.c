@@ -174,7 +174,40 @@ void test01() {
   }
 }
 
+void test02() {
+  {
+    const char* buf =
+        "Vp1HviLhW3uvrsqRsRft4GMp61QtuNod3fLomkv8dOus6I7opdFhJiuD7aXpObsHf3Trcc"
+        "pfQHyKfvXswsA4ySxtTiIvi10nSJC";
+    size_t size = strlen(buf);
+    uint64_t expected = 9209945766287268207U;
+    uint64_t result = mckits_hash_xxhash3((const uint8_t*)buf, size, 0);
+    assert(expected == result);
+  }
+
+  {
+    const char* buf =
+        "JPYonkWqDHH005UmNfGuocPw3FHKc9uKOgYZqIeSgLI4EqghvKCHNf3ELyeLxzlaD7XUG1"
+        "CKA8E4oKaHjAfWF6qetvQOSZOlVA3";
+    size_t size = strlen(buf);
+    uint64_t expected = 10988062942048841369U;
+    uint64_t result = mckits_hash_xxhash3((const uint8_t*)buf, size, 0);
+    assert(expected == result);
+  }
+
+  {
+    const char* buf =
+        "ptZQrtID1G9a6cUA6bEpui4c8GlT6d8mwV0Mewd33c4XeMn9NSo50i5WPhDJkzTEkJgm4i"
+        "gXk8InKWmmCAhqHddkiGRq6BUeaZr";
+    size_t size = strlen(buf);
+    uint64_t expected = 10255986917226870783U;
+    uint64_t result = mckits_hash_xxhash3((const uint8_t*)buf, size, 0);
+    assert(expected == result);
+  }
+}
+
 int main() {
   test01();
+  test02();
   return 0;
 }
