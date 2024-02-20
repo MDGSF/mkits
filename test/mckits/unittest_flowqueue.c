@@ -111,10 +111,24 @@ void test04() {
   mckits_flowqueue_drop(flow_queue);
 }
 
+void test05() {
+  struct MckitsFlowQueue* flow_queue = mckits_flowqueue_new(1, 0, free);
+
+  for (int64_t i = 0; i < 10; ++i) {
+    int64_t* value = (int64_t*)malloc(sizeof(int64_t));
+    *value = i;
+    assert(mckits_flowqueue_push(flow_queue, value) == 1);
+    assert(mckits_flowqueue_size(flow_queue) == 1);
+  }
+
+  mckits_flowqueue_drop(flow_queue);
+}
+
 int main() {
   test01();
   test02();
   test03();
   test04();
+  test05();
   return 0;
 }
