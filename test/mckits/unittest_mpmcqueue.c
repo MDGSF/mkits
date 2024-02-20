@@ -40,6 +40,7 @@ void test02() {
   struct MckitsMpmcQueue* mpmc_queue = mckits_mpmcqueue_new(10, NULL);
   mckits_mpmcqueue_stop(mpmc_queue);
   assert(0 == mckits_mpmcqueue_push(mpmc_queue, (void*)10));
+  assert(NULL == mckits_mpmcqueue_pop(mpmc_queue));
   mckits_mpmcqueue_drop(mpmc_queue);
 }
 
