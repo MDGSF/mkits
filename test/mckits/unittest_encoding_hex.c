@@ -778,8 +778,43 @@ void test02() {
   }
 }
 
+void test03() {
+  for (int i = 1; i <= 10; ++i) {
+    assert(i * 2 == mckits_hex_encode_len(i));
+  }
+}
+
+void test04() {
+  for (int i = 2; i <= 10; i += 2) {
+    assert(i / 2 == mckits_hex_decode_len(i));
+  }
+}
+
+void test05() {
+  for (int i = 1; i < 10; i += 2) {
+    assert(-1 == mckits_hex_decode(NULL, NULL, i));
+  }
+}
+
+void test06() {
+  char src[2] = {'M', 'A'};
+  char dst[1] = {0};
+  assert(-2 == mckits_hex_decode((uint8_t*)dst, (const uint8_t*)src, 2));
+}
+
+void test07() {
+  char src[2] = {'A', 'M'};
+  char dst[1] = {0};
+  assert(-2 == mckits_hex_decode((uint8_t*)dst, (const uint8_t*)src, 2));
+}
+
 int main() {
   test01();
   test02();
+  test03();
+  test04();
+  test05();
+  test06();
+  test07();
   return 0;
 }
