@@ -367,6 +367,29 @@ void test34() {
   mckits_string_drop(mstring);
 }
 
+void test35() {
+  struct MckitsString* mstring = mckits_string_new("hello");
+  assert(0 == mckits_string_push_char(mstring, 'A'));
+  assert(0 == mckits_string_push_char(mstring, 'B'));
+  assert(0 == mckits_string_push_char(mstring, 'C'));
+  assert(0 == mckits_string_push_char(mstring, 'D'));
+  mckits_string_drop(mstring);
+}
+
+void test36() {
+  struct MckitsString* mstring = mckits_string_new("hello");
+  struct MckitsStr mstr = mckits_str(" world");
+  assert(0 == mckits_string_push_mstr(mstring, mstr));
+  mckits_string_drop(mstring);
+}
+
+void test37() {
+  struct MckitsString* mstring = mckits_string_new("123");
+  assert(123 == mckits_string_to_int(mstring));
+  assert(123 == mckits_string_to_int64(mstring));
+  mckits_string_drop(mstring);
+}
+
 int main() {
   test01();
   test02();
@@ -402,5 +425,8 @@ int main() {
   test32();
   test33();
   test34();
+  test35();
+  test36();
+  test37();
   return 0;
 }

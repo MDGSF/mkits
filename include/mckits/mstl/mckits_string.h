@@ -101,7 +101,7 @@ int mckits_string_end_with(struct MckitsString* mstring, const char* substr);
 @brief: Push back one character to mstring.
 return:
   On success, zero is returned.
-  On failed, -1 is returned, -1 means resize failed.
+  On failed, means resize failed, abort the program.
 */
 int mckits_string_push_char(struct MckitsString* mstring, char c);
 
@@ -109,7 +109,7 @@ int mckits_string_push_char(struct MckitsString* mstring, char c);
 @brief: Push back str to mstring.
 return:
   On success, zero is returned.
-  On failed, -1 is returned, -1 means resize failed.
+  On failed, means resize failed, abort the program.
 */
 int mckits_string_push_mstr(struct MckitsString* mstring,
                             struct MckitsStr mstr);

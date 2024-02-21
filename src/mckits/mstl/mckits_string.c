@@ -144,10 +144,7 @@ int mckits_string_push_char(struct MckitsString* mstring, char c) {
     // string is full
 
     size_t new_capacity = mstring->cap * 2;
-    void* new_buffer = malloc(new_capacity);
-    if (NULL == new_buffer) {
-      return -1;
-    }
+    void* new_buffer = mckits_malloc(new_capacity);
 
     memcpy(new_buffer, mstring->data, mstring->cap);
     free(mstring->data);
@@ -166,10 +163,7 @@ int mckits_string_push_mstr(struct MckitsString* mstring,
 
     size_t new_capacity =
         2 * (mstr.len > mstring->cap ? mstr.len : mstring->cap);
-    void* new_buffer = malloc(new_capacity);
-    if (NULL == new_buffer) {
-      return -1;
-    }
+    void* new_buffer = mckits_malloc(new_capacity);
 
     memcpy(new_buffer, mstring->data, mstring->len + 1);
     free(mstring->data);
@@ -233,10 +227,7 @@ struct MckitsStr mckits_str_initn(const char* str, size_t len) {
 }
 
 uint8_t* mckits_pstrdup(const struct MckitsStr* src) {
-  uint8_t* dst = (uint8_t*)malloc(src->len + 1);
-  if (dst == NULL) {
-    return NULL;
-  }
+  uint8_t* dst = (uint8_t*)mckits_malloc(src->len + 1);
   mckits_memcpy(dst, src->data, src->len + 1);
   return dst;
 }
