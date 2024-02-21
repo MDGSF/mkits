@@ -63,6 +63,7 @@ set(mckits_mstl_headers
   ${MCKITS_INCLUDE_HOME}/mstl/mckits_ring.h
   ${MCKITS_INCLUDE_HOME}/mstl/mckits_skiplist.h
   ${MCKITS_INCLUDE_HOME}/mstl/mckits_array.h
+  ${MCKITS_INCLUDE_HOME}/mstl/mckits_strconv.h
   ${MCKITS_INCLUDE_HOME}/mstl/mckits_string.h
   ${MCKITS_INCLUDE_HOME}/mstl/mckits_vecdeque.h
   ${MCKITS_INCLUDE_HOME}/mstl/mckits_vector.h
@@ -80,6 +81,7 @@ set(mckits_mstl_srcs
   ${MCKITS_SRC_HOME}/mstl/mckits_ring.c
   ${MCKITS_SRC_HOME}/mstl/mckits_skiplist.c
   ${MCKITS_SRC_HOME}/mstl/mckits_array.c
+  ${MCKITS_SRC_HOME}/mstl/mckits_strconv.c
   ${MCKITS_SRC_HOME}/mstl/mckits_string.c
   ${MCKITS_SRC_HOME}/mstl/mckits_vecdeque.c
   ${MCKITS_SRC_HOME}/mstl/mckits_vector.c
@@ -130,7 +132,6 @@ set(mckits_core_headers
   ${MCKITS_INCLUDE_HOME}/core/mckits_msock.h
   ${MCKITS_INCLUDE_HOME}/core/mckits_rawpipe.h
   ${MCKITS_INCLUDE_HOME}/core/mckits_socket_poller.h
-  ${MCKITS_INCLUDE_HOME}/core/mckits_strconv.h
   ${MCKITS_INCLUDE_HOME}/core/mckits_thread.h
 )
 
@@ -147,7 +148,6 @@ set(mckits_core_srcs
   ${MCKITS_SRC_HOME}/core/mckits_msock.c
   ${MCKITS_SRC_HOME}/core/mckits_rawpipe.c
   ${MCKITS_SRC_HOME}/core/mckits_socket_poller.c
-  ${MCKITS_SRC_HOME}/core/mckits_strconv.c
   ${MCKITS_SRC_HOME}/core/mckits_thread.c
 )
 

@@ -172,6 +172,11 @@ ssize_t mckits_read_whole_file(const char* pathname, void* buf, size_t count) {
     return -2;
   }
 
+  if (file_size == 0) {
+    fclose(file);
+    return 0;
+  }
+
   if (file_size > count) {
     fclose(file);
     return -3;
@@ -183,6 +188,85 @@ ssize_t mckits_read_whole_file(const char* pathname, void* buf, size_t count) {
   if (read_size != file_size) {
     return -4;
   }
+
+  return (ssize_t)read_size;
+}
+
+ssize_t mckits_read_whole_file_bytes(const char* pathname, void** buf) {
+  FILE* file = fopen(pathname, "rb");
+  if (file == NULL) {
+    return -1;
+  }
+
+  fseek(file, 0, SEEK_END);
+  long file_size = ftell(file);
+  fseek(file, 0, SEEK_SET);
+
+  if (file_size < 0) {
+    fclose(file);
+    return -2;
+  }
+
+  if (file_size == 0) {
+    fclose(file);
+    return 0;
+  }
+
+  void* data = malloc(file_size);
+  if (data == NULL) {
+    fclose(file);
+    return -3;
+  }
+
+  size_t read_size = fread(data, 1, file_size, file);
+  fclose(file);
+
+  if (read_size != file_size) {
+    free(data);
+    return -4;
+  }
+
+  *buf = data;
+
+  return (ssize_t)read_size;
+}
+
+ssize_t mckits_read_whole_file_cstring(const char* pathname, char** buf) {
+  FILE* file = fopen(pathname, "rb");
+  if (file == NULL) {
+    return -1;
+  }
+
+  fseek(file, 0, SEEK_END);
+  long file_size = ftell(file);
+  fseek(file, 0, SEEK_SET);
+
+  if (file_size < 0) {
+    fclose(file);
+    return -2;
+  }
+
+  if (file_size == 0) {
+    fclose(file);
+    return 0;
+  }
+
+  char* data = (char*)malloc(file_size + 1);
+  if (data == NULL) {
+    fclose(file);
+    return -3;
+  }
+  memset(data, 0, file_size + 1);
+
+  size_t read_size = fread(data, 1, file_size, file);
+  fclose(file);
+
+  if (read_size != file_size) {
+    free(data);
+    return -4;
+  }
+
+  *buf = data;
 
   return (ssize_t)read_size;
 }

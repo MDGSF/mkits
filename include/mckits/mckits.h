@@ -21,6 +21,7 @@ extern "C" {
 #include "mckits/mstl/mckits_rbtree.h"
 #include "mckits/mstl/mckits_ring.h"
 #include "mckits/mstl/mckits_skiplist.h"
+#include "mckits/mstl/mckits_strconv.h"
 #include "mckits/mstl/mckits_string.h"
 #include "mckits/mstl/mckits_vecdeque.h"
 #include "mckits/mstl/mckits_vector.h"
@@ -66,7 +67,6 @@ extern "C" {
 #include "mckits/core/mckits_mtime.h"
 #include "mckits/core/mckits_rawpipe.h"
 #include "mckits/core/mckits_socket_poller.h"
-#include "mckits/core/mckits_strconv.h"
 #include "mckits/core/mckits_thread.h"
 
 #ifdef __cplusplus

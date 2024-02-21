@@ -86,8 +86,50 @@ ssize_t mckits_path_base(const char* pathname, char* basename, size_t count);
     -2: ftell get file size failed.
     -3: file_size > count, file size is greater than buffer size.
     -4: readed bytes not equal to file size.
+@example:
+  char buf[1024] = {0};
+  ssize_t bytes_readed = mckits_read_whole_file(pathname, buf, 1024);
 */
 ssize_t mckits_read_whole_file(const char* pathname, void* buf, size_t count);
+
+/*
+@brief: Read whole file to memory buffer.
+@param pathname[in]: filename.
+@param buf[out]: pass pointer to get the memory buffer, need free manually.
+@return
+  On success, the number of bytes read is returned.
+  On error,
+    -1: open file failed.
+    -2: ftell get file size failed.
+    -3: malloc failed.
+    -4: readed bytes not equal to file size.
+@example:
+  void* buf = NULL;
+  ssize_t bytes_readed = mckits_read_whole_file_bytes(pathname, &buf);
+  // do something to buf
+  free(buf);
+*/
+ssize_t mckits_read_whole_file_bytes(const char* pathname, void** buf);
+
+/*
+@brief: Read whole file to C string.
+@param pathname[in]: filename.
+@param buf[out]: pass pointer to get the file content string.
+  Need free manually. Will include '\0'.
+@return
+  On success, the number of bytes read is returned, not include '\0'.
+  On error,
+    -1: open file failed.
+    -2: ftell get file size failed.
+    -3: malloc failed.
+    -4: readed bytes not equal to file size.
+@example:
+  char* buf = NULL;
+  ssize_t bytes_readed = mckits_read_whole_file_cstring(pathname, &buf);
+  // do something to buf
+  free(buf);
+*/
+ssize_t mckits_read_whole_file_cstring(const char* pathname, char** buf);
 
 /*
 @brief: Write memory buffer to file.

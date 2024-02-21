@@ -23,10 +23,36 @@ void mckits_string_init(struct MckitsString* mstring, const char* data) {
   mckits_memcpy(ptr, data, len + 1);
 }
 
+void mckits_string_init_from_bytes(struct MckitsString* mstring,
+                                   const uint8_t* data, size_t size) {
+  if (data == NULL || size <= 0) {
+    mstring->cap = 0;
+    mstring->len = 0;
+    mstring->data = NULL;
+    return;
+  }
+
+  uint8_t* ptr = (uint8_t*)mckits_malloc(size + 1);
+
+  mstring->len = size;
+  mstring->cap = size + 1;
+  mstring->data = ptr;
+  mckits_memcpy(ptr, data, size);
+  ptr[size] = '\0';
+}
+
 struct MckitsString* mckits_string_new(const char* data) {
   struct MckitsString* mstring =
       (struct MckitsString*)mckits_malloc(sizeof(struct MckitsString));
   mckits_string_init(mstring, data);
+  return mstring;
+}
+
+struct MckitsString* mckits_string_from_bytes(const uint8_t* data,
+                                              size_t size) {
+  struct MckitsString* mstring =
+      (struct MckitsString*)mckits_malloc(sizeof(struct MckitsString));
+  mckits_string_init_from_bytes(mstring, data, size);
   return mstring;
 }
 
@@ -139,30 +165,15 @@ int mckits_string_end_with(struct MckitsString* mstring, const char* substr) {
   return 1;
 }
 
-int mckits_string_push_char(struct MckitsString* mstring, char c) {
-  if (mstring->len + 1 >= mstring->cap) {
-    // string is full
-
-    size_t new_capacity = mstring->cap * 2;
-    void* new_buffer = mckits_malloc(new_capacity);
-
-    memcpy(new_buffer, mstring->data, mstring->cap);
-    free(mstring->data);
-    mstring->data = new_buffer;
-    mstring->cap = new_capacity;
-  }
-  mstring->data[mstring->len++] = (uint8_t)c;
-  mstring->data[mstring->len] = '\0';
-  return 0;
-}
-
-int mckits_string_push_mstr(struct MckitsString* mstring,
-                            struct MckitsStr mstr) {
-  if (mstring->len + 1 + mstr.len > mstring->cap) {
-    // string is full
-
+static void mckits_string_grow_size(struct MckitsString* mstring,
+                                    size_t grow_size) {
+  if (mstring->data == NULL) {
+    mstring->cap = grow_size + 1;
+    mstring->len = 0;
+    mstring->data = mckits_malloc(mstring->cap);
+  } else if (mstring->len + 1 + grow_size > mstring->cap) {
     size_t new_capacity =
-        2 * (mstr.len > mstring->cap ? mstr.len : mstring->cap);
+        2 * (grow_size > mstring->cap ? grow_size : mstring->cap);
     void* new_buffer = mckits_malloc(new_capacity);
 
     memcpy(new_buffer, mstring->data, mstring->len + 1);
@@ -170,11 +181,49 @@ int mckits_string_push_mstr(struct MckitsString* mstring,
     mstring->data = new_buffer;
     mstring->cap = new_capacity;
   }
+}
+
+void mckits_string_push_char(struct MckitsString* mstring, char c) {
+  mckits_string_grow_size(mstring, 1);
+
+  mstring->data[mstring->len++] = (uint8_t)c;
+  mstring->data[mstring->len] = '\0';
+}
+
+void mckits_string_push_cstring(struct MckitsString* mstring,
+                                const char* cstring) {
+  size_t cstring_len = strlen(cstring);
+  mckits_string_grow_size(mstring, cstring_len);
+
+  memcpy(mstring->data + mstring->len, cstring, cstring_len);
+  mstring->data[mstring->len + cstring_len] = '\0';
+  mstring->len += cstring_len;
+}
+
+void mckits_string_push_mstr(struct MckitsString* mstring,
+                             struct MckitsStr mstr) {
+  mckits_string_grow_size(mstring, mstr.len);
 
   memcpy(mstring->data + mstring->len, mstr.data, mstr.len);
   mstring->data[mstring->len + mstr.len] = '\0';
   mstring->len += mstr.len;
-  return 0;
+}
+
+void mckits_string_push_mstring(struct MckitsString* mstring,
+                                const struct MckitsString* appended) {
+  mckits_string_grow_size(mstring, appended->len);
+
+  memcpy(mstring->data + mstring->len, appended->data, appended->len);
+  mstring->data[mstring->len + appended->len] = '\0';
+  mstring->len += appended->len;
+}
+
+char* mckits_string_take(struct MckitsString* mstring) {
+  char* data = (char*)mstring->data;
+  mstring->cap = 0;
+  mstring->len = 0;
+  mstring->data = NULL;
+  return data;
 }
 
 struct MckitsString* mckits_string_from_int(int num) {
@@ -211,6 +260,21 @@ int mckits_string_to_int(struct MckitsString* mstring) {
 
 int64_t mckits_string_to_int64(struct MckitsString* mstring) {
   return (int64_t)atoll((const char*)mstring->data);
+}
+
+int mckits_string_equal(const struct MckitsString* a,
+                        const struct MckitsString* b) {
+  return mckits_strcmp(a->data, b->data) == 0 ? 1 : 0;
+}
+
+int mckits_string_equal_str(const struct MckitsString* mstring,
+                            const struct MckitsStr* mstr) {
+  return mckits_strcmp(mstring->data, mstr->data) == 0 ? 1 : 0;
+}
+
+int mckits_string_equal_cstring(const struct MckitsString* mstring,
+                                const char* cstr) {
+  return mckits_strcmp(mstring->data, cstr) == 0 ? 1 : 0;
 }
 
 struct MckitsStr mckits_str_init(const char* str) {

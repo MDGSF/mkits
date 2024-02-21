@@ -23,18 +23,38 @@ struct MckitsString {
 /*
 @brief: Initialize mstring with data.
 @param mstring[in]: mstring will be initialized.
-@param data[in]: input data string will be copyed into mstring.
+@param data[in]: Input data string will be copyed into mstring.
+  Parameter `data` is null-terminated c-string.
 */
 void mckits_string_init(struct MckitsString* mstring, const char* data);
 
 /*
-@brief: Create a new MckitsString with input data.
+@brief: Initialize mstring with data bytes.
+@param mstring[in]: mstring will be initialized.
+@param data[in]: Input data string will be copyed into mstring.
+@param size[in]: data size in bytes.
+*/
+void mckits_string_init_from_bytes(struct MckitsString* mstring,
+                                   const uint8_t* data, size_t size);
+
+/*
+@brief: Create a new MckitsString with input data, null-terminated c-string.
 @param data[in]: input data string will be copyed into mstring.
 @return
   On success, pointer to mstring.
   On failed, NULL is returned
 */
 struct MckitsString* mckits_string_new(const char* data);
+
+/*
+@brief: Create a new MckitsString with input data, bytes array.
+@param data[in]: input data string will be copyed into mstring.
+@param size[in]: data size in bytes.
+@return
+  On success, pointer to mstring.
+  On failed, NULL is returned
+*/
+struct MckitsString* mckits_string_from_bytes(const uint8_t* data, size_t size);
 
 /*
 @brief: Drop the MckitsString.
@@ -99,20 +119,33 @@ int mckits_string_end_with(struct MckitsString* mstring, const char* substr);
 
 /*
 @brief: Push back one character to mstring.
-return:
-  On success, zero is returned.
-  On failed, means resize failed, abort the program.
 */
-int mckits_string_push_char(struct MckitsString* mstring, char c);
+void mckits_string_push_char(struct MckitsString* mstring, char c);
+
+/*
+@brief: Push back null-terminated c-string to mstring.
+*/
+void mckits_string_push_cstring(struct MckitsString* mstring,
+                                const char* cstring);
 
 /*
 @brief: Push back str to mstring.
-return:
-  On success, zero is returned.
-  On failed, means resize failed, abort the program.
 */
-int mckits_string_push_mstr(struct MckitsString* mstring,
-                            struct MckitsStr mstr);
+void mckits_string_push_mstr(struct MckitsString* mstring,
+                             struct MckitsStr mstr);
+
+/*
+@brief: Push back mstring to mstring.
+ mstring = mstring + appended.
+*/
+void mckits_string_push_mstring(struct MckitsString* mstring,
+                                const struct MckitsString* appended);
+
+/*
+@brief: Take data from mstring, and reset mstring to empty.
+@return: Pointer to data, need free manually.
+*/
+char* mckits_string_take(struct MckitsString* mstring);
 
 /*
 @brief: Convert int to mstring.
@@ -125,6 +158,27 @@ struct MckitsString* mckits_string_from_int64(int64_t num);
 */
 int mckits_string_to_int(struct MckitsString* mstring);
 int64_t mckits_string_to_int64(struct MckitsString* mstring);
+
+/*
+@brief: Check mstring equal or not.
+@return: 1 mean equal, 0 mean not equal.
+*/
+int mckits_string_equal(const struct MckitsString* a,
+                        const struct MckitsString* b);
+
+/*
+@brief: Check mstring equal to mstr or not.
+@return: 1 mean equal, 0 mean not equal.
+*/
+int mckits_string_equal_str(const struct MckitsString* mstring,
+                            const struct MckitsStr* mstr);
+
+/*
+@brief: Check mstring equal to c-string or not.
+@return: 1 mean equal, 0 mean not equal.
+*/
+int mckits_string_equal_cstring(const struct MckitsString* mstring,
+                                const char* cstr);
 
 /*
 @brief: MckitsStr represents a null-terminate string. `len` is the string
