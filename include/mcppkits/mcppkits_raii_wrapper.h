@@ -22,7 +22,6 @@ class RAIIWrapper {
   RAIIWrapper& operator=(RAIIWrapper&&) = default;
 
   T* operator->() { return ptr; }
-  T& operator[](int index) { return ptr[index]; }
   T& operator*() { return *ptr; }
 
  private:
