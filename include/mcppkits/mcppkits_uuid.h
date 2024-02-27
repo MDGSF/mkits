@@ -1,3 +1,7 @@
+/*
+@brief: rfc4122-A Universally Unique IDentifier (UUID) URN Namespace
+*/
+
 #ifndef MKITS_INCLUDE_MCPPKITS_MCPPKITS_UUID_H_
 #define MKITS_INCLUDE_MCPPKITS_MCPPKITS_UUID_H_
 
@@ -16,8 +20,12 @@ class UUIDGenerator {
  private:
   UUIDGenerator() = delete;
   ~UUIDGenerator() = delete;
+
   UUIDGenerator(const UUIDGenerator&) = delete;
   UUIDGenerator& operator=(const UUIDGenerator&) = delete;
+
+  UUIDGenerator(UUIDGenerator&&) = delete;
+  UUIDGenerator& operator=(UUIDGenerator&&) = delete;
 };
 
 }  // namespace mcppkits
