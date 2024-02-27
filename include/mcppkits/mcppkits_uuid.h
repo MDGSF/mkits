@@ -8,7 +8,7 @@ namespace mcppkits {
 class UUIDGenerator {
  public:
   /*
-  @brief: Generate a new uuid.
+  @brief: Generate a new uuid. UUIDv4.
   @return: new uuid.
   */
   static std::string uuid();

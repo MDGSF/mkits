@@ -7,6 +7,7 @@
 
 namespace mcppkits {
 
+// Generate this code with ChatGPT, -_-.
 std::string UUIDGenerator::uuid() {
   std::random_device rd;
   std::mt19937 gen(rd());
