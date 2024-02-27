@@ -5,6 +5,7 @@
 #include "mcppkits/mcppkits_fixed_size_string.hpp"
 #include "mcppkits/mcppkits_fps.h"
 #include "mcppkits/mcppkits_strutils.h"
+#include "mcppkits/mcppkits_uuid.h"
 
 namespace mcppkits {}
 
