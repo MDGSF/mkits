@@ -1,6 +1,7 @@
 #ifndef MKITS_INCLUDE_MCPPKITS_MCPPKITS_SINGLETONP_H_
 #define MKITS_INCLUDE_MCPPKITS_MCPPKITS_SINGLETONP_H_
 
+#include <cstdlib>
 #include <mutex>
 #include <thread>
 
@@ -14,6 +15,7 @@ class SingletonP {
       std::lock_guard<std::mutex> lock(mtx_);
       if (instance_ == nullptr) {
         instance_ = new T();
+        ::atexit(destroy);
       }
     }
     return *instance_;
@@ -26,7 +28,7 @@ class SingletonP {
   SingletonP& operator=(const SingletonP&) = delete;
   SingletonP(SingletonP&&) = delete;
   SingletonP& operator=(SingletonP&&) = delete;
-
+  static void destroy() { delete instance_; }
   static T* instance_;
   static std::mutex mtx_;
 };
