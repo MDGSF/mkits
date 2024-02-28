@@ -98,7 +98,173 @@ void test01() {
   mckits_iniparser_drop(iniparser);
 }
 
+void test02() {
+  struct MckitsIniParser* iniparser =
+      mckits_iniparser_new(MCKITS_INIPARSER_DEFAULT_DELIMITERS,
+                           MCKITS_INIPARSER_DEFAULT_COMMENT_PREFIXS);
+  mckits_iniparser_drop(iniparser);
+}
+
+void test03() {
+  struct MckitsIniParser* iniparser =
+      mckits_iniparser_new(MCKITS_INIPARSER_DEFAULT_DELIMITERS,
+                           MCKITS_INIPARSER_DEFAULT_COMMENT_PREFIXS);
+
+  mckits_iniparser_set(iniparser, "section01", "e1", "v1");
+  {
+    char* value = NULL;
+    assert(0 == mckits_iniparser_get(iniparser, "section01", "e1", &value));
+    assert(strcmp(value, "v1") == 0);
+  }
+
+  mckits_iniparser_set(iniparser, "section01", "e1", "v2");
+  {
+    char* value = NULL;
+    assert(0 == mckits_iniparser_get(iniparser, "section01", "e1", &value));
+    assert(strcmp(value, "v2") == 0);
+  }
+
+  mckits_iniparser_set(iniparser, "section01", "e2", "v2");
+  mckits_iniparser_set(iniparser, "section01", "e3", "v3");
+  mckits_iniparser_set(iniparser, "section02", "d1", "z1");
+  mckits_iniparser_set(iniparser, "section02", "d2", "z2");
+  mckits_iniparser_set(iniparser, "section02", "d3", "z3");
+
+  {
+    char* value = NULL;
+    assert(0 == mckits_iniparser_get(iniparser, "section01", "e1", &value));
+    assert(strcmp(value, "v2") == 0);
+  }
+  {
+    char* value = NULL;
+    assert(0 == mckits_iniparser_get(iniparser, "section01", "e2", &value));
+    assert(strcmp(value, "v2") == 0);
+  }
+  {
+    char* value = NULL;
+    assert(0 == mckits_iniparser_get(iniparser, "section01", "e3", &value));
+    assert(strcmp(value, "v3") == 0);
+  }
+  {
+    char* value = NULL;
+    assert(0 == mckits_iniparser_get(iniparser, "section02", "d1", &value));
+    assert(strcmp(value, "z1") == 0);
+  }
+  {
+    char* value = NULL;
+    assert(0 == mckits_iniparser_get(iniparser, "section02", "d2", &value));
+    assert(strcmp(value, "z2") == 0);
+  }
+  {
+    char* value = NULL;
+    assert(0 == mckits_iniparser_get(iniparser, "section02", "d3", &value));
+    assert(strcmp(value, "z3") == 0);
+  }
+
+  mckits_iniparser_remove_entry(iniparser, "section02", "d2");
+  assert(0 == mckits_iniparser_has_entry(iniparser, "section2", "d2"));
+  {
+    char* value = NULL;
+    assert(-1 == mckits_iniparser_get(iniparser, "section02", "d2", &value));
+  }
+
+  assert(1 == mckits_iniparser_has_section(iniparser, "section02"));
+  mckits_iniparser_remove_section(iniparser, "section02");
+  assert(0 == mckits_iniparser_has_section(iniparser, "section02"));
+
+  mckits_iniparser_drop(iniparser);
+}
+
+void test04() {
+  struct MckitsIniParser* iniparser =
+      mckits_iniparser_new(MCKITS_INIPARSER_DEFAULT_DELIMITERS,
+                           MCKITS_INIPARSER_DEFAULT_COMMENT_PREFIXS);
+
+  mckits_iniparser_set(iniparser, "section", "n1", "0");
+  mckits_iniparser_set(iniparser, "section", "n2", "false");
+  mckits_iniparser_set(iniparser, "section", "n3", "no");
+  mckits_iniparser_set(iniparser, "section", "n4", "off");
+
+  mckits_iniparser_set(iniparser, "section", "m1", "1");
+  mckits_iniparser_set(iniparser, "section", "m2", "true");
+  mckits_iniparser_set(iniparser, "section", "m3", "yes");
+  mckits_iniparser_set(iniparser, "section", "m4", "on");
+
+  {
+    int value = 0;
+    assert(0 ==
+           mckits_iniparser_get_boolean(iniparser, "section", "n1", &value));
+    assert(value == 0);
+  }
+  {
+    int value = 0;
+    assert(0 ==
+           mckits_iniparser_get_boolean(iniparser, "section", "n2", &value));
+    assert(value == 0);
+  }
+  {
+    int value = 0;
+    assert(0 ==
+           mckits_iniparser_get_boolean(iniparser, "section", "n3", &value));
+    assert(value == 0);
+  }
+  {
+    int value = 0;
+    assert(0 ==
+           mckits_iniparser_get_boolean(iniparser, "section", "n4", &value));
+    assert(value == 0);
+  }
+
+  {
+    int value = 0;
+    assert(0 ==
+           mckits_iniparser_get_boolean(iniparser, "section", "m1", &value));
+    assert(value == 1);
+  }
+  {
+    int value = 0;
+    assert(0 ==
+           mckits_iniparser_get_boolean(iniparser, "section", "m2", &value));
+    assert(value == 1);
+  }
+  {
+    int value = 0;
+    assert(0 ==
+           mckits_iniparser_get_boolean(iniparser, "section", "m3", &value));
+    assert(value == 1);
+  }
+  {
+    int value = 0;
+    assert(0 ==
+           mckits_iniparser_get_boolean(iniparser, "section", "m4", &value));
+    assert(value == 1);
+  }
+
+  {
+    int value = 0;
+    assert(-1 == mckits_iniparser_get_boolean(iniparser, "invalid_section",
+                                              "m4", &value));
+  }
+  {
+    int value = 0;
+    assert(-1 == mckits_iniparser_get_boolean(iniparser, "section",
+                                              "invalid_entry", &value));
+  }
+  {
+    mckits_iniparser_set(iniparser, "section", "kk", "invalid_bool_value");
+
+    int value = 0;
+    assert(-2 ==
+           mckits_iniparser_get_boolean(iniparser, "section", "kk", &value));
+  }
+
+  mckits_iniparser_drop(iniparser);
+}
+
 int main() {
   test01();
+  test02();
+  test03();
+  test04();
   return 0;
 }

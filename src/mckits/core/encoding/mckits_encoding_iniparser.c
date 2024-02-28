@@ -550,6 +550,8 @@ void mckits_iniparser_remove_section(struct MckitsIniParser* iniparser,
 
   // free section
   iniparser_section_drop(section);
+  // free section node
+  mckits_list_node_drop(section_node);
 }
 
 void mckits_iniparser_remove_entry(struct MckitsIniParser* iniparser,
@@ -576,4 +578,6 @@ void mckits_iniparser_remove_entry(struct MckitsIniParser* iniparser,
 
   // free entry
   iniparser_entry_drop(entry);
+  // free entry node
+  mckits_list_node_drop(entry_node);
 }
