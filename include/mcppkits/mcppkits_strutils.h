@@ -9,20 +9,6 @@ namespace mcppkits {
 namespace strutils {
 
 /*
-@brief: Generate random string, every byte is 0~255.
-@param size[in]: Random string length.
-@return: Random string.
-*/
-std::string random_str(int size);
-
-/*
-@brief: Generate random string, every byte is 0~9 a-z A-Z.
-@param size[in]: Random string length.
-@return: Random string.
-*/
-std::string random_str_alnum(int size);
-
-/*
 @brief: Change string character to lower.
 @param str[in]: The reference of string.
 @return: The reference of input str.

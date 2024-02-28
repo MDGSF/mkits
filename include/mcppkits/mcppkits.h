@@ -9,6 +9,7 @@
 #include "mcppkits/mcppkits_fps.h"
 #include "mcppkits/mcppkits_md5.h"
 #include "mcppkits/mcppkits_raii_wrapper.h"
+#include "mcppkits/mcppkits_random.h"
 #include "mcppkits/mcppkits_singleton.h"
 #include "mcppkits/mcppkits_singletonp.h"
 #include "mcppkits/mcppkits_strutils.h"

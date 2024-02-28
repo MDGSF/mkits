@@ -13,29 +13,6 @@
 namespace mcppkits {
 namespace strutils {
 
-std::string random_str(int size) {
-  std::string result;
-  result.resize(size);
-  std::mt19937 rng(std::random_device{}());
-  for (int i = 0; i < size; ++i) {
-    result[i] = static_cast<char>(rng() % 0xFF);
-  }
-  return result;
-}
-
-std::string random_str_alnum(int size) {
-  static const char Chars[] =
-      "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  std::string result;
-  result.resize(size);
-  std::mt19937 rng(std::random_device{}());
-  for (int i = 0; i < size; ++i) {
-    uint32_t x = rng() % (sizeof(Chars) - 1);
-    result[i] = Chars[x];
-  }
-  return result;
-}
-
 std::string& str_to_lower(std::string& str) {
   std::transform(str.begin(), str.end(), str.begin(), towlower);
   return str;

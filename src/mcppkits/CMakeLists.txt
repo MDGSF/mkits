@@ -19,6 +19,7 @@ set(mcppkits_headers
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_fps.h
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_md5.h
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_raii_wrapper.h
+  ${MCPPKITS_INCLUDE_HOME}/mcppkits_random.h
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_singleton.h
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_singletonp.h
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_strutils.h
@@ -31,6 +32,7 @@ set(mcppkits_srcs
   ${MCPPKITS_SRC_HOME}/mcppkits_count_down_latch.cpp
   ${MCPPKITS_SRC_HOME}/mcppkits_fileutils.cpp
   ${MCPPKITS_SRC_HOME}/mcppkits_md5.cpp
+  ${MCPPKITS_SRC_HOME}/mcppkits_random.cpp
   ${MCPPKITS_SRC_HOME}/mcppkits_strutils.cpp
   ${MCPPKITS_SRC_HOME}/mcppkits_uuid.cpp
 )
