@@ -255,7 +255,7 @@ int mckits_iniparser_from_cstring(struct MckitsIniParser* iniparser,
         }
 
         section = iniparser_add_new_section(iniparser, (const char*)line.data);
-
+        mckits_string_clear(&line);
         continue;
       }
 
@@ -263,11 +263,13 @@ int mckits_iniparser_from_cstring(struct MckitsIniParser* iniparser,
       for (int i = 0; i < iniparser->comment_prefixs.len; ++i) {
         if (line.data[i] == iniparser->comment_prefixs.data[i]) {
           // comment line, do nothing
+          mckits_string_clear(&line);
           continue;
         }
       }
 
       // process entry line
+      int found_delimiter = 0;
       for (int i = 0; i < iniparser->delimiters.len; ++i) {
         char* delimiter =
             mckits_strchr(line.data, iniparser->delimiters.data[i]);
@@ -295,9 +297,14 @@ int mckits_iniparser_from_cstring(struct MckitsIniParser* iniparser,
 
           mckits_string_drop_data(&entry_name);
           mckits_string_drop_data(&entry_value);
-
-          continue;
+          mckits_string_clear(&line);
+          found_delimiter = 1;
+          break;
         }
+      }
+
+      if (found_delimiter) {
+        continue;
       }
 
       // entry not found delimiter, invalid

@@ -67,6 +67,11 @@ void mckits_string_drop(struct MckitsString* mstring);
 void mckits_string_drop_data(struct MckitsString* mstring);
 
 /*
+@brief: Clear data, just set len to zero, will not free data field.
+*/
+void mckits_string_clear(struct MckitsString* mstring);
+
+/*
 @brief: Clone a string.
 @param mstring[in]: mstring will be cloned.
 @return

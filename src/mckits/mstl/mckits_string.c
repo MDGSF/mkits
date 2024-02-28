@@ -70,6 +70,8 @@ void mckits_string_drop_data(struct MckitsString* mstring) {
   }
 }
 
+void mckits_string_clear(struct MckitsString* mstring) { mstring->len = 0; }
+
 void mckits_string_to_lower(struct MckitsString* mstring) {
   for (size_t i = 0; i < mstring->len; ++i) {
     mstring->data[i] = mckits_tolower(mstring->data[i]);
