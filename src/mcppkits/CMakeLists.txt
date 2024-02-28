@@ -16,6 +16,9 @@ set(mcppkits_headers
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_fixed_size_string.hpp
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_fps.h
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_md5.h
+  ${MCPPKITS_INCLUDE_HOME}/mcppkits_raii_wrapper.h
+  ${MCPPKITS_INCLUDE_HOME}/mcppkits_singleton.h
+  ${MCPPKITS_INCLUDE_HOME}/mcppkits_singletonp.h
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_strutils.h
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_uuid.h
 )
