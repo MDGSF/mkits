@@ -145,7 +145,9 @@ int mckits_iniparser_get_float(struct MckitsIniParser* iniparser,
   "1", "true", "yes", "on"  --> true --> `1`
 @return:
   On success, 0 is returned.
-  On error, -1 means section_name or entry_name is invalid.
+  On error,
+    -1 means section_name or entry_name is invalid.
+    -2 mean value can't be convert to true or false.
 */
 int mckits_iniparser_get_boolean(struct MckitsIniParser* iniparser,
                                  const char* section_name,
