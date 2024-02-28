@@ -8,6 +8,11 @@
 namespace mcppkits {
 namespace fileutils {
 
+bool file_exists(const std::string& filename) {
+  std::ifstream file(filename);
+  return file.good();
+}
+
 int read_whole_file(const std::string& filename, std::string& content) {
   std::ifstream file(filename);
   if (!file.is_open()) {

@@ -7,6 +7,11 @@ namespace mcppkits {
 namespace fileutils {
 
 /*
+@brief: Check file exists or not.
+*/
+bool file_exists(const std::string& filename);
+
+/*
 @biref: Read whole file.
 @param filename[in]: File will be read.
 @param content[out]: File content.
