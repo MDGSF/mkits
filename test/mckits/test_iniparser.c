@@ -31,6 +31,7 @@ void test01() {
     char* data = mckits_iniparser_to_cstring(iniparser);
     assert(data != NULL);
     printf("%ld, %s\n", strlen(data), data);
+    free(data);
   }
 
   mckits_iniparser_drop(iniparser);
