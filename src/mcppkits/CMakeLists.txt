@@ -11,8 +11,10 @@ message(STATUS "[mcppkits] MCPPKITS_SRC_HOME: ${MCPPKITS_SRC_HOME}")
 
 set(mcppkits_headers
   ${MCPPKITS_INCLUDE_HOME}/mcppkits.h
+  ${MCPPKITS_INCLUDE_HOME}/mcppkits_config_file_reader.h
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_count_down_latch.h
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_dbgutils.h
+  ${MCPPKITS_INCLUDE_HOME}/mcppkits_fileutils.h
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_fixed_size_string.hpp
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_fps.h
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_md5.h
@@ -25,7 +27,9 @@ set(mcppkits_headers
 
 set(mcppkits_srcs
   ${MCPPKITS_SRC_HOME}/mcppkits.cpp
+  ${MCPPKITS_SRC_HOME}/mcppkits_config_file_reader.cpp
   ${MCPPKITS_SRC_HOME}/mcppkits_count_down_latch.cpp
+  ${MCPPKITS_SRC_HOME}/mcppkits_fileutils.cpp
   ${MCPPKITS_SRC_HOME}/mcppkits_md5.cpp
   ${MCPPKITS_SRC_HOME}/mcppkits_strutils.cpp
   ${MCPPKITS_SRC_HOME}/mcppkits_uuid.cpp
