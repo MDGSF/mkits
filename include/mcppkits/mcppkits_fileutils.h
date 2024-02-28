@@ -9,9 +9,10 @@ namespace fileutils {
 /*
 @biref: Read whole file.
 @param filename[in]: File will be read.
+@param content[out]: File content.
 @return: File content. If read failed, return an empty string.
 */
-std::string read_whole_file(const std::string& filename);
+int read_whole_file(const std::string& filename, std::string& content);
 
 /*
 @brief: Write content to file.

@@ -8,18 +8,18 @@
 namespace mcppkits {
 namespace fileutils {
 
-std::string read_whole_file(const std::string& filename) {
+int read_whole_file(const std::string& filename, std::string& content) {
   std::ifstream file(filename);
   if (!file.is_open()) {
     std::cerr << "Could not open file: " << filename << std::endl;
-    return "";
+    return -1;
   }
 
-  std::string content((std::istreambuf_iterator<char>(file)),
-                      std::istreambuf_iterator<char>());
-
+  std::string file_content((std::istreambuf_iterator<char>(file)),
+                           std::istreambuf_iterator<char>());
+  content = file_content;
   file.close();
-  return content;
+  return 0;
 }
 
 int write_to_file(const std::string& filename, const std::string& content) {

@@ -12,7 +12,7 @@ name2 = value2
 */
 class ConfigFileReader {
  public:
-  explicit ConfigFileReader(const std::string& filename);
+  ConfigFileReader() = default;
   ~ConfigFileReader() = default;
 
   ConfigFileReader(const ConfigFileReader&) = default;
@@ -20,6 +20,12 @@ class ConfigFileReader {
 
   ConfigFileReader(ConfigFileReader&&) = default;
   ConfigFileReader& operator=(ConfigFileReader&&) = default;
+
+  /*
+  @brief: Load config from file.
+  return: On success, 0 is returned. Else means failed.
+  */
+  int load_file(const std::string& filename);
 
   /*
   @brief: Get value by name.
@@ -37,11 +43,9 @@ class ConfigFileReader {
   int set(const std::string& name, const std::string& value);
 
  private:
-  void load_file(const std::string& filename);
   int write_file(const std::string& filename);
   std::string to_string();
 
-  bool loaded_ = false;
   std::string config_file_{};
   std::map<std::string, std::string> config_map_{};
 };

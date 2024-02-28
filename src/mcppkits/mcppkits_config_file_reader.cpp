@@ -8,36 +8,27 @@
 
 namespace mcppkits {
 
-ConfigFileReader::ConfigFileReader(const std::string& filename) {
-  load_file(filename);
-}
-
 std::string ConfigFileReader::get(const std::string& name) {
-  if (!loaded_) {
-    return "";
-  }
-
   auto it = config_map_.find(name);
   if (it == config_map_.end()) {
     return "";
   }
-
   return it->second;
 }
 
 int ConfigFileReader::set(const std::string& name, const std::string& value) {
-  if (!loaded_) {
-    return -1;
-  }
-
   config_map_[name] = value;
-
   return write_file(config_file_);
 }
 
-void ConfigFileReader::load_file(const std::string& filename) {
+int ConfigFileReader::load_file(const std::string& filename) {
   config_file_ = filename;
-  std::string content = fileutils::read_whole_file(filename);
+  std::string content;
+  int ret = fileutils::read_whole_file(filename, content);
+  if (ret != 0) {
+    return ret;
+  }
+
   std::string line;
   for (size_t i = 0; i < content.length(); ++i) {
     char c = content[i];
@@ -75,7 +66,7 @@ void ConfigFileReader::load_file(const std::string& filename) {
     line.clear();
   }
 
-  loaded_ = true;
+  return 0;
 }
 
 int ConfigFileReader::write_file(const std::string& filename) {
