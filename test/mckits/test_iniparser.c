@@ -16,6 +16,8 @@ void test01() {
   }
 
   const char* data =
+      "ip=127.0.0.1\n"
+      "port=12306\n"
       "[section1]\n"
       "name=John\n"
       "age=18\n"
@@ -30,7 +32,8 @@ void test01() {
   {
     char* data = mckits_iniparser_to_cstring(iniparser);
     assert(data != NULL);
-    printf("%ld, %s\n", strlen(data), data);
+    printf("%ld\n", strlen(data));
+    printf("%s\n", data);
     free(data);
   }
 

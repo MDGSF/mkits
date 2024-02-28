@@ -159,7 +159,7 @@ static struct MckitsListNode* iniparser_find_section_node(
   Else, return NULL.
 */
 static struct MckitsIniParserSection* iniparser_find_section(
-    struct MckitsIniParser* iniparser, const char* section_name) {
+    const struct MckitsIniParser* iniparser, const char* section_name) {
   struct MckitsListNode* node = mckits_list_front(iniparser->sections);
   while (node != NULL) {
     struct MckitsIniParserSection* section =
@@ -327,11 +327,38 @@ char* mckits_iniparser_to_cstring(const struct MckitsIniParser* iniparser) {
 
   int first_section = 1;
 
-  // process sections
+  // process default section
+  struct MckitsIniParserSection* section =
+      iniparser_find_section(iniparser, MCKITS_INIPARSER_DEFAULT_SECTION);
+  if (section != NULL) {
+    // default section exists
+    first_section = 0;
+
+    // process entryies
+    struct MckitsListNode* entry_node = mckits_list_front(section->entries);
+    while (entry_node != NULL) {
+      struct MckitsIniParserEntry* entry =
+          (struct MckitsIniParserEntry*)entry_node->value;
+      mckits_string_push_mstring(&result, &entry->name);
+      mckits_string_push_char(&result, (char)iniparser->delimiters.data[0]);
+      mckits_string_push_mstring(&result, &entry->value);
+      mckits_string_push_char(&result, '\n');
+      entry_node = mckits_list_node_next(entry_node);
+    }
+  }
+
+  // process sections, except default
   struct MckitsListNode* section_node = mckits_list_front(iniparser->sections);
   while (section_node != NULL) {
     struct MckitsIniParserSection* section =
         (struct MckitsIniParserSection*)section_node->value;
+
+    if (mckits_string_equal_cstring(&section->name,
+                                    MCKITS_INIPARSER_DEFAULT_SECTION)) {
+      // skip default section
+      section_node = mckits_list_node_next(section_node);
+      continue;
+    }
 
     if (first_section) {
       first_section = 0;
