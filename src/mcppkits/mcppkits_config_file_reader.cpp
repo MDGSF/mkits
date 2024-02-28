@@ -63,6 +63,7 @@ void ConfigFileReader::load_file(const std::string& filename) {
     auto pos = line.find('=');
     if (pos == std::string::npos) {
       // invalid line
+      line.clear();
       continue;
     }
 
@@ -71,6 +72,7 @@ void ConfigFileReader::load_file(const std::string& filename) {
     strutils::trim(name, " \r\n\t");
     strutils::trim(value, " \r\n\t");
     config_map_.insert(std::make_pair(name, value));
+    line.clear();
   }
 
   loaded_ = true;

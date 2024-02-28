@@ -36,10 +36,11 @@ std::string random_str_alpha(int size);
 
 /*
 @brief: Generate a temp filename. /tmp/xxx
-@param filename_size[in]: filename length.
+@param size[in]: filename size.
+@param prefix[in]: filename prefix.
 @return: Temp filename.
 */
-std::string random_tmp_filename(int filename_size = 8);
+std::string random_tmp_filename(int size = 8, const std::string& prefix = "");
 
 }  // namespace mcppkits
 

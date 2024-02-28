@@ -24,7 +24,7 @@ class ConfigFileReader {
   /*
   @brief: Get value by name.
   @param name[in]: entry name.
-  @return: entry value.
+  @return: entry value. If not found, return empty string.
   */
   std::string get(const std::string& name);
 

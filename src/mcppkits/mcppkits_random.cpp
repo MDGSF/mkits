@@ -50,9 +50,9 @@ std::string random_str_alpha(int size) {
   return result;
 }
 
-std::string random_tmp_filename(int filename_size) {
-  std::string filename = random_str_alpha(filename_size);
-  return "/tmp/" + filename;
+std::string random_tmp_filename(int size, const std::string& prefix) {
+  std::string filename = random_str_alpha(size);
+  return "/tmp/" + prefix + filename;
 }
 
 }  // namespace mcppkits
