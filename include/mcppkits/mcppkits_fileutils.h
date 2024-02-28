@@ -6,8 +6,19 @@
 namespace mcppkits {
 namespace fileutils {
 
+/*
+@biref: Read whole file.
+@param filename[in]: File will be read.
+@return: File content. If read failed, return an empty string.
+*/
 std::string read_whole_file(const std::string& filename);
 
+/*
+@brief: Write content to file.
+@param filename[in]: File will be write.
+@param content[in]: Content data will be write to file.
+@return: On success, 0 is returned. Else means failed.
+*/
 int write_to_file(const std::string& filename, const std::string& content);
 
 }  // namespace fileutils
