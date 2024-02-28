@@ -21,6 +21,14 @@ sex = male
   assert("18" == config.get("age"));
   assert("male" == config.get("sex"));
   assert("" == config.get("not_exists"));
+
+  config.set("ip", "127.0.0.1");
+  config.set("port", "12306");
+
+  assert("127.0.0.1" == config.get("ip"));
+  assert("12306" == config.get("port"));
+
+  mcppkits::fileutils::remove_file(filename);
 }
 
 int main() {

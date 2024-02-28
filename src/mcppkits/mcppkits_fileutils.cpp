@@ -1,5 +1,6 @@
 #include "mcppkits/mcppkits_fileutils.h"
 
+#include <cstdio>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -31,6 +32,10 @@ int write_to_file(const std::string& filename, const std::string& content) {
   file << content;
   file.close();
   return 0;
+}
+
+int remove_file(const std::string& filename) {
+  return std::remove(filename.c_str());
 }
 
 }  // namespace fileutils

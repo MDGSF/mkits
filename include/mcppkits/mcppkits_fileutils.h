@@ -21,6 +21,12 @@ std::string read_whole_file(const std::string& filename);
 */
 int write_to_file(const std::string& filename, const std::string& content);
 
+/*
+@brief: Remove file.
+@return: On success, 0 is returned. Else means failed.
+*/
+int remove_file(const std::string& filename);
+
 }  // namespace fileutils
 }  // namespace mcppkits
 
