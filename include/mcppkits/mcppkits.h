@@ -12,6 +12,7 @@
 #include "mcppkits/mcppkits_uuid.h"
 
 // mcppkits/core/queue
+#include "mcppkits/core/queue/mcppkits_list_queue.h"
 #include "mcppkits/core/queue/mcppkits_mpmc.h"
 
 // mcppkits/mstl

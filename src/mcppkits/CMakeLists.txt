@@ -10,6 +10,7 @@ message(STATUS "[mcppkits] MCPPKITS_INCLUDE_HOME: ${MCPPKITS_INCLUDE_HOME}")
 message(STATUS "[mcppkits] MCPPKITS_SRC_HOME: ${MCPPKITS_SRC_HOME}")
 
 set(mcppkits_core_queue_headers
+  ${MCPPKITS_INCLUDE_HOME}/core/queue/mcppkits_list_queue.h
   ${MCPPKITS_INCLUDE_HOME}/core/queue/mcppkits_mpmc.h
 )
 
