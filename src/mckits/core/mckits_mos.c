@@ -38,3 +38,7 @@ int mckits_hardware_concurrency() {
   long cores = sysconf(_SC_NPROCESSORS_ONLN);
   return (int)cores;
 }
+
+int mckits_get_pid() { return (int)getpid(); }
+
+int mckits_get_parent_pid() { return (int)getppid(); }

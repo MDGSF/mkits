@@ -44,6 +44,16 @@ ssize_t mckits_exe_path_base(char* buf, size_t bufsiz);
 */
 int mckits_hardware_concurrency();
 
+/*
+@brief: Get current process [PID].
+*/
+int mckits_get_pid();
+
+/*
+@brief: Get parent process [PID].
+*/
+int mckits_get_parent_pid();
+
 #ifdef __cplusplus
 }
 #endif
