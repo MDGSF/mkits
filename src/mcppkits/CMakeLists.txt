@@ -9,6 +9,10 @@ message(STATUS "[mcppkits] BUILD_STATIC: ${BUILD_STATIC}")
 message(STATUS "[mcppkits] MCPPKITS_INCLUDE_HOME: ${MCPPKITS_INCLUDE_HOME}")
 message(STATUS "[mcppkits] MCPPKITS_SRC_HOME: ${MCPPKITS_SRC_HOME}")
 
+set(mcppkits_core_queue_headers
+  ${MCPPKITS_INCLUDE_HOME}/core/queue/mcppkits_mpmc.h
+)
+
 set(mcppkits_mstl_headers
   ${MCPPKITS_INCLUDE_HOME}/mstl/mcppkits_fixed_size_string.h
   ${MCPPKITS_INCLUDE_HOME}/mstl/mcppkits_raii_wrapper.h

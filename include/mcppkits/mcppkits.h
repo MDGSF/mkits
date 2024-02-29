@@ -10,6 +10,11 @@
 #include "mcppkits/mcppkits_random.h"
 #include "mcppkits/mcppkits_strutils.h"
 #include "mcppkits/mcppkits_uuid.h"
+
+// mcppkits/core/queue
+#include "mcppkits/core/queue/mcppkits_mpmc.h"
+
+// mcppkits/mstl
 #include "mcppkits/mstl/mcppkits_fixed_size_string.h"
 #include "mcppkits/mstl/mcppkits_raii_wrapper.h"
 #include "mcppkits/mstl/mcppkits_singleton.h"
