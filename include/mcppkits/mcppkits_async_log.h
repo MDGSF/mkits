@@ -1,7 +1,10 @@
 #ifndef MKITS_INCLUDE_MCPPKITS_MCPPKITS_ASYNC_LOG_H_
 #define MKITS_INCLUDE_MCPPKITS_MCPPKITS_ASYNC_LOG_H_
 
+#include <string>
+
 #include "mckits/core/mckits_mlog.h"
+#include "mcppkits/core/queue/mcppkits_list_queue.h"
 
 #define LOGT(...)                                                      \
   mcppkits::AsyncLog::log(MKITS_LOG_LEVEL_VERBOSE, __FILE__, __LINE__, \
@@ -34,6 +37,8 @@ namespace mcppkits {
 
 class CAsyncLog {
  public:
+  static int init(const std::string& log_filename);
+
   static void log(int log_level, const char* filename, int line,
                   const char* format, ...);
 
@@ -51,6 +56,11 @@ class CAsyncLog {
 
  private:
   static int current_log_level_;
+  static bool running_;
+  static std::string log_filename_;
+  static FILE* log_file_;
+  static mcppkits::queue::TListQueue<std::string> mylist;
+  static std::string process_pid_;
 };
 
 }  // namespace mcppkits

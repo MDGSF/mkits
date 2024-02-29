@@ -3,6 +3,17 @@
 namespace mcppkits {
 
 int CAsyncLog::current_log_level_ = MKITS_LOG_LEVEL_INFO;
+bool CAsyncLog::running_ = false;
+std::string CAsyncLog::log_filename_ = "default";
+FILE* CAsyncLog::log_file_ = nullptr;
+mcppkits::queue::TListQueue<std::string> CAsyncLog::mylist;
+std::string CAsyncLog::process_pid_ = "";
+
+int CAsyncLog::init(const std::string& log_filename) {
+  log_filename_ = log_filename;
+
+  return 0;
+}
 
 void CAsyncLog::log(int log_level, const char* filename, int line,
                     const char* format, ...) {
