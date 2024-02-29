@@ -12,9 +12,12 @@ message(STATUS "[mcppkits] MCPPKITS_SRC_HOME: ${MCPPKITS_SRC_HOME}")
 set(mcppkits_mstl_headers
   ${MCPPKITS_INCLUDE_HOME}/mstl/mcppkits_fixed_size_string.h
   ${MCPPKITS_INCLUDE_HOME}/mstl/mcppkits_raii_wrapper.h
+  ${MCPPKITS_INCLUDE_HOME}/mstl/mcppkits_singleton.h
+  ${MCPPKITS_INCLUDE_HOME}/mstl/mcppkits_singletonp.h
 )
 
 set(mcppkits_headers
+  ${mcppkits_mstl_headers}
   ${MCPPKITS_INCLUDE_HOME}/mcppkits.h
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_config_file_reader.h
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_count_down_latch.h
@@ -23,8 +26,6 @@ set(mcppkits_headers
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_fps.h
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_md5.h
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_random.h
-  ${MCPPKITS_INCLUDE_HOME}/mcppkits_singleton.h
-  ${MCPPKITS_INCLUDE_HOME}/mcppkits_singletonp.h
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_strutils.h
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_uuid.h
 )

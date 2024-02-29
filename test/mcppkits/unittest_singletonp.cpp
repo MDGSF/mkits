@@ -1,7 +1,7 @@
 #include <cassert>
 #include <iostream>
 
-#include "mcppkits/mcppkits_singletonp.h"
+#include "mcppkits/mstl/mcppkits_singletonp.h"
 
 class MyClass {
  public:
