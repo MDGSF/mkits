@@ -6,7 +6,7 @@
 namespace mcppkits {
 
 /*
-@brief: Defer like golang.
+@brief: Defer like golang defer keyword.
 @example:
 
 void test() {
@@ -20,10 +20,17 @@ Some actions...
 Deferred executed 1
 Deferred executed 2
 */
-class Defer {
+class Defer final {
  public:
-  Defer(std::function<void()> func) : func(func) {}
+  Defer() = delete;
+  explicit Defer(std::function<void()> func) : func(func) {}
   ~Defer() { func(); }
+
+  Defer(const Defer&) = delete;
+  Defer& operator=(const Defer&) = delete;
+
+  Defer(Defer&&) = delete;
+  Defer& operator=(Defer&&) = delete;
 
  private:
   std::function<void()> func;
@@ -34,9 +41,12 @@ class Defer {
 #define mcppkits_Defer_CONCAT_INTERNAL(x, y) x##y
 #define mcppkits_Defer_CONCAT(x, y) mcppkits_Defer_CONCAT_INTERNAL(x, y)
 
-// it will expand like:
-// Defer _mcppkits_defer_[line_number]([]() { xxx });
-// `_mcppkits_defer_[line_number]` is an Defer instance.
+/*
+@brief: This macro is public, you should use this macro.
+it will expand like:
+  Defer _mcppkits_defer_[line_number]([]() { xxx });
+  `_mcppkits_defer_[line_number]` is an Defer instance.
+*/
 #define DEFER(func) \
   mcppkits::Defer mcppkits_Defer_CONCAT(_mcppkits_defer_, __LINE__)(func)
 
