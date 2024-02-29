@@ -42,7 +42,7 @@ if(BUILD_SHARED)
   target_include_directories(mcppkits PUBLIC
     ${SOLUTION_INCLUDE_HOME}
   )
-  target_link_libraries(mcppkits ${mcppkits_libs})
+  target_link_libraries(mcppkits ${mcppkits_libs} mckits)
   target_compile_options(mcppkits PRIVATE ${mcppkits_compile_options})
   target_link_options(mcppkits PRIVATE ${mcppkits_link_options})
   install(TARGETS mcppkits
@@ -58,7 +58,7 @@ if(BUILD_STATIC)
   target_include_directories(mcppkits_static PUBLIC
     ${SOLUTION_INCLUDE_HOME}
   )
-  target_link_libraries(mcppkits_static ${mcppkits_libs})
+  target_link_libraries(mcppkits_static ${mcppkits_libs} mckits)
   target_compile_options(mcppkits_static PRIVATE ${mcppkits_compile_options})
   target_link_options(mcppkits_static PRIVATE ${mcppkits_link_options})
   install(TARGETS mcppkits_static
