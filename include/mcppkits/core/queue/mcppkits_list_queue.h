@@ -81,8 +81,8 @@ class TListQueue {
         break;
       }
     }
-
-    auto value = list_.pop_front();
+    auto value = list_.front();
+    list_.pop_front();
     lock.unlock();
     output = std::move(value);
 
