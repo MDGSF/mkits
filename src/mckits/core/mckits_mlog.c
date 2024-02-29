@@ -8,11 +8,12 @@
 
 #define MCKITS_LOG_MAX_LINE 4096
 
-int mckits_global_loglevel = LOG_LEVEL_ERROR;
+int mckits_global_loglevel = MKITS_LOG_LEVEL_ERROR;
 
 void simple_log_impl(int log_level, const char* filename, int line,
                      const char* format, ...) {
-  if (mckits_global_loglevel <= log_level) {
+  if (mckits_global_loglevel <= log_level ||
+      log_level == MKITS_LOG_LEVEL_CRITICAL) {
     va_list ap;
     va_start(ap, format);
 
@@ -23,6 +24,10 @@ void simple_log_impl(int log_level, const char* filename, int line,
             p ? p + 1 : filename, line, buf);
 
     va_end(ap);
+
+    if (log_level == MKITS_LOG_LEVEL_FATAL) {
+      abort();
+    }
   }
 }
 
@@ -50,14 +55,14 @@ static void err_doit(int show_errno, int log_level, const char* filename,
 void err_ret_impl(const char* filename, int line, const char* fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  err_doit(1, LOG_LEVEL_INFO, filename, line, fmt, ap);
+  err_doit(1, MKITS_LOG_LEVEL_INFO, filename, line, fmt, ap);
   va_end(ap);
 }
 
 void err_sys_impl(const char* filename, int line, const char* fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  err_doit(1, LOG_LEVEL_ERROR, filename, line, fmt, ap);
+  err_doit(1, MKITS_LOG_LEVEL_ERROR, filename, line, fmt, ap);
   va_end(ap);
   exit(1);
 }
@@ -65,7 +70,7 @@ void err_sys_impl(const char* filename, int line, const char* fmt, ...) {
 void err_dump_impl(const char* filename, int line, const char* fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  err_doit(1, LOG_LEVEL_ERROR, filename, line, fmt, ap);
+  err_doit(1, MKITS_LOG_LEVEL_ERROR, filename, line, fmt, ap);
   va_end(ap);
   abort();  // dump core and terminate
   // exit(1);  // shouldn't get here
@@ -74,14 +79,14 @@ void err_dump_impl(const char* filename, int line, const char* fmt, ...) {
 void err_msg_impl(const char* filename, int line, const char* fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  err_doit(0, LOG_LEVEL_INFO, filename, line, fmt, ap);
+  err_doit(0, MKITS_LOG_LEVEL_INFO, filename, line, fmt, ap);
   va_end(ap);
 }
 
 void err_quit_impl(const char* filename, int line, const char* fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
-  err_doit(0, LOG_LEVEL_ERROR, filename, line, fmt, ap);
+  err_doit(0, MKITS_LOG_LEVEL_ERROR, filename, line, fmt, ap);
   va_end(ap);
   exit(1);
 }

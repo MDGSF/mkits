@@ -1,0 +1,6 @@
+#ifndef MKITS_INCLUDE_MCPPKITS_MCPPKITS_ASYNC_LOG_H_
+#define MKITS_INCLUDE_MCPPKITS_MCPPKITS_ASYNC_LOG_H_
+
+namespace mcppkits {}  // namespace mcppkits
+
+#endif  // MKITS_INCLUDE_MCPPKITS_MCPPKITS_ASYNC_LOG_H_
