@@ -1,4 +1,4 @@
-#include "mckits/core/queue/mckits_adt_flowqueue.h"
+#include "mckits/core/queue/mckits_flowqueue.h"
 
 #include <stdlib.h>
 

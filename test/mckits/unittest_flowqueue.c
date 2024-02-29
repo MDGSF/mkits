@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "mckits/core/queue/mckits_adt_flowqueue.h"
+#include "mckits/core/queue/mckits_flowqueue.h"
 
 void test01() {
   struct MckitsFlowQueue* flow_queue = mckits_flowqueue_new(10, 0, NULL);

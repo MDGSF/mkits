@@ -102,13 +102,13 @@ set(mckits_core_encoding_srcs
 )
 
 set(mckits_core_queue_headers
-  ${MCKITS_INCLUDE_HOME}/core/queue/mckits_adt_flowqueue.h
-  ${MCKITS_INCLUDE_HOME}/core/queue/mckits_adt_mpmcqueue.h
+  ${MCKITS_INCLUDE_HOME}/core/queue/mckits_flowqueue.h
+  ${MCKITS_INCLUDE_HOME}/core/queue/mckits_mpmcqueue.h
 )
 
 set(mckits_core_queue_srcs
-  ${MCKITS_SRC_HOME}/core/queue/mckits_adt_flowqueue.c
-  ${MCKITS_SRC_HOME}/core/queue/mckits_adt_mpmcqueue.c
+  ${MCKITS_SRC_HOME}/core/queue/mckits_flowqueue.c
+  ${MCKITS_SRC_HOME}/core/queue/mckits_mpmcqueue.c
 )
 
 set(mckits_core_thread_headers

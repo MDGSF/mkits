@@ -1,4 +1,4 @@
-#include "mckits/core/queue/mckits_adt_mpmcqueue.h"
+#include "mckits/core/queue/mckits_mpmcqueue.h"
 
 #include <pthread.h>
 #include <stdatomic.h>

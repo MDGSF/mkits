@@ -47,8 +47,8 @@ extern "C" {
 #include "mckits/core/encoding/mckits_endian.h"
 
 // core/queue
-#include "mckits/core/queue/mckits_adt_flowqueue.h"
-#include "mckits/core/queue/mckits_adt_mpmcqueue.h"
+#include "mckits/core/queue/mckits_flowqueue.h"
+#include "mckits/core/queue/mckits_mpmcqueue.h"
 
 // core/thread
 #include "mckits/core/thread/mckits_atomic.h"
