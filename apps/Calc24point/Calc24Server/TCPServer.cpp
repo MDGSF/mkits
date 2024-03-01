@@ -50,6 +50,13 @@ void TCPServer::start() {
 void TCPServer::stop() {
   running_ = false;
   close(listen_socket_);
+
+  mtx_.lock();
+  for (auto it = client_socks_.begin(); it != client_socks_.end(); ++it) {
+    close(*it);
+  }
+  client_socks_.clear();
+  mtx_.unlock();
 }
 
 void TCPServer::accept_loop() {
@@ -59,7 +66,7 @@ void TCPServer::accept_loop() {
     int s = mckits_accept_client(listen_socket_);
     if (s <= 0) {
       errlog("accept client failed");
-      continue;
+      break;
     }
 
     infolog("new client: %d", s);
@@ -71,6 +78,7 @@ void TCPServer::accept_loop() {
 }
 
 void TCPServer::one_loop(int sock) {
+  add_socket(sock);
   for (; running_;) {
     char buf[1024] = {0};
     ssize_t read_bytes = read(sock, buf, sizeof(buf));
@@ -86,4 +94,15 @@ void TCPServer::one_loop(int sock) {
       break;
     }
   }
+  del_socket(sock);
+}
+
+void TCPServer::add_socket(int sock) {
+  std::lock_guard<std::mutex> lock(mtx_);
+  client_socks_.insert(sock);
+}
+
+void TCPServer::del_socket(int sock) {
+  std::lock_guard<std::mutex> lock(mtx_);
+  client_socks_.erase(sock);
 }

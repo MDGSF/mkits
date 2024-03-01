@@ -9,7 +9,10 @@
 
 TCPServer* pserver = nullptr;
 
-void sig_handler(int sig) { pserver->stop(); }
+void sig_handler(int sig) {
+  printf("sig = %d\n", sig);
+  pserver->stop();
+}
 
 int main(int argc, char** argv) {
   signal(SIGPIPE, SIG_IGN);
