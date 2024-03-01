@@ -71,7 +71,7 @@ int mckits_accept_client(int server_socket) {
   return s;
 }
 
-int mckits_tcpconnect(char* addr, int port, int nonblock) {
+int mckits_tcpconnect(const char* addr, int port, int nonblock) {
   char portstr[6];
   snprintf(portstr, sizeof(portstr), "%d", port);
 

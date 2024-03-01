@@ -17,6 +17,7 @@ class TCPClient {
   int init(const std::string& ip, uint16_t port);
 
  private:
+  int sock_ = -1;
 };
 
 #endif

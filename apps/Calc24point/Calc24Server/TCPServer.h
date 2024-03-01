@@ -1,6 +1,7 @@
 #ifndef MKITS_APPS_CALC24POINT_CALC24SERVER_TCPSERVER_H_
 #define MKITS_APPS_CALC24POINT_CALC24SERVER_TCPSERVER_H_
 
+#include <atomic>
 #include <string>
 
 class TCPServer {
@@ -16,7 +17,16 @@ class TCPServer {
 
   int init(const std::string& ip, uint16_t port);
 
+  void start();
+
+  void stop();
+
  private:
+  void accept_loop();
+  void one_loop(int sock);
+
+  int listen_socket_ = -1;
+  std::atomic_bool running_{false};
 };
 
 #endif

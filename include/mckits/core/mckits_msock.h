@@ -57,7 +57,7 @@ int mckits_accept_client(int server_socket);
   On success, the socket descriptor is returned.
   On error, return -1.
 */
-int mckits_tcpconnect(char* addr, int port, int nonblock);
+int mckits_tcpconnect(const char* addr, int port, int nonblock);
 
 /*
 @brief: Set socket SO_REUSEADDR.
