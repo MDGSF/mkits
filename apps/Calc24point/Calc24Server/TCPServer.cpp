@@ -73,7 +73,17 @@ void TCPServer::accept_loop() {
 void TCPServer::one_loop(int sock) {
   for (; running_;) {
     char buf[1024] = {0};
-    ssize_t readed_bytes = read(sock, buf, sizeof(buf));
-    infolog("%d, %s\n", readed_bytes, buf);
+    ssize_t read_bytes = read(sock, buf, sizeof(buf));
+    if (read_bytes <= 0) {
+      errlog("read failed");
+      break;
+    }
+    infolog("%d, %s", read_bytes, buf);
+
+    ssize_t write_bytes = write(sock, buf, read_bytes);
+    if (write_bytes != read_bytes) {
+      errlog("write failed");
+      break;
+    }
   }
 }
