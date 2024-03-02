@@ -1,1 +1,2 @@
 add_subdirectory(Calc24point)
+add_subdirectory(math_study)
