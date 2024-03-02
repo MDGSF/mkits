@@ -24,7 +24,7 @@ void TCPClient::run() {
   for (;;) {
     char buf[1024] = "hello";
     ssize_t write_bytes = write(sock_, buf, strlen(buf));
-    if (write_bytes != strlen(buf)) {
+    if ((size_t)write_bytes != strlen(buf)) {
       errlog("write failed");
       break;
     }

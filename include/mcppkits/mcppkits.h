@@ -15,6 +15,9 @@
 #include "mcppkits/core/queue/mcppkits_list_queue.h"
 #include "mcppkits/core/queue/mcppkits_mpmc.h"
 
+// mcppkits/core
+#include "mcppkits/core/mcppkits_mtime.h"
+
 // mcppkits/mstl
 #include "mcppkits/mstl/mcppkits_fixed_size_string.h"
 #include "mcppkits/mstl/mcppkits_raii_wrapper.h"

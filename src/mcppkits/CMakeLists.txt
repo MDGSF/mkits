@@ -12,6 +12,16 @@ message(STATUS "[mcppkits] MCPPKITS_SRC_HOME: ${MCPPKITS_SRC_HOME}")
 set(mcppkits_core_queue_headers
   ${MCPPKITS_INCLUDE_HOME}/core/queue/mcppkits_list_queue.h
   ${MCPPKITS_INCLUDE_HOME}/core/queue/mcppkits_mpmc.h
+  ${MCPPKITS_INCLUDE_HOME}/core/mcppkits_mtime.h
+)
+
+set(mcppkits_core_headers
+  ${mcppkits_core_queue_headers}
+  ${MCPPKITS_INCLUDE_HOME}/core/mcppkits_mtime.h
+)
+
+set(mcppkits_core_srcs
+  ${MCPPKITS_SRC_HOME}/core/mcppkits_mtime.cpp
 )
 
 set(mcppkits_mstl_headers
@@ -22,6 +32,7 @@ set(mcppkits_mstl_headers
 )
 
 set(mcppkits_headers
+  ${mcppkits_core_headers}
   ${mcppkits_mstl_headers}
   ${MCPPKITS_INCLUDE_HOME}/mcppkits.h
   ${MCPPKITS_INCLUDE_HOME}/mcppkits_config_file_reader.h
@@ -36,6 +47,7 @@ set(mcppkits_headers
 )
 
 set(mcppkits_srcs
+  ${mcppkits_core_srcs}
   ${MCPPKITS_SRC_HOME}/mcppkits.cpp
   ${MCPPKITS_SRC_HOME}/mcppkits_config_file_reader.cpp
   ${MCPPKITS_SRC_HOME}/mcppkits_count_down_latch.cpp

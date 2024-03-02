@@ -1,7 +1,12 @@
 #ifndef MKITS_INCLUDE_MCPPKITS_MCPPKITS_ASYNC_LOG_H_
 #define MKITS_INCLUDE_MCPPKITS_MCPPKITS_ASYNC_LOG_H_
 
+#include <condition_variable>
+#include <list>
+#include <memory>
+#include <mutex>
 #include <string>
+#include <thread>
 
 #include "mckits/core/mckits_mlog.h"
 #include "mcppkits/core/queue/mcppkits_list_queue.h"
@@ -37,7 +42,10 @@ namespace mcppkits {
 
 class CAsyncLog {
  public:
-  static int init(const std::string& log_filename);
+  static int init(const std::string& log_filename, bool truncate_long_log,
+                  int64_t roll_size);
+
+  static void uninit();
 
   static void log(int log_level, const char* filename, int line,
                   const char* format, ...);
@@ -54,13 +62,20 @@ class CAsyncLog {
   CAsyncLog(CAsyncLog&&) = delete;
   CAsyncLog& operator=(CAsyncLog&&) = delete;
 
+  static void write_thread();
+
  private:
+  static std::unique_ptr<std::thread> write_thread_;
+  static std::mutex mtx_write_;
+  static std::condition_variable cv_write_;
   static int current_log_level_;
   static bool running_;
   static std::string log_filename_;
   static FILE* log_file_;
   static mcppkits::queue::TListQueue<std::string> mylist;
   static std::string process_pid_;
+  static bool truncate_long_log_;
+  static int64_t roll_size_;
 };
 
 }  // namespace mcppkits
