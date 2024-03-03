@@ -15,7 +15,7 @@
 #include "mckits/core/mckits_msock.h"
 
 int TCPServer::init(const std::string& ip, uint16_t port) {
-  int s = socket(AF_INET, SOCK_STREAM, 0);
+  int s = ::socket(AF_INET, SOCK_STREAM, 0);
   if (s == -1) {
     errlog("create socket failed: %s", strerror(errno));
     return -1;
@@ -30,8 +30,8 @@ int TCPServer::init(const std::string& ip, uint16_t port) {
   sa.sin_port = htons(port);
   sa.sin_addr.s_addr = inet_addr(ip.c_str());
 
-  if (bind(s, (struct sockaddr*)&sa, sizeof(sa)) == -1 ||
-      listen(s, 511) == -1) {
+  if (::bind(s, (struct sockaddr*)&sa, sizeof(sa)) == -1 ||
+      ::listen(s, 511) == -1) {
     errlog("bind or listen failed: %s", strerror(errno));
     close(s);
     return -1;
