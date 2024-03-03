@@ -1,0 +1,9 @@
+#ifndef MKITS_APPS_CALC24POINT_COMMON_MSG_H_
+#define MKITS_APPS_CALC24POINT_COMMON_MSG_H_
+
+/*
+@brief: deal cards
+num1 num2 num3 num4\n
+*/
+
+#endif  // MKITS_APPS_CALC24POINT_COMMON_MSG_H_
