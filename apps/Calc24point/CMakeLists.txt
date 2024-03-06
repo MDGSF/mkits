@@ -3,6 +3,7 @@ set(PROJECT_HOME ${SOLUTION_HOME}/apps/Calc24point)
 add_executable(Calc24Server
   ${PROJECT_HOME}/Calc24Server/main.cpp
   ${PROJECT_HOME}/Calc24Server/TCPServer.cpp
+  ${PROJECT_HOME}/Calc24Server/Player.cpp
 )
 target_link_libraries(Calc24Server PRIVATE mckits mcppkits m dl rt)
 target_compile_options(Calc24Server PRIVATE -pthread)

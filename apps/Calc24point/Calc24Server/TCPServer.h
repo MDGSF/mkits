@@ -9,14 +9,7 @@
 #include <unordered_map>
 #include <vector>
 
-#define NO_PLAYER_ON_SEAET -1
-
-struct Desk {
-  int id;
-  int clientfd1{NO_PLAYER_ON_SEAET};
-  int clientfd2{NO_PLAYER_ON_SEAET};
-  int clientfd3{NO_PLAYER_ON_SEAET};
-};
+#include "Player.h"
 
 class TCPServer {
  public:
