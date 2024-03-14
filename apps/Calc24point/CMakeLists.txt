@@ -4,6 +4,15 @@ add_executable(Calc24Server
   ${PROJECT_HOME}/Calc24Server/main.cpp
   ${PROJECT_HOME}/Calc24Server/TCPServer.cpp
   ${PROJECT_HOME}/Calc24Server/Player.cpp
+  ${PROJECT_HOME}/net/ByteBuffer.cpp
+  ${PROJECT_HOME}/net/Epoll.cpp
+  ${PROJECT_HOME}/net/EventLoop.cpp
+  ${PROJECT_HOME}/net/Poll.cpp
+  ${PROJECT_HOME}/net/Select.cpp
+  ${PROJECT_HOME}/net/TCPConnection.cpp
+)
+target_include_directories(Calc24Server PUBLIC
+  ${PROJECT_HOME}
 )
 target_link_libraries(Calc24Server PRIVATE mckits mcppkits m dl rt)
 target_compile_options(Calc24Server PRIVATE -pthread)
