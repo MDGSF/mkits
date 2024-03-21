@@ -4,7 +4,7 @@
 #include <cstdio>
 #include <iostream>
 
-#include "TCPServer.h"
+#include "Calc24Server.h"
 #include "mckits/core/mckits_mlog.h"
 
 void sig_handler(int sig) { printf("sig = %d\n", sig); }
@@ -30,8 +30,8 @@ int main(int argc, char** argv) {
   const char* ip = argv[1];
   const char* port = argv[2];
 
-  TCPServer server;
-  int ret = server.init(ip, atoi(port));
+  Calc24Server server;
+  int ret = server.init(4, ip, atoi(port));
   if (ret != 0) {
     errlog("tcp server init failed, ret = %d", ret);
     return 0;

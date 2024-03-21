@@ -15,7 +15,7 @@ using CloseCallback = std::function<int()>;
 
 class TCPConnection : public IEventDispatcher {
  public:
-  TCPConnection(const std::shared_ptr<EventLoop>& event_loop);
+  TCPConnection(int clientfd, const std::shared_ptr<EventLoop>& event_loop);
   virtual ~TCPConnection();
 
   TCPConnection(const TCPConnection&) = default;
@@ -23,6 +23,8 @@ class TCPConnection : public IEventDispatcher {
 
   TCPConnection(TCPConnection&&) = default;
   TCPConnection& operator=(TCPConnection&&) = default;
+
+  int start_read();
 
   void set_read_callback(ReadCallback&& read_callback) {
     read_callback_ = std::move(read_callback);

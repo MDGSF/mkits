@@ -10,6 +10,8 @@ add_executable(Calc24Server
   ${PROJECT_HOME}/net/Poll.cpp
   ${PROJECT_HOME}/net/Select.cpp
   ${PROJECT_HOME}/net/TCPConnection.cpp
+  ${PROJECT_HOME}/net/TCPServer.cpp
+  ${PROJECT_HOME}/net/ThreadPool.cpp
 )
 target_include_directories(Calc24Server PUBLIC
   ${PROJECT_HOME}

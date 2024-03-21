@@ -4,10 +4,16 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-TCPConnection::TCPConnection(const std::shared_ptr<EventLoop>& event_loop)
-    : event_loop_(event_loop) {}
+TCPConnection::TCPConnection(int clientfd,
+                             const std::shared_ptr<EventLoop>& event_loop)
+    : fd_(clientfd), event_loop_(event_loop) {}
 
 TCPConnection::~TCPConnection() { ::close(fd_); }
+
+int TCPConnection::start_read() {
+  event_loop_.register_read_event(clientfd, true);
+  return 0;
+}
 
 int TCPConnection::send(const char* buf, int buf_len) {
   send_buf_.append(buf, buf_len);

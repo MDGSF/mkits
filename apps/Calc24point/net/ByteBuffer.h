@@ -21,6 +21,10 @@ class ByteBuffer {
 
   void retrieve(std::string& out_buf, int buf_len = 0);
 
+  size_t retrieve(char* buf, int buf_len);
+
+  size_t peek(char* buf, int buf_len);
+
   /*
   @param buf_len[in]: 0 means remove all
   */
