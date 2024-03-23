@@ -23,10 +23,10 @@ set(CMAKE_C_STANDARD_REQUIRED True)
 set(CMAKE_C_FLAGS_DEBUG "-std=c11 -Wall -g")
 set(CMAKE_C_FLAGS_RELEASE "-std=c11 -Wall -Werror -O3")
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-set(CMAKE_CXX_FLAGS_DEBUG "-std=c++11 -Wall -g")
-set(CMAKE_CXX_FLAGS_RELEASE "-std=c++11 -Wall -Werror -O3")
+set(CMAKE_CXX_FLAGS_DEBUG "-std=c++17 -Wall -g")
+set(CMAKE_CXX_FLAGS_RELEASE "-std=c++17 -Wall -Werror -O3")
 
 if(BUILD_COVERAGE)
   SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fprofile-arcs -ftest-coverage")

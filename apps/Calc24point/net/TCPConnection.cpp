@@ -4,14 +4,19 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#include <iostream>
+
 TCPConnection::TCPConnection(int clientfd,
                              const std::shared_ptr<EventLoop>& event_loop)
     : fd_(clientfd), event_loop_(event_loop) {}
 
-TCPConnection::~TCPConnection() { ::close(fd_); }
+TCPConnection::~TCPConnection() {
+  std::cout << "TCPConnection::~TCPConnection, fd_ = " << fd_ << std::endl;
+  ::close(fd_);
+}
 
 int TCPConnection::start_read() {
-  event_loop_.register_read_event(clientfd, true);
+  event_loop_->register_read_event(fd_, this, true);
   return 0;
 }
 
@@ -88,8 +93,11 @@ void TCPConnection::on_write() {
 }
 
 void TCPConnection::on_close() {
-  close_callback_();
+  std::cout << "TCPConnection::on_close 1" << std::endl;
   unregister_all_event();
+  std::cout << "TCPConnection::on_close 2" << std::endl;
+  close_callback_(shared_from_this());
+  std::cout << "TCPConnection::on_close 3" << std::endl;
 }
 
 void TCPConnection::enable_read(bool read) { enable_read_ = read; }
@@ -101,18 +109,18 @@ void TCPConnection::register_write_event() {
     return;
   }
 
-  event_loop_->register_write_event(fd_, true);
+  event_loop_->register_write_event(fd_, this, true);
 }
 
 void TCPConnection::unregister_write_event() {
   if (!register_write_event_) {
     return;
   }
-  event_loop_->register_write_event(fd_, false);
+
+  event_loop_->register_write_event(fd_, this, false);
   register_write_event_ = false;
 }
 
 void TCPConnection::unregister_all_event() {
-  event_loop_->register_read_event(fd_, false);
-  event_loop_->register_write_event(fd_, false);
+  event_loop_->unregister_all_event(fd_, this);
 }

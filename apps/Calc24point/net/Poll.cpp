@@ -19,3 +19,12 @@ void Poll::register_write_event(int fd, IEventDispatcher* event_dispatcher,
   // poll
   event_dispatchers_[fd] = event_dispatcher;
 }
+
+void Poll::unregister_read_event(int fd, IEventDispatcher* event_dispatcher,
+                                 bool read_event) {}
+
+void Poll::unregister_write_event(int fd, IEventDispatcher* event_dispatcher,
+                                  bool write_event) {}
+
+void Poll::unregister_read_write_event(int fd,
+                                       IEventDispatcher* event_dispatcher) {}

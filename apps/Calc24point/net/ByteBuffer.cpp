@@ -1,5 +1,7 @@
 #include "net/ByteBuffer.h"
 
+#include <cstring>
+
 ByteBuffer::ByteBuffer() {}
 
 ByteBuffer::~ByteBuffer() {}

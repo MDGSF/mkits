@@ -36,3 +36,12 @@ void Select::register_write_event(int fd, IEventDispatcher* event_dispatcher,
 
   FD_SET(fd, &writefds_);
 }
+
+void Select::unregister_read_event(int fd, IEventDispatcher* event_dispatcher,
+                                   bool read_event) {}
+
+void Select::unregister_write_event(int fd, IEventDispatcher* event_dispatcher,
+                                    bool write_event) {}
+
+void Select::unregister_read_write_event(int fd,
+                                         IEventDispatcher* event_dispatcher) {}

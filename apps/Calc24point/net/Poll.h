@@ -11,25 +11,33 @@
 
 class Poll : public IOMultiplex {
  public:
-  Poll();
-  virtual ~Poll();
-
-  Poll(const Poll&) = default;
-  Poll& operator=(const Poll&) = default;
-
-  Poll(Poll&&) = default;
-  Poll& operator=(Poll&&) = default;
-
   virtual void poll(int timeout_us,
                     std::vector<IEventDispatcher*>& triggered_fds) override;
   virtual void register_read_event(int fd, IEventDispatcher* event_dispatcher,
                                    bool read_event) override;
   virtual void register_write_event(int fd, IEventDispatcher* event_dispatcher,
                                     bool write_event) override;
+  virtual void unregister_read_event(int fd, IEventDispatcher* event_dispatcher,
+                                     bool read_event) override;
+
+  virtual void unregister_write_event(int fd,
+                                      IEventDispatcher* event_dispatcher,
+                                      bool write_event) override;
+
+  virtual void unregister_read_write_event(
+      int fd, IEventDispatcher* event_dispatcher) override;
+
+ public:
+  Poll();
+  virtual ~Poll();
+
+  Poll(const Poll&) = delete;
+  Poll& operator=(const Poll&) = delete;
+
+  Poll(Poll&&) = default;
+  Poll& operator=(Poll&&) = default;
 
  private:
-  struct pollfd* pollfd_;
-
   // <fd, value>
   std::map<int, IEventDispatcher*> event_dispatchers_;
 };

@@ -12,21 +12,29 @@
 
 class Select : public IOMultiplex {
  public:
-  Select();
-  virtual ~Select();
-
-  Select(const Select&) = default;
-  Select& operator=(const Select&) = default;
-
-  Select(Select&&) = default;
-  Select& operator=(Select&&) = default;
-
   virtual void poll(int timeout_us,
                     std::vector<IEventDispatcher*>& triggered_fds) override;
   virtual void register_read_event(int fd, IEventDispatcher* event_dispatcher,
                                    bool read_event) override;
   virtual void register_write_event(int fd, IEventDispatcher* event_dispatcher,
                                     bool write_event) override;
+  virtual void unregister_read_event(int fd, IEventDispatcher* event_dispatcher,
+                                     bool read_event) override;
+  virtual void unregister_write_event(int fd,
+                                      IEventDispatcher* event_dispatcher,
+                                      bool write_event) override;
+  virtual void unregister_read_write_event(
+      int fd, IEventDispatcher* event_dispatcher) override;
+
+ public:
+  Select();
+  virtual ~Select();
+
+  Select(const Select&) = delete;
+  Select& operator=(const Select&) = delete;
+
+  Select(Select&&) = default;
+  Select& operator=(Select&&) = default;
 
  private:
   int maxfd_ = 0;

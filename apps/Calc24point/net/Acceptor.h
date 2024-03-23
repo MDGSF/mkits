@@ -11,34 +11,33 @@ using AcceptCallback = std::function<void(int)>;
 
 class Acceptor final : public IEventDispatcher {
  public:
-  Acceptor(EventLoop* event_loop);
-  virtual ~Acceptor();
-
-  Acceptor(const Acceptor&) = default;
-  Acceptor& operator=(const Acceptor&) = default;
-
-  Acceptor(Acceptor&&) = default;
-  Acceptor& operator=(Acceptor&&) = default;
-
-  void set_accept_callback(AcceptCallback&& accept_callback) {
-    accept_callback_ = std::move(accept_callback);
-  }
-
-  void on_accept(int clientfd);
-
-  int start_listen(const std::string& ip, uint16_t port);
-
- public:
   virtual void on_read() override;
-
- private:
   virtual void on_write() override {}
   virtual void on_close() override {}
   virtual void enable_read(bool read) override {}
   virtual void enable_write(bool write) override {}
 
+ public:
+  Acceptor() = delete;
+  virtual ~Acceptor();
+
+  Acceptor(const Acceptor&) = delete;
+  Acceptor& operator=(const Acceptor&) = delete;
+
+  Acceptor(Acceptor&&) = delete;
+  Acceptor& operator=(Acceptor&&) = delete;
+
+ public:
+  explicit Acceptor(EventLoop* event_loop);
+
+  void set_accept_callback(AcceptCallback&& accept_callback) {
+    accept_callback_ = std::move(accept_callback);
+  }
+
+  int start_listen(const std::string& ip, uint16_t port);
+
  private:
-  int listenfd_{-1};
+  int listen_fd_{-1};
   EventLoop* event_loop_{nullptr};
   AcceptCallback accept_callback_;
 };

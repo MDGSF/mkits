@@ -1,7 +1,15 @@
 #include "net/Acceptor.h"
 
+#include <arpa/inet.h>
+#include <netinet/in.h>
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <unistd.h>
+
+#include <cstring>
+
+#include "mckits/core/mckits_mlog.h"
+#include "mckits/core/mckits_msock.h"
 
 Acceptor::Acceptor(EventLoop* event_loop) : event_loop_(event_loop) {}
 
@@ -37,7 +45,7 @@ int Acceptor::start_listen(const std::string& ip, uint16_t port) {
 
   listen_fd_ = s;
 
-  event_loop_.register_read_event(listen_fd_, true);
+  event_loop_->register_read_event(listen_fd_, this, true);
 
   return 0;
 }
@@ -46,7 +54,8 @@ void Acceptor::on_read() {
   while (true) {
     struct sockaddr_in client_addr;
     socklen_t addrlen;
-    int clientfd = ::accept(listen_fd_, &client_addr, &addrlen);
+    int clientfd =
+        ::accept(listen_fd_, (struct sockaddr*)&client_addr, &addrlen);
     if (clientfd > 0) {
       // new connection
       accept_callback_(clientfd);

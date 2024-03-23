@@ -13,19 +13,20 @@
 using OnConnectedCallback =
     std::function<void(std::shared_ptr<TCPConnection>& conn)>;
 using OnDisconnectedCallback =
-    std::function<void(std::shared_ptr<TCPConnection>& conn)>;
+    std::function<void(const std::shared_ptr<TCPConnection>& conn)>;
 
 class TCPServer {
  public:
   TCPServer() = default;
   virtual ~TCPServer() = default;
 
-  TCPServer(const TCPServer&) = default;
-  TCPServer& operator=(const TCPServer&) = default;
+  TCPServer(const TCPServer&) = delete;
+  TCPServer& operator=(const TCPServer&) = delete;
 
-  TCPServer(TCPServer&&) = default;
-  TCPServer& operator=(TCPServer&&) = default;
+  TCPServer(TCPServer&&) = delete;
+  TCPServer& operator=(TCPServer&&) = delete;
 
+ public:
   int init(int32_t thread_num, const std::string& ip, uint16_t port);
   void uninit();
   void start();
@@ -40,9 +41,9 @@ class TCPServer {
 
  private:
   void on_accept(int clientfd);
+  void on_disconnected(const std::shared_ptr<TCPConnection>& conn);
 
  private:
-  int listen_fd_{-1};
   uint16_t port_;
   std::string ip_;
   ThreadPool thread_pool_;

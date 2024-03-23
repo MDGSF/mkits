@@ -22,6 +22,7 @@ class TCPServer {
   TCPServer(TCPServer&&) = delete;
   TCPServer& operator=(TCPServer&&) = delete;
 
+ public:
   int init(const std::string& ip, uint16_t port);
 
   void start();

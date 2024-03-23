@@ -9,13 +9,24 @@
 #include "net/EventLoop.h"
 #include "net/IEventDispatcher.h"
 
+class TCPConnection;
+
 using ReadCallback = std::function<int(ByteBuffer&)>;
 using WriteCallback = std::function<int()>;
-using CloseCallback = std::function<int()>;
+using CloseCallback =
+    std::function<void(const std::shared_ptr<TCPConnection>&)>;
 
-class TCPConnection : public IEventDispatcher {
+class TCPConnection : public IEventDispatcher,
+                      public std::enable_shared_from_this<TCPConnection> {
  public:
-  TCPConnection(int clientfd, const std::shared_ptr<EventLoop>& event_loop);
+  virtual void on_read() override;
+  virtual void on_write() override;
+  virtual void on_close() override;
+  virtual void enable_read(bool read) override;
+  virtual void enable_write(bool write) override;
+
+ public:
+  TCPConnection() = delete;
   virtual ~TCPConnection();
 
   TCPConnection(const TCPConnection&) = default;
@@ -23,6 +34,9 @@ class TCPConnection : public IEventDispatcher {
 
   TCPConnection(TCPConnection&&) = default;
   TCPConnection& operator=(TCPConnection&&) = default;
+
+ public:
+  TCPConnection(int clientfd, const std::shared_ptr<EventLoop>& event_loop);
 
   int start_read();
 
@@ -40,12 +54,6 @@ class TCPConnection : public IEventDispatcher {
 
   int send(const char* buf, int buf_len);
   int send(const std::string& buf);
-
-  virtual void on_read() override;
-  virtual void on_write() override;
-  virtual void on_close() override;
-  virtual void enable_read(bool read) override;
-  virtual void enable_write(bool write) override;
 
  private:
   void register_write_event();

@@ -17,8 +17,8 @@ void ThreadPool::start(int32_t thread_num /* = 1*/) {
     event_loop_->init();
     event_loops_.push_back(std::move(event_loop_));
 
-    std::shared_ptr<std::thread> thread =
-        std::make_shared<std::thread>(std::bind(thread_func, this, i));
+    std::shared_ptr<std::thread> thread = std::make_shared<std::thread>(
+        std::bind(&ThreadPool::thread_func, this, i));
     threads_.push_back(std::move(thread));
   }
 }
@@ -42,6 +42,6 @@ std::shared_ptr<EventLoop> ThreadPool::get_next_event_loop() {
 
 void ThreadPool::thread_func(size_t event_loop_index) {
   while (!stop_) {
-    event_loops_[event_loop_index].run();
+    event_loops_[event_loop_index]->run();
   }
 }

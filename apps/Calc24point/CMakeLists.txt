@@ -2,8 +2,9 @@ set(PROJECT_HOME ${SOLUTION_HOME}/apps/Calc24point)
 
 add_executable(Calc24Server
   ${PROJECT_HOME}/Calc24Server/main.cpp
-  ${PROJECT_HOME}/Calc24Server/TCPServer.cpp
-  ${PROJECT_HOME}/Calc24Server/Player.cpp
+  ${PROJECT_HOME}/Calc24Server/Calc24Server.cpp
+  ${PROJECT_HOME}/Calc24Server/Calc24Session.cpp
+  ${PROJECT_HOME}/net/Acceptor.cpp
   ${PROJECT_HOME}/net/ByteBuffer.cpp
   ${PROJECT_HOME}/net/Epoll.cpp
   ${PROJECT_HOME}/net/EventLoop.cpp

@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
   const char* port = argv[2];
 
   Calc24Server server;
-  int ret = server.init(4, ip, atoi(port));
+  int ret = server.init(1, ip, atoi(port));
   if (ret != 0) {
     errlog("tcp server init failed, ret = %d", ret);
     return 0;
